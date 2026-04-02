@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getDb, BillingEntry } from "@/lib/db";
+import { getSql, initDb, BillingEntry } from "@/lib/db";
 
 export async function GET(req: NextRequest) {
   const week = req.nextUrl.searchParams.get("week");
@@ -7,12 +7,14 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "week param required (YYYY-MM-DD)" }, { status: 400 });
   }
 
-  const db = getDb();
-  const rows = db
-    .prepare(
-      `SELECT * FROM billing_entries WHERE week_start = ? ORDER BY created_at DESC LIMIT 50`
-    )
-    .all(week) as BillingEntry[];
+  await initDb();
+  const sql = getSql();
+  const rows = await sql`
+    SELECT * FROM billing_entries
+    WHERE week_start = ${week}
+    ORDER BY created_at DESC
+    LIMIT 50
+  ` as BillingEntry[];
 
   return NextResponse.json(rows);
 }
@@ -34,28 +36,18 @@ export async function POST(req: NextRequest) {
   const sa = Number(sat || 0);
   const week_total = s + m + t + w + th + f + sa;
 
-  const db = getDb();
-  const result = db
-    .prepare(
-      `INSERT INTO billing_entries
-        (rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, week_total, invoice_number, notes)
-       VALUES
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-    .run(
-      rj_number,
-      company_name,
-      job_description || "",
-      week_start,
-      s, m, t, w, th, f, sa,
-      week_total,
-      invoice_number || "",
-      notes || ""
-    );
+  await initDb();
+  const sql = getSql();
 
-  const created = db
-    .prepare("SELECT * FROM billing_entries WHERE id = ?")
-    .get(result.lastInsertRowid) as BillingEntry;
+  const rows = await sql`
+    INSERT INTO billing_entries
+      (rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, week_total, invoice_number, notes)
+    VALUES
+      (${rj_number}, ${company_name}, ${job_description || ""}, ${week_start},
+       ${s}, ${m}, ${t}, ${w}, ${th}, ${f}, ${sa}, ${week_total},
+       ${invoice_number || ""}, ${notes || ""})
+    RETURNING *
+  ` as BillingEntry[];
 
-  return NextResponse.json(created, { status: 201 });
+  return NextResponse.json(rows[0], { status: 201 });
 }
