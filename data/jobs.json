@@ -1,12 +1,6277 @@
 [
-  { "rj_number": "RJ26-01", "job_description": "Paving – Main St Phase 1", "company_name": "Acme Paving Co" },
-  { "rj_number": "RJ26-02", "job_description": "Base Grading – Industrial Park", "company_name": "Desert Sun Contractors" },
-  { "rj_number": "RJ26-03", "job_description": "Overlay – Commerce Blvd", "company_name": "SoCal Road Builders" },
-  { "rj_number": "RJ26-04", "job_description": "Milling – Hwy 38 Corridor", "company_name": "Inland Asphalt Inc" },
-  { "rj_number": "RJ25-143", "job_description": "Widening – Valley Ave", "company_name": "Acme Paving Co" },
-  { "rj_number": "RJ25-143 (8)", "job_description": "Widening – Valley Ave (Return 8)", "company_name": "Acme Paving Co" },
-  { "rj_number": "RJ25-143 (9)", "job_description": "Widening – Valley Ave (Return 9)", "company_name": "Acme Paving Co" },
-  { "rj_number": "RJ26-43", "job_description": "Chip Seal – Airport Rd", "company_name": "Premier Paving LLC" },
-  { "rj_number": "RJ26-44", "job_description": "Grading – Logistics Center", "company_name": "Desert Sun Contractors" },
-  { "rj_number": "RJ26-45", "job_description": "Paving – Retail Complex", "company_name": "SoCal Road Builders" }
+  {
+    "rj_number": "2023-14",
+    "job_description": "CITY OF BEAUMONT-CITYWIDE ST R",
+    "company_name": "CITY OF BEAUMONT"
+  },
+  {
+    "rj_number": "2024-07",
+    "job_description": "WILDOMAR BUNDY CANYON BASIN",
+    "company_name": "H&H GENERAL CONTRACTORS INC"
+  },
+  {
+    "rj_number": "2024-15",
+    "job_description": "HEMET AUTO MALL",
+    "company_name": "CITY OF HEMET"
+  },
+  {
+    "rj_number": "2024-24",
+    "job_description": "CITY OF HEMET- STREET REHAB",
+    "company_name": "CITY OF HEMET"
+  },
+  {
+    "rj_number": "2025-01",
+    "job_description": "POST B.MILES SQUARE PRK PAVING",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "2025-03",
+    "job_description": "RECHE CANYON-COLTON AREA",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "2025-04",
+    "job_description": "CAT CITY - DREAM HOMES",
+    "company_name": "CITY OF CATHEDRAL CITY"
+  },
+  {
+    "rj_number": "2025-05",
+    "job_description": "NORTH SHORE AREA-COUNTY OF SA",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "2025-06",
+    "job_description": "CHINO HILLS- BUTTERFIELD RANCH",
+    "company_name": "City of Chino Hills"
+  },
+  {
+    "rj_number": "2025-07",
+    "job_description": "CITRUS ST. - COUNTY OF SAN B",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "2025-08",
+    "job_description": "TEMECULA CITYWIDE PVMNT REHAB",
+    "company_name": "City of Temecula"
+  },
+  {
+    "rj_number": "2025-09",
+    "job_description": "PALM DESERT-EL PASEO ST. REHAB",
+    "company_name": "CITY OF PALM DESERT"
+  },
+  {
+    "rj_number": "2025-10",
+    "job_description": "EL SOBRANTE ROAD RES.-RIV COUN",
+    "company_name": "COUNTY OF RIVERSIDE"
+  },
+  {
+    "rj_number": "2025-11",
+    "job_description": "CITY OF BEAUMONT-CTYWD ST REH",
+    "company_name": "CITY OF BEAUMONT"
+  },
+  {
+    "rj_number": "2025-12",
+    "job_description": "VICTORVILLE CITYWIDE ST. IMPRO",
+    "company_name": "City of Victorville"
+  },
+  {
+    "rj_number": "2025-13",
+    "job_description": "SAN DIMAS- FIFTH STREET IMPRO",
+    "company_name": "CITY OF SAN DIMAS"
+  },
+  {
+    "rj_number": "2025-14",
+    "job_description": "KYA- CENTENNIAL DOG PARK SANTA",
+    "company_name": "KYA SERVICES LLC"
+  },
+  {
+    "rj_number": "2025-15",
+    "job_description": "CAT CITY- PANORAMA NEIGHBORHO",
+    "company_name": "CITY OF CATHEDRAL CITY"
+  },
+  {
+    "rj_number": "2025-700",
+    "job_description": "MISC.",
+    "company_name": "VANCE CORPORATION"
+  },
+  {
+    "rj_number": "2026-01",
+    "job_description": "CITY OF NEEDLES-PHASE V STREET",
+    "company_name": "CITY OF NEEDLES"
+  },
+  {
+    "rj_number": "2026-02",
+    "job_description": "NEW CHICAGO AVE-CITY OF HEMET",
+    "company_name": "COUNTY OF RIVERSIDE TRANS.DEPT"
+  },
+  {
+    "rj_number": "2026-03",
+    "job_description": "VAN BUREN BLVD RESURFACING-RIV",
+    "company_name": "COUNTY OF RIVERSIDE TRANS.DEPT"
+  },
+  {
+    "rj_number": "2026-04",
+    "job_description": "CITY OF INDIO-24-25 PAVEMENT M",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "2026-05",
+    "job_description": "RESOURCE DRIVE-CITY OF RIALTO",
+    "company_name": "CITY OF RIALTO"
+  },
+  {
+    "rj_number": "2026-06",
+    "job_description": "Bella Canto Neighborhood Pavem",
+    "company_name": "CITY OF COACHELLA"
+  },
+  {
+    "rj_number": "2026-07",
+    "job_description": "SUNLINE TRANSIT AGENCY",
+    "company_name": "SUNLINE TRANSIT AGENCY"
+  },
+  {
+    "rj_number": "2026-08",
+    "job_description": "SOUTHWEST BRAWLEY MAINTENAN",
+    "company_name": "UNION PAVEMENT SERVICES, INC."
+  },
+  {
+    "rj_number": "2026-09",
+    "job_description": "FONTANA CITYWIDE REHAB-CALMEX",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "2026-10",
+    "job_description": "SANTA CLARITA 25-26- OVERLAY",
+    "company_name": "CITY OF SANTA CLARITA"
+  },
+  {
+    "rj_number": "2026-11",
+    "job_description": "ALURE GRADING-PALM SPRINGS PH",
+    "company_name": "DENNETT CONSTRUCTION"
+  },
+  {
+    "rj_number": "R0219-135",
+    "job_description": "AAA Paving",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ23-223",
+    "job_description": "CALMEX Engineering  Inc.",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-110",
+    "job_description": "ROMERO TEMECULA 21526",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-111",
+    "job_description": "HILLCREST SAN BERN 7821-78269",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-112",
+    "job_description": "JRM ANAHEIM WESTERN HS",
+    "company_name": "JRM Paving"
+  },
+  {
+    "rj_number": "RJ24-113",
+    "job_description": "AAA SAN JACINTO 22-086",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-114",
+    "job_description": "HILLCREST RIVERSIDE 7821",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-115",
+    "job_description": "LYLE VICK 5TH STREET",
+    "company_name": "VICK CONSTRUCTION COMPANY"
+  },
+  {
+    "rj_number": "RJ24-116",
+    "job_description": "RJ NOBLE CARSON 91865",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-117",
+    "job_description": "SULLY EL SEGUNDO 10290474",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-118",
+    "job_description": "GRANITE LANCASTER",
+    "company_name": "GRANITE CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-119",
+    "job_description": "STAN RENTAL WPS-CB44",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ24-12",
+    "job_description": "AAA PAVING- RIVERSIDE KB22-089",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-120",
+    "job_description": "DELTA - SAN JUAN",
+    "company_name": "Delta Group, Inc."
+  },
+  {
+    "rj_number": "RJ24-121",
+    "job_description": "AAA PAVING WINCHESTER 21-060",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-122",
+    "job_description": "GRIFFITH - SAN BERN BNSF",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-123",
+    "job_description": "SULLY W HOLLYWOOD 10270590",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-124",
+    "job_description": "MATICH D.H.S. 23-058",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-125",
+    "job_description": "HILLCREST HEMET J#2783 P#78320",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-127",
+    "job_description": "EXCEL EL MONTE 5938",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-128",
+    "job_description": "T MAUS HARBART DR RIVERSIDE",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-129",
+    "job_description": "HILLCREST TEMECULA 78329",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-13",
+    "job_description": "EXCEL - IRVINE 5937",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-130",
+    "job_description": "HILLCREST TEMECULA  78330",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-131",
+    "job_description": "PRECISION FONTANA 6134",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-132",
+    "job_description": "COUNTY OF SB BID NO. 6563",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-133",
+    "job_description": "PRECISION PERRIS 6125",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-134",
+    "job_description": "EXCEL ORANGE 5932",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-135",
+    "job_description": "EXCEL  ORANGE  5939",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-136",
+    "job_description": "ROMERO SAN DIEGO 24506.01",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-137",
+    "job_description": "SB COUNTY 29PALMS TX1820/6579",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-138",
+    "job_description": "MANHOLE SALTON SEA",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-139",
+    "job_description": "SULLY MILLER CASTAIC",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-14",
+    "job_description": "WESTERN PAVING - SAN PEDRO",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-140",
+    "job_description": "WESTERN UNIVERSAL CITY 5493",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-141",
+    "job_description": "POST BROS LOS ALAMITOS HS 1050",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-142",
+    "job_description": "MATICH FONTANA  22-029",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-143",
+    "job_description": "ROMERO CARLSBAD",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-144",
+    "job_description": "MATICH PALM DESERT 21-022",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-145",
+    "job_description": "MATICH REDLANDS 24-003",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-146",
+    "job_description": "RJ NOBLE IRVINE 91890",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-147",
+    "job_description": "PRIDE PAVING SAN BERN 2008-JC",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-148",
+    "job_description": "ONYX MURRIETA 24-016",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-149",
+    "job_description": "AAA (BARE RNT4009) 24-009",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-15",
+    "job_description": "ONYX - WHITTIER 23-083",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-150",
+    "job_description": "AIRJET COMM - NEWPORT BEACH",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ24-151",
+    "job_description": "HILLCREST LAKE ELSINORE 7775",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-152",
+    "job_description": "HAIRTBRINK PERRIS 13070",
+    "company_name": "Haitbrink Asphalt Paving Inc."
+  },
+  {
+    "rj_number": "RJ24-153",
+    "job_description": "WESTERN MORENO VALLEY 5542",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-154",
+    "job_description": "WESTERN LOS ANGELES 5367",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-155",
+    "job_description": "GRIFFITH - HEMET 10846.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-156",
+    "job_description": "POST BROS VISTA HS  1023",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-157",
+    "job_description": "GRIFFITH LA METRO 10803.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-158",
+    "job_description": "AAA LAKE ELSINORE 24-017",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-159",
+    "job_description": "WESTERN IRVINE 5554",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-16",
+    "job_description": "AAA PAVING - HEMET 21-084",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-160",
+    "job_description": "ROMERO OTAY MESA 24503",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-161",
+    "job_description": "PRIDE PAVING ANAHEIM 1740",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-162",
+    "job_description": "SULLY THOUSAND OAKS 10315332",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-163",
+    "job_description": "RIVERSIDE HWY 138/HWY 18 23017",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-164",
+    "job_description": "HILLCREST MO VAL 7854 78401",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-165",
+    "job_description": "AAA RIVERSIDE 23-054",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-166",
+    "job_description": "RIVERSIDE ANGELUS OAKS",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-167",
+    "job_description": "LEE & STIRES SANTA ANA 23095",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-168",
+    "job_description": "T MAUS SAN JACINTO ACADEMY",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-169",
+    "job_description": "RAZ TEC - SAN BERN HOSPITAL",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ24-17",
+    "job_description": "LEE & STIRES - RIALTO",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-170",
+    "job_description": "MATICH FONTANA 24-003",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-171",
+    "job_description": "MANHOLE COLTON PLANT",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-172",
+    "job_description": "GPM RIVERSIDE 503EC",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ24-173",
+    "job_description": "ONYX HEMET 23-130",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-174",
+    "job_description": "WESTERN PAVING SAN PEDRO 5574",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-175",
+    "job_description": "RJ NOBLE SAN JUAN CAP 91891",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-176",
+    "job_description": "WESTERN SIERRA MADRE 5529",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-177",
+    "job_description": "MATICH FONTANA 23-056",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-178",
+    "job_description": "MATICH PALM DESERT 24-012",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-179",
+    "job_description": "ROMERO SAN DIEGO 22515.05",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-18",
+    "job_description": "T MAUS - PALMDALE",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-180",
+    "job_description": "13900 BARSTOW ROAD-EDWARDS",
+    "company_name": "CERES ENTERPRISES, INC."
+  },
+  {
+    "rj_number": "RJ24-181",
+    "job_description": "RJ NOBLE CYPRESS 91906",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-182",
+    "job_description": "PRECISION SUN VALLEY 4830",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-183",
+    "job_description": "T MAUS SAN JACINTO KB 7TH & LY",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-184",
+    "job_description": "T MAUS DHS SKYBORNE",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-185",
+    "job_description": "ONYX GLENDALE 23-129",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-186",
+    "job_description": "RIVERSIDE JURUPA VALLEY 24004",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-187",
+    "job_description": "MATICH PALM SPRINGS 24-008",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-188",
+    "job_description": "E & M CONSTRUCTORS LA",
+    "company_name": "E & M CONSTRUCTORS,INC."
+  },
+  {
+    "rj_number": "RJ24-189",
+    "job_description": "GRIFFITH ONTARIO",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-19",
+    "job_description": "INFINITY LOW BED",
+    "company_name": "INFINITY RECYCLING & MATERIALS"
+  },
+  {
+    "rj_number": "RJ24-190",
+    "job_description": "DANIELLE BOLDT-GENERATOR RENTL",
+    "company_name": "DANIELLE M. BOLDT"
+  },
+  {
+    "rj_number": "RJ24-191",
+    "job_description": "PROACTIVE SITE - AGOURA HILLS",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ24-192",
+    "job_description": "HILLCREST ONTARIO 7832/78468",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-193",
+    "job_description": "MATICH DHS 23-013",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-194",
+    "job_description": "COUNTY OF SB GLEN HELEN 6597",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-195",
+    "job_description": "ONYX DANA POINT 23-136",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-196",
+    "job_description": "ROMERO EL CAJON 24506.03",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-197",
+    "job_description": "H&H RIALTO",
+    "company_name": "H & H General Contractors"
+  },
+  {
+    "rj_number": "RJ24-198",
+    "job_description": "CAL FIRE - PATCH WORK",
+    "company_name": "CAL FIRE"
+  },
+  {
+    "rj_number": "RJ24-199",
+    "job_description": "EXCEL ANAHEIM 5905.03",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-20",
+    "job_description": "WESTERN PAVING-GLENDORA-5313",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-200",
+    "job_description": "SULLY PALMDALE 10272297",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-201",
+    "job_description": "PRIDE FOUNTAIN VALLEY",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-202",
+    "job_description": "WESTERN SIERRA MADRE 5529",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-203",
+    "job_description": "T MAUS SAN MARCOS",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-204",
+    "job_description": "ONYX RIVERSIDE 24-020",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-205",
+    "job_description": "ROMERO CHULA VISTA 23502",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-206",
+    "job_description": "SULLY MILLER PALMDALE 10315398",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-207",
+    "job_description": "MATICH CATHEDRAL CITY 22-065",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-208",
+    "job_description": "MATICH RIALTO 24-008",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-209",
+    "job_description": "HANDICAP PARKING STALLS",
+    "company_name": "Halbrook's Carving & Gun Room"
+  },
+  {
+    "rj_number": "RJ24-21",
+    "job_description": "EBS-CITY OF COMMERCE 22146",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ24-210",
+    "job_description": "MARK CO TEMECULA 5606",
+    "company_name": "MARK COMPANY"
+  },
+  {
+    "rj_number": "RJ24-211",
+    "job_description": "ALL AMERICAN ONTARIO 35996",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-212",
+    "job_description": "AAA PAVING SAN BERN 23-036",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-213",
+    "job_description": "T MAUS VICTORVILLE",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-214",
+    "job_description": "T MAUS MENIFEE",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-215",
+    "job_description": "MATICH YUCAIPA R2024-3",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-216",
+    "job_description": "LEE & STIRES INDIO 21213",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-217",
+    "job_description": "TRIPLE H TUSTIN",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ24-218",
+    "job_description": "ROMERO SAN DIEGO 24514",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-219",
+    "job_description": "CALMEX SAN DIEGO 22-1094",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-22",
+    "job_description": "AAA PAVING - MURRIETA 18-038",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-220",
+    "job_description": "LEE & STIRES MURRIETA 23050",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-221",
+    "job_description": "DELTA SAN JUAN -30811 CALLE",
+    "company_name": "Delta Group, Inc."
+  },
+  {
+    "rj_number": "RJ24-222",
+    "job_description": "MATICH BLOOMINGTON 23-066",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-223",
+    "job_description": "ONYX TEMPLE CITY 24-017",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-224",
+    "job_description": "RJ NOBLE GARDEN GROVE 91881",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-225",
+    "job_description": "T MAUS THERMAL 86030 62ND ST",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-226",
+    "job_description": "B-81 PAVING - YUCAIPA",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ24-227",
+    "job_description": "BORDEN EXCAVATION YUCAIPA",
+    "company_name": "BORDEN EXCAVATING INC."
+  },
+  {
+    "rj_number": "RJ24-228",
+    "job_description": "B-81 PAVING YUCAIPA",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ24-229",
+    "job_description": "TRIPLE H DANA POINT CS_DPZ3_UG",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ24-23",
+    "job_description": "GRIFFITH - SAN DEIGO",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-230",
+    "job_description": "POST BROS COSTA MESA HS",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-231",
+    "job_description": "RJ NOBLE RIVERSIDE 91911",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-232",
+    "job_description": "RJ NOBLE SANTA FESPRINGS 91909",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-233",
+    "job_description": "PRIDE OCEANSIDE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-234",
+    "job_description": "SULLY MILLER ANAHEIM 10314672",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-235",
+    "job_description": "TC & SONS LUCERNE VALLEY",
+    "company_name": "TC & SONS"
+  },
+  {
+    "rj_number": "RJ24-236",
+    "job_description": "(MINI X BARE RENT) MENTONE CA",
+    "company_name": "TANNA GUILLIAM"
+  },
+  {
+    "rj_number": "RJ24-237",
+    "job_description": "RJ NOBLE RIVERSIDE 91868",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-238",
+    "job_description": "LUCERO CONCRETE ANZA",
+    "company_name": "LUCERO'S CONCRETE CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-239",
+    "job_description": "DELTA CHINO",
+    "company_name": "Delta Group, Inc."
+  },
+  {
+    "rj_number": "RJ24-24",
+    "job_description": "MATICH - DESERT HOT SPRINGS",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-240",
+    "job_description": "AAA RIVERSIDE/HIGHGROVE 21-056",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-241",
+    "job_description": "BENS PAVING PASADENA",
+    "company_name": "BEN'S PAVING EQUIPMENT SERVICE"
+  },
+  {
+    "rj_number": "RJ24-242",
+    "job_description": "SB COUNTY - PHELAN",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-243",
+    "job_description": "B-81 YUCAIPA 11TH ST (4' MILL)",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ24-244",
+    "job_description": "APACHE PAVING FONTANA (4'MILL)",
+    "company_name": "APACHE PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-245",
+    "job_description": "ROMERO SD 24515",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-246",
+    "job_description": "LEE & STIRES INDIO 21176",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-248",
+    "job_description": "AAA WINCHESTER 22-066",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-249",
+    "job_description": "AAA PAVING PALM DESERT 24-005",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-25",
+    "job_description": "MATICH - JURUPA VALLEY 23-067",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-250",
+    "job_description": "WESTERN COVINA 5588",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-251",
+    "job_description": "ONYX WALNUT 24-022",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-252",
+    "job_description": "GRIFFITH SAN PEDRO WBCT 10413.",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-253",
+    "job_description": "ONYX POMONA 24-042",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-254",
+    "job_description": "ONYX DIAMOND BAR",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-255",
+    "job_description": "RIVERSIDE CONS RIALTO 23006",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-256",
+    "job_description": "EBS MONTCLAIR 24106",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ24-257",
+    "job_description": "EXCEL INGLEWOOD 5885",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-258",
+    "job_description": "SULLY ADELANTO 10309927",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-259",
+    "job_description": "GRIFFITH SD 20017.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-26",
+    "job_description": "EBS IRVINE",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ24-260",
+    "job_description": "EXCEL LAGUNA NIGUEL 5967",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-261",
+    "job_description": "MATICH SAN BERNARDINO 24-013",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-262",
+    "job_description": "RJ NOBLE ORANGE 91914",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-263",
+    "job_description": "MANHOLE - EL MONTE",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-264",
+    "job_description": "PRIDE PAVING LA",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-265",
+    "job_description": "MATICH SAN BERNARDINO 24-018",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-266",
+    "job_description": "MATICH FONTANA 24-011",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-267",
+    "job_description": "ONYX FULLERTON 24-060",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-268",
+    "job_description": "GRIFFITH CITYOFINDUS. 10808.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-269",
+    "job_description": "EXCEL HUNTINGTON BEACH 5993",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-27",
+    "job_description": "AAA PAVING - WINCHESTER 22-048",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-270",
+    "job_description": "ARIJET COMM. COSTA MESA",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ24-271",
+    "job_description": "MANHOLE  FULLERTON GS24-42380",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-272",
+    "job_description": "ONYX RIALTO 7041",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-273",
+    "job_description": "AAA PAVING SAN BERN 23-016",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-274",
+    "job_description": "SULLY PALMDALE 10319316",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-275",
+    "job_description": "AMS PAVING LA QUINTA 24-270",
+    "company_name": "AMS PAVING, INC."
+  },
+  {
+    "rj_number": "RJ24-276",
+    "job_description": "MANHOLE RIVERSIDE GS24-32368",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-277",
+    "job_description": "ROMERO CARLSBAD 24506.07",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-278",
+    "job_description": "PETERSON&GRADINGGARDEN GROV",
+    "company_name": "Peterson Grading & Paving, Inc"
+  },
+  {
+    "rj_number": "RJ24-279",
+    "job_description": "AAA PAVING RIVERSIDE 22-089",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-28",
+    "job_description": "WESTERN PAVING RIVERSIDE 5451",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-280",
+    "job_description": "LEE & STIRES FONTANA 23158",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-281",
+    "job_description": "ROMERO CHULA VISTA 24504",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-282",
+    "job_description": "SULLY MILLER ALTADENA 10314596",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-283",
+    "job_description": "EBS RANCHO CUCAMONGA 22222",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ24-284",
+    "job_description": "MATICH INDIO 23-022",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-285",
+    "job_description": "EXCEL BEVERLY HILLS 5965",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-286",
+    "job_description": "EXCEL LOS ANGELES 5861",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-287",
+    "job_description": "ROMERO ESCONDIDO 23538",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-29",
+    "job_description": "NARROW PATH ENG. D3 DOZER RNTL",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ24-290",
+    "job_description": "MACADEM TORRANCE TMMC CPOL",
+    "company_name": "MACADAM CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-291",
+    "job_description": "WEKA INC MURRIETA 313",
+    "company_name": "WEKA INC."
+  },
+  {
+    "rj_number": "RJ24-292",
+    "job_description": "ONYX SANTA ANA 23-062",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-293",
+    "job_description": "LEE & STIRES HEMET 23183",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-294",
+    "job_description": "EXCEL WALNUT PARK 5941",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-296",
+    "job_description": "WESTERN LOS ANGELES 5599",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-297",
+    "job_description": "AAA PAVING WINCHESTER 22-084",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-298",
+    "job_description": "MZ COMMUN. SANTA ANA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-299",
+    "job_description": "ONYX TEMECULA 24-045",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-30",
+    "job_description": "GRIFFITH - LA",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-300",
+    "job_description": "WESTERN WOODLAND HILLS 5617",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-301",
+    "job_description": "PRECISION EL SEGUNDO 6168",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-302",
+    "job_description": "GRIFFITH LA 10882.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-303",
+    "job_description": "LEE & STIRES PALM DESERT 23126",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-304",
+    "job_description": "HILLCREST RIALTO 7794 - 78884",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-305",
+    "job_description": "EXCEL LACANADA FLINTRIDGE 5983",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-306",
+    "job_description": "ROMERO CHINO 23517",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-307",
+    "job_description": "SULLY PALMDALE 10330528",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-308",
+    "job_description": "S. CHRISTENSEN ENG / INDIO",
+    "company_name": "S. CHRISTENSEN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-309",
+    "job_description": "ADVANTAGE UNLIMITED LA",
+    "company_name": "ADVANTAGE UNLIMITED PAVING"
+  },
+  {
+    "rj_number": "RJ24-31",
+    "job_description": "JACOB SANCHEZ",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ24-310",
+    "job_description": "CITY SERVICES SANTA ANA",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ24-311",
+    "job_description": "omega paving riverside",
+    "company_name": "OMEGA PAVING, INC."
+  },
+  {
+    "rj_number": "RJ24-312",
+    "job_description": "EXCEL E LOS ANGELES 5942",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-313",
+    "job_description": "CALMEX JURUPA VALLEY 23-1146",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-314",
+    "job_description": "AAA PAVING PERRIS 24-016",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-315",
+    "job_description": "EXCEL LA 5891",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-316",
+    "job_description": "AAAPAVING MORENO VALLEY 24-062",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-317",
+    "job_description": "EXCEL HUNTINGTON BEACH 5961",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-318",
+    "job_description": "GRIFFITH UPLAND/FONTA 10862.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-319",
+    "job_description": "CALMEX RIALTO 24-1157",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-32",
+    "job_description": "ONYX - THERMAL 24-008",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-320",
+    "job_description": "LYLE VICK - LOCAL12 WTR TRK OP",
+    "company_name": "VICK CONSTRUCTION COMPANY"
+  },
+  {
+    "rj_number": "RJ24-321",
+    "job_description": "GRIFFITH INGLEWOOD 10878.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-322",
+    "job_description": "PAVEMENT COAT MACDOEL 004513",
+    "company_name": "PAVEMENT COATINGS CO."
+  },
+  {
+    "rj_number": "RJ24-323",
+    "job_description": "PRIDE LOS ANGELES 2010 JS",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-324",
+    "job_description": "PRIDE MENIFEE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-325",
+    "job_description": "ONYX RANCHO CUCAMONGA 24-040",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-326",
+    "job_description": "PRECISION LA 6174",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-327",
+    "job_description": "LEE & STIRES LA QUINTA 23018",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-328",
+    "job_description": "MANHOLE PICO RIVERA / LA V-368",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-329",
+    "job_description": "ONYX TEMECULA 24-073",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-33",
+    "job_description": "AAA PAVING SAN JACINTO 22-069",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-330",
+    "job_description": "PRIDE PAVING HB 2118",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-331",
+    "job_description": "AAA PAVING - PERRIS KB 22-074",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-332",
+    "job_description": "CUTTINGHAM DAVIS - EAGLE ROCK",
+    "company_name": "Cuttingham Davis Corp."
+  },
+  {
+    "rj_number": "RJ24-333",
+    "job_description": "ROMERO CHULA VISTA 24528",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-334",
+    "job_description": "PRIDE PAVING RIVERSIDE 2325",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-335",
+    "job_description": "EXCEL IRWINDALE 5908",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-336",
+    "job_description": "B-81 YUCAIPA - WESTERN HEIGHTS",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ24-337",
+    "job_description": "ROMERO MORENO VALLEY 24529",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-338",
+    "job_description": "AAA PALM SPRINGS 24-038",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-339",
+    "job_description": "AAA PAVING MORENO VALLEY 23-06",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-34",
+    "job_description": "ALL AMERICAN ONTARIO 34949",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-340",
+    "job_description": "ALL AMERICAN LONG BEACH 35038",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-341",
+    "job_description": "PRECISION SANTA ANA 6114",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-342",
+    "job_description": "ALL AMERICAN ONTARIO 36107",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-343",
+    "job_description": "ALL AMERICAN CLAREMONT 36151",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-344",
+    "job_description": "ALL AMERICAN TORRANCE 35891",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-345",
+    "job_description": "GRIFFITH FALLBROOK 2002",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-346",
+    "job_description": "ALL AMERICAN SANTA ANA 32489",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-347",
+    "job_description": "ALL AMERICAN FULLERTON 36108",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-348",
+    "job_description": "RJ NOBLE SANTA FE SPRINGS 9434",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-349",
+    "job_description": "GRIFFITH MONTCLAIR 10858.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-35",
+    "job_description": "DOUG FORD - NORCO",
+    "company_name": "GRACE FELLOWSHIP CHURCH"
+  },
+  {
+    "rj_number": "RJ24-350",
+    "job_description": "LEE & STIRES LA QUINTA 21191",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-351",
+    "job_description": "SULLY SANTA CLARITA 10322379",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-352",
+    "job_description": "PRIDE  BIG BEAR - GREEN VALLEY",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-353",
+    "job_description": "FERREIRA PALM SPRINGS",
+    "company_name": "Ferreira Construction"
+  },
+  {
+    "rj_number": "RJ24-354",
+    "job_description": "ALL AMERICAN ANAHEIM 35882",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-355",
+    "job_description": "ALL AMERICAN LB 36138",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-356",
+    "job_description": "ALL AMERICAN HEMET 36129",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-357",
+    "job_description": "PRECISION INDIO 6154",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-358",
+    "job_description": "ONYX RIVERSIDE 23-134",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-359",
+    "job_description": "C.H.P. BEAUMONT",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ24-36",
+    "job_description": "ONYX - MONTEREY PARK 23-110",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-360",
+    "job_description": "GRIFFITH RANCHO CUCAMONGA 1086",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-361",
+    "job_description": "NATIONAL PAVING CORONA 2824146",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ24-362",
+    "job_description": "LEE & STIRES YUCAIPA 22022",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-363",
+    "job_description": "MATICH FONTANA 24-009",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-364",
+    "job_description": "IB PAVING ONTARIO CARLOS",
+    "company_name": "IB PAVING & PARKING LOT SPECIA"
+  },
+  {
+    "rj_number": "RJ24-365",
+    "job_description": "AAA PAVING FONTANA 24-025",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-366",
+    "job_description": "WESTERN PAVING W LA 5562",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-367",
+    "job_description": "SB COUNTY - HESPERIA 6668",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-368",
+    "job_description": "CALMEX PALMDALE 24-1175",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-369",
+    "job_description": "FOX COLD PLANING PLACENTA",
+    "company_name": "FOX COLD PLANING LLC"
+  },
+  {
+    "rj_number": "RJ24-37",
+    "job_description": "ALL AMERICAN - INDIO 35841",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-370",
+    "job_description": "MANHOLE TEMECULA",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-371",
+    "job_description": "GT GENERAL MORENO VALLEY",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ24-372",
+    "job_description": "LEE & STIRES ONTARIO 24112",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-373",
+    "job_description": "GRANITE CAMARILLO",
+    "company_name": "GRANITE CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-374",
+    "job_description": "ALL AMERICAN LA HABRA 36334",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-375",
+    "job_description": "ALL AMERICAN EASTVALE 36208",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-376",
+    "job_description": "SB COUNTY CRESTLINE BID 6661",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-377",
+    "job_description": "PRIDE LA 2299",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-378",
+    "job_description": "WESTERN PAVING RIVERSIDE 5496",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-379",
+    "job_description": "RJ NOBLE ANAHEIM 91913",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-38",
+    "job_description": "JACOB SANCHE BARE RENTAL SKIP",
+    "company_name": "JACOB SANCHEZ"
+  },
+  {
+    "rj_number": "RJ24-380",
+    "job_description": "MATICH YUCAIPA 24-024",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-381",
+    "job_description": "HAZARD LEMON GROVE 23016-10",
+    "company_name": "HAZARD CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-382",
+    "job_description": "LEE & STIRES SAN JACINTO 23154",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-383",
+    "job_description": "WESTERN INGLEWOOD 5623",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-384",
+    "job_description": "WEKA WILDOMAR",
+    "company_name": "WEKA INC."
+  },
+  {
+    "rj_number": "RJ24-385",
+    "job_description": "GT HERMOSA BEACH 201",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ24-386",
+    "job_description": "ONYX EASTVALE",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-387",
+    "job_description": "GRIFFITH SD 805 - 20019.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-388",
+    "job_description": "ARIJET SANTA ANA",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ24-389",
+    "job_description": "PRIDE LOS ANGELES",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-39",
+    "job_description": "SNOW REMOVAL EMERGENCY-ORDR",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-390",
+    "job_description": "WESTERN PAVING INDUSTRY",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-391",
+    "job_description": "ALL AMERICAN TORRANCE 36036",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-392",
+    "job_description": "POST BROS FOUNTAIN VALLEY",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-393",
+    "job_description": "MATICH SAN BERNARDINO 24-028",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-394",
+    "job_description": "MANHOLE POMONA  GS24-42381",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-395",
+    "job_description": "ONYX DOWNEY 24-044",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-396",
+    "job_description": "PRECISION MURRIETA 6102",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-397",
+    "job_description": "AAA (4004)RENTAL JURUPA 24-036",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-398",
+    "job_description": "PRECISION SIGNAL HILLS 6102",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-399",
+    "job_description": "ALL AMERICAN AZUSA 36197",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-40",
+    "job_description": "ONYX - LAKE FOREST 23-135",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-400",
+    "job_description": "WESTERN PAVING GLENDORA 5533",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-401",
+    "job_description": "WESTERN PAVING ANAHEIM 5591",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-402",
+    "job_description": "GRIFFITH SAN DIEGO 10859.1",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-403",
+    "job_description": "ALL AMER. SAN JUAN CAP 35645",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-404",
+    "job_description": "MANHOLE SAN DIEGO GS23-32366",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-405",
+    "job_description": "ADVANTAGE STANTON 24-077",
+    "company_name": "ADVANTAGE UNLIMITED PAVING"
+  },
+  {
+    "rj_number": "RJ24-406",
+    "job_description": "SB COUNTY JOHNSON VALLEY",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-407",
+    "job_description": "ARIJET COSTA MESA 24389-C500",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ24-408",
+    "job_description": "ERGON APPLE VALLEY",
+    "company_name": "Ergon Asphalt & Emulsions, Inc"
+  },
+  {
+    "rj_number": "RJ24-409",
+    "job_description": "WESTERN RIVERSIDE 5614",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-41",
+    "job_description": "AAA - WINCHESTER 22-002 - CNCL",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-410",
+    "job_description": "COMPETITIVE ASPHALT INDIO",
+    "company_name": "COMPETITIVE ASPHALT COATINGS"
+  },
+  {
+    "rj_number": "RJ24-411",
+    "job_description": "HARDY HARPER MO VAL 24110",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-412",
+    "job_description": "AAA JURUPA VALLEY 24-027",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-413",
+    "job_description": "ONYX SAN CLEMENTE 24-063",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-414",
+    "job_description": "JACOBSSON ENG SAN MANUEL 381",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-415",
+    "job_description": "GRIFFITH SAN PEDRO 10822.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-416",
+    "job_description": "WESTERN PAVING LA 5579",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-417",
+    "job_description": "ONYX MURRIETA 24-070",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-418",
+    "job_description": "PRIDE BUENA PARK 2184",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-419",
+    "job_description": "HILLCREST RIALTO J# 2789",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-42",
+    "job_description": "ADD WORK(MILL&CRKSL SF)2024-01",
+    "company_name": "UNIVERSAL CONSTRUCTION & ENG."
+  },
+  {
+    "rj_number": "RJ24-420",
+    "job_description": "RJ NOBLE GARDEN GROVE 91931",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-421",
+    "job_description": "COMPETITIVE LA PALMA  24-863",
+    "company_name": "COMPETITIVE ASPHALT COATINGS"
+  },
+  {
+    "rj_number": "RJ24-422",
+    "job_description": "T MAUS SIGNAL HILLS (PHASE 3-6",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-423",
+    "job_description": "BLACK DIAMOND BUARTE",
+    "company_name": "BLACK DIAMOND ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-424",
+    "job_description": "STEWART DUNCAN - DINOSAUR TIRE",
+    "company_name": "WARREN DUNCAN CONTRACTING"
+  },
+  {
+    "rj_number": "RJ24-425",
+    "job_description": "MATICH FONTANA 24-030",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-426",
+    "job_description": "H & H - SAN BERNARDINO 2202",
+    "company_name": "H & H General Contractors"
+  },
+  {
+    "rj_number": "RJ24-427",
+    "job_description": "GEO PAVING - LA FASHION DSTRCT",
+    "company_name": "GEO PAVING"
+  },
+  {
+    "rj_number": "RJ24-428",
+    "job_description": "AAA PAVING WINCHESTER 20-018",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-429",
+    "job_description": "MANHOLE RIVERSIDE GS24-32382",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-43",
+    "job_description": "GRIFFITH - LONG BEACH AIRPORT",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-430",
+    "job_description": "SULLY MILLER LAGUNA B 10288378",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-431",
+    "job_description": "SULLY MILLER EAST LA 10310800",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-432",
+    "job_description": "TRIPLE H CARLSBAD",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ24-433",
+    "job_description": "SE PIPELINE ANAHEIM",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-434",
+    "job_description": "RIVERSIDE CONS HIGHLAND",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-435",
+    "job_description": "ALL AMERICAN LAKE FOREST 35824",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-436",
+    "job_description": "RJ NOBLE NEWPORT BEACH 91921",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-437",
+    "job_description": "MZ PAVING AGOURA HILLS",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ24-438",
+    "job_description": "MZ COMM CLAREMONT",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-439",
+    "job_description": "T MAUS VICTORVILLE KHOLS",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-44",
+    "job_description": "MANHOLE GLENDALE V-356",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-440",
+    "job_description": "HARDY HARPER FONTANA",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-441",
+    "job_description": "JACOBSSON ENG PALM DESERT 372",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-442",
+    "job_description": "MANHOLE BUENA PARK GS24-42387",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-443",
+    "job_description": "ONYX ONTARIO 24-043",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-444",
+    "job_description": "ALL AMERICAN ONTARIO 35100",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-445",
+    "job_description": "CITY SERVICES MURRIETA",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ24-446",
+    "job_description": "AAA PAVING TEMECULA 24-033",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-447",
+    "job_description": "MZ COMMUNICATION MISSION VIEJO",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-448",
+    "job_description": "CALMEX BARSTOW",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-449",
+    "job_description": "CALMEX CARLSBAD",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-45",
+    "job_description": "EBS CARSON 22108",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ24-450",
+    "job_description": "ALL AMERICAN FONTANA 36257",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-451",
+    "job_description": "AAA MORENO VALLEY 22-078",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-452",
+    "job_description": "GRANITE OXNARD",
+    "company_name": "GRANITE CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-453",
+    "job_description": "MK PAVING",
+    "company_name": "MK PAVING"
+  },
+  {
+    "rj_number": "RJ24-454",
+    "job_description": "PRIDE PAVING LONG BEACH",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-455",
+    "job_description": "ONYX FONTANA 24-087",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-456",
+    "job_description": "SULLY MILLER SANTA MONICA",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-457",
+    "job_description": "AAA PAVING MENIFEE 24-034",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-458",
+    "job_description": "SB COUNTY PHELAN BID NO. 6699",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-459",
+    "job_description": "MANHOLE GARDENGROVE 32389",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-46",
+    "job_description": "WESTERN - CITY OF HOPE 5399",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-460",
+    "job_description": "LEE & STIRES CIACHELLA 24076",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-461",
+    "job_description": "ONYX LA HABRA 24-085",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-462",
+    "job_description": "DC HUB TEHACHAPI",
+    "company_name": "DANNY C. HUBBS CONSTRUCTION, I"
+  },
+  {
+    "rj_number": "RJ24-463",
+    "job_description": "PRECISION LA 4995",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-464",
+    "job_description": "HAILEYS BLACKTOP SAN BERN",
+    "company_name": "Haleys Blacktop"
+  },
+  {
+    "rj_number": "RJ24-465",
+    "job_description": "EXCEL HUNTINGTON BEACH 5977",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-466",
+    "job_description": "ALL AMERICAN FONTANA 33699",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-468",
+    "job_description": "SULLY IRWINDALE 10260702",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-469",
+    "job_description": "ALL AMERICAN AZUSA 36227",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-47",
+    "job_description": "WESTERN PAVING ARCADIA",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-470",
+    "job_description": "JACOBSSON PALM SPRINGS 3331",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-471",
+    "job_description": "SB COUNTY HIGHLAND BID NO.6696",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-472",
+    "job_description": "MATICH REDLANDS 24-035",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-473",
+    "job_description": "SULLY IRWINDALE 10331665",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-474",
+    "job_description": "MZ COMMUNICATION FONTANA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-475",
+    "job_description": "IE GENERAL YORBA LINDA",
+    "company_name": "IE GENERAL ENGINEERING, INC."
+  },
+  {
+    "rj_number": "RJ24-476",
+    "job_description": "MANHOLE IMPERIAL COUNTY",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-477",
+    "job_description": "CALMEX ONTARIO 24-1154",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-478",
+    "job_description": "ALL AMERICAN MURRIETA 362133",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-479",
+    "job_description": "ALL AMERICAN MO VAL 36281",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-48",
+    "job_description": "AAA PAVING WINCEHSTER 20-018",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-480",
+    "job_description": "PARKER ARMAN CANYON COUNTRY",
+    "company_name": "JP ARMAN ARMAN CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-481",
+    "job_description": "AAA PAVING WINCHESTER 21-098",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-482",
+    "job_description": "JACOBSSON ENG RANCHO MIRAGE",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-483",
+    "job_description": "AAA PAVING MOVALLEY  22-075",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-484",
+    "job_description": "JACOBSSON ENG INDIO 374",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ24-485",
+    "job_description": "PETERSON & GRADING EL MONTE",
+    "company_name": "Peterson Grading & Paving, Inc"
+  },
+  {
+    "rj_number": "RJ24-486",
+    "job_description": "CALMEX LONG BEACH",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ24-487",
+    "job_description": "ALL AMERICAN RIVERSIDE 36103",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ24-488",
+    "job_description": "LEE & STIRES INDIO 22005",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-489",
+    "job_description": "NPG PALM SPRINGS 24260",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ24-49",
+    "job_description": "WESTERN PAVING TORRANCE 5525",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-490",
+    "job_description": "CITY SERVICES SAN DIEGO BASE",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ24-491",
+    "job_description": "COMPETITIVE COMPTON",
+    "company_name": "COMPETITIVE ASPHALT COATINGS"
+  },
+  {
+    "rj_number": "RJ24-492",
+    "job_description": "ONYX BURBANK 24-067",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-493",
+    "job_description": "SB COUNTY BARSTOW BID NO. 6710",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-495",
+    "job_description": "SB COUNTY YUCAIPA  6701",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-496",
+    "job_description": "ARIJET COMMUNICATION TUSTIN",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ24-497",
+    "job_description": "CUNNINGHAM DAVID BANNING",
+    "company_name": "CUNNINGHAM DAVIS CORP"
+  },
+  {
+    "rj_number": "RJ24-498",
+    "job_description": "SB COUNTY YERMO BID NO.6710",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-499",
+    "job_description": "MK PAVING BEVERLY HILLS R1020",
+    "company_name": "MK PAVING"
+  },
+  {
+    "rj_number": "RJ24-50",
+    "job_description": "LEE & STIRES SANTA ANA 23061",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-500",
+    "job_description": "LEE & STIRES INDIO 24018",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-501",
+    "job_description": "CM PAVING SANTEE",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ24-502",
+    "job_description": "LEE & STIRES YUCAIPA 24038",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-503",
+    "job_description": "CITY SERVICES CORONA",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ24-504",
+    "job_description": "HARDY HARPER BELLFLOWER",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-505",
+    "job_description": "NARROW PATHWAY WINCHESTER",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ24-506",
+    "job_description": "MATICH REDLANDS 24-034",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-507",
+    "job_description": "PRIDE PAVING BUENA PARK",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-508",
+    "job_description": "MZ COMMUNICATION SANTA CLARITA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-509",
+    "job_description": "SB COUNTY WRIGHTWOOD",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-51",
+    "job_description": "JIMCO - APPLE VALLEY",
+    "company_name": "JIMCO CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-510",
+    "job_description": "ONYX EAST HEMET 24-057",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-511",
+    "job_description": "PRIDE PAVING LA PALMA",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-512",
+    "job_description": "VENTURA PAVING ONTARIO",
+    "company_name": "VENTURA PAVING"
+  },
+  {
+    "rj_number": "RJ24-513",
+    "job_description": "ONYX RIVERSIDE 24-099",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-514",
+    "job_description": "PRIDE PAVING SEAL BEACH",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-515",
+    "job_description": "HAZARD CONST SD 23012",
+    "company_name": "HAZARD CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-516",
+    "job_description": "T MAUS ROMOLAND",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-517",
+    "job_description": "RIVERSIDE CONST ONTARIO",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ24-518",
+    "job_description": "GPM GRANADA HILLS",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ24-519",
+    "job_description": "NATIONAL PAVING SAN DIEGO",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ24-52",
+    "job_description": "SULLY MILLER ALHAMBRA COSTCO",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-520",
+    "job_description": "NPG RANCHO MIRAGE 24362",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ24-521",
+    "job_description": "GPM PACIFIC PALASADES",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ24-522",
+    "job_description": "GRIFFITH PERRIS 11791.11",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-523",
+    "job_description": "LEE & STIRES YUCAIPA",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-524",
+    "job_description": "GPM BEVERLY HILLS",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ24-525",
+    "job_description": "MZ COMMUNICATION SAN BERN",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ24-526",
+    "job_description": "ASPHALT SEALERS EL MONTE",
+    "company_name": "ASPHALT SEALERS"
+  },
+  {
+    "rj_number": "RJ24-527",
+    "job_description": "AAA PAVING UPLAND 24-023",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-528",
+    "job_description": "LEE & STIRES PALM DESERT 22173",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-529",
+    "job_description": "GRIFFITH NORCO 10794.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-53",
+    "job_description": "ONYX ONTARIO 24-004",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-530",
+    "job_description": "ONYX POMONA 7008",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-531",
+    "job_description": "AAA PAVING FONTANA 24-043",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-532",
+    "job_description": "NARROW PATH ENG  WINCHESTER",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ24-533",
+    "job_description": "PRECISION NORTHRIDGE",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-534",
+    "job_description": "NATIONAL PAV DEL MAR 2924267",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ24-535",
+    "job_description": "SB COUNTY E.HIGHLAND BID.6714",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-536",
+    "job_description": "HARDY SANTA MONICA  24176",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-537",
+    "job_description": "HARDY HARPER CARSON 24380",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-538",
+    "job_description": "HARDY JURUPA VALLEY 24262",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ24-539",
+    "job_description": "WESTERN PAVING IRVINE 5601",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-54",
+    "job_description": "EXCEL IRVINE 5926",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-540",
+    "job_description": "PRIDE RIVERSIDE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ24-541",
+    "job_description": "ONYX LAKE FOREST 24-079",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-542",
+    "job_description": "PRECISION NORWALK 6115",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-543",
+    "job_description": "GRIFFITH INGLEWOOD 10864.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-544",
+    "job_description": "GRIFFITH DIAMOND BAR 10868.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-545",
+    "job_description": "COMMERCIAL PAVING MALIBU",
+    "company_name": "COMMERCIAL PAVING"
+  },
+  {
+    "rj_number": "RJ24-546",
+    "job_description": "POST BROS SANTA MONICA",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-547",
+    "job_description": "HAZARD CONS SD  23012-G",
+    "company_name": "HAZARD CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ24-55",
+    "job_description": "WESTERN PAVING GLENDORA 5407",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-56",
+    "job_description": "WESTERN PAVING WILDOMAR 5479",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-57",
+    "job_description": "GARNEY CON. 6699 / DIR 503084",
+    "company_name": "Garney Construction, Inc."
+  },
+  {
+    "rj_number": "RJ24-58",
+    "job_description": "AAA PAVING LA QUINTA 23-025",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-59",
+    "job_description": "REGAN PAVING PALM DESERT",
+    "company_name": "REGAN PAVING"
+  },
+  {
+    "rj_number": "RJ24-60",
+    "job_description": "TRUCK HAUL INDIO/DEVORE",
+    "company_name": "WARREN DUNCAN CONTRACTING"
+  },
+  {
+    "rj_number": "RJ24-61",
+    "job_description": "PRECISION SANTA FESPRINGS 6016",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-62",
+    "job_description": "ONYX WESTMINISTER 23-103",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-63",
+    "job_description": "HILLCREST - HUNTINGTON BEACH",
+    "company_name": "Hillcrest Contracting"
+  },
+  {
+    "rj_number": "RJ24-64",
+    "job_description": "EXCEL - LA 5761",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-65",
+    "job_description": "SB COUNTY K RAIL RMVL OAK GLEN",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ24-66",
+    "job_description": "CHP PALM SPRINGS 23-1101",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ24-67",
+    "job_description": "SULLY HESPERIA 10257589",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-68",
+    "job_description": "SULLY MILLER - LA 10247885",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-70",
+    "job_description": "MATICH - SAN BERN 23-041",
+    "company_name": "MATICH CORPORATION"
+  },
+  {
+    "rj_number": "RJ24-71",
+    "job_description": "PRECISIONSANTA FE SPRINGS 6062",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-72",
+    "job_description": "DELTA SAN JUAN CAPISTRANO",
+    "company_name": "Delta Group, Inc."
+  },
+  {
+    "rj_number": "RJ24-73",
+    "job_description": "RJ NOBLE CARSON 91902",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-74",
+    "job_description": "RJ NOBLE CARSON 91895",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-75",
+    "job_description": "ROMERO JURUPA VALLEY 20520",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-76",
+    "job_description": "LEE & STIRES EASTVALE 20098",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-77",
+    "job_description": "ONYX UPLAND 23-124",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-78",
+    "job_description": "RJ NOBLE CARSON 91903",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-79",
+    "job_description": "SULLY MILLER ESSEX 10289428",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ24-80",
+    "job_description": "WESTERN PAVING LA 55017",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-81",
+    "job_description": "WESTERN PAVING SUN VALLEY 5466",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ24-82",
+    "job_description": "FLOREZ IMPERIAL BEACH 2310",
+    "company_name": "FLOREZ PAVING"
+  },
+  {
+    "rj_number": "RJ24-83",
+    "job_description": "GRIFFITH SANTA ANA",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-84",
+    "job_description": "RJ NOBLE PLACENTIA 91899",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-85",
+    "job_description": "T MAUS SAN JACINTO",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ24-86",
+    "job_description": "GRIFFITH LONG BEACH 10857.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-87",
+    "job_description": "CHP YORBA LINDA 24-0202",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ24-88",
+    "job_description": "LEE & STIRES ARTESIA",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ24-89",
+    "job_description": "EXCEL MONROVIA 5940",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ24-90",
+    "job_description": "GRIFFITH LA MESA 20018.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-91",
+    "job_description": "GRIFFITH SAN PEDRO 10783.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ24-92",
+    "job_description": "ONYX ROSEMEAD 23-133",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ24-93",
+    "job_description": "MANHOLE EL CENTRO",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ24-94",
+    "job_description": "AAA PAVING MENIFEE 20-007",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ24-95",
+    "job_description": "PRECISION VICTORVILLE",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-96",
+    "job_description": "RJ NOBLE FULLERTON 9485",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ24-97",
+    "job_description": "PRECISION LAKE ELSINORE",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ24-98",
+    "job_description": "ROMERO SANTEE 21521",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ24-99",
+    "job_description": "NATIONAL ENCINITAS 2924059",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ25-01",
+    "job_description": "GPM CAMARILLO 2137GM",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ25-0175",
+    "job_description": "ARIJET COMM TRUSTIN",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-02",
+    "job_description": "PRECISION INGLEWOOD 6017",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-03",
+    "job_description": "ONYX JURUPA VALLEY 24-090",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-04",
+    "job_description": "AAA PAVING FONTANA 24-047",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-05",
+    "job_description": "RIVERSIDE CON ONTARIO RANCH RD",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-06",
+    "job_description": "UNIVERSAL VALLEY PARKWAY",
+    "company_name": "UNIVERSAL CONSTRUCTION & ENG."
+  },
+  {
+    "rj_number": "RJ25-07",
+    "job_description": "FERREIRA TUSTIN 5543",
+    "company_name": "Ferreira Construction"
+  },
+  {
+    "rj_number": "RJ25-08",
+    "job_description": "ONYX LA PUENTA 24-119",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-09",
+    "job_description": "ONYX PLACENTIA 24-117",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-10",
+    "job_description": "HARDY HARPER RIVERSIDE 24396",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-100",
+    "job_description": "APACHE CORONA 0024",
+    "company_name": "APACHE PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-101",
+    "job_description": "ONYX CALIMESA 24-103",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-102",
+    "job_description": "SULLY MILLER PHELAN 10336628",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-103",
+    "job_description": "ROMERO SAN DIEGO 24537.14",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-104",
+    "job_description": "AAA PAVING RIALTO 23-004",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-105",
+    "job_description": "AAA PAVING CORONA 25-009",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-106",
+    "job_description": "CITY SERVICES HB 16400FIA",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ25-107",
+    "job_description": "AAA PAV LAKE ELSINORE 25-013",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-108",
+    "job_description": "MANHOLE IMPERIAL GS25-32405",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-109",
+    "job_description": "ADELANTO BID CE001",
+    "company_name": "CITY OF ADELANTO"
+  },
+  {
+    "rj_number": "RJ25-11",
+    "job_description": "GRIFFITH VAN NUYS 10888.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-110",
+    "job_description": "GRIFFITH LAX 10853.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-111",
+    "job_description": "PRIDE CYPRESS",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-112",
+    "job_description": "HELENDALE BID NO 6780",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-113",
+    "job_description": "SB COUNTY BARSTOW BID NO 6781",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-114",
+    "job_description": "ROMERO SAN DIEGO 24537.16",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-115",
+    "job_description": "PRIDE PAVING JURUPA VALLEY",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-116",
+    "job_description": "T MAUS INDIO",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-117",
+    "job_description": "AAA PAVING HIGHLAND 22-052",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-118",
+    "job_description": "VICK CONS PERRIS",
+    "company_name": "VICK CONSTRUCTION COMPANY"
+  },
+  {
+    "rj_number": "RJ25-119",
+    "job_description": "ALL AMERICAN ANAHEIM 36537",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-12",
+    "job_description": "ONYX SAN MARNO 24-065",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-120",
+    "job_description": "SB COUNTY CHINO",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-121",
+    "job_description": "TRIPLE V TRACTOR",
+    "company_name": "TRIPLE V TRACTOR, INC"
+  },
+  {
+    "rj_number": "RJ25-122",
+    "job_description": "ALL AMERICAN PLACENTIA 36800",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-123",
+    "job_description": "CALMEX RTE 261 ORANGE",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-124",
+    "job_description": "DPE YUMA AZ",
+    "company_name": "DPE CONSTRUCTION, INC."
+  },
+  {
+    "rj_number": "RJ25-125",
+    "job_description": "T MAUS MORENO VALLEY",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-126",
+    "job_description": "T MAUS ARTESIA",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-127",
+    "job_description": "GRIFFITH 805 FRWY",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-128",
+    "job_description": "ALL AMERICAN PERRIS J# 36763",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-129",
+    "job_description": "ALL AMERICAN RIVERSIDE J#36483",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-13",
+    "job_description": "T MAUS SAN GABRIEL 2200 DENTON",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-130",
+    "job_description": "MSM ASPHALT YUMA AZ",
+    "company_name": "MSM ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-131",
+    "job_description": "ALL AMERICAN SEAL BEACH 36593",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-132",
+    "job_description": "RJ NOBLE MO VALLEY 91939",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-133",
+    "job_description": "GRIFFITH LONG BEACH 10894.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-134",
+    "job_description": "ONYX SAN BERN 24-108",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-135",
+    "job_description": "ONYX VENTURA",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-136",
+    "job_description": "ALL AMERICAN TORRANCE 36036",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-137",
+    "job_description": "LEE & STIRES PALM DESERT 22173",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-138",
+    "job_description": "GRIFFITH LAGUNA BEACH 10848.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-139",
+    "job_description": "ALL AMERICAN EASTVALE 36208",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-14",
+    "job_description": "GRIFFITH LOS ANGELES 10863",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-140",
+    "job_description": "SULLY SAN GABRIEL 10330991",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-141",
+    "job_description": "MANHOLE IMPERIAL GS25-32407",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-142",
+    "job_description": "4D BAY CITIES WI,MINGTON",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-143",
+    "job_description": "VAN ENG WILDOMAR",
+    "company_name": "VAN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-144",
+    "job_description": "ONYX ANAHEIM 23-139",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-145",
+    "job_description": "TRIPLE H SAN DIEGO 3290",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ25-146",
+    "job_description": "4D GOLDEN STATE PAVING",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-147",
+    "job_description": "4D GPM / ETC RIVERSIDE CBU",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-148",
+    "job_description": "EXCEL FONTANA 6044",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-149",
+    "job_description": "ARIJET COM. ANAHEIM 2515C-271",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-15",
+    "job_description": "AAA PAVING CAOCHELLA 24-020",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-150",
+    "job_description": "ALL AMERICAN BANNING",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-151",
+    "job_description": "ALL AMERICAN MUSCOY 36549",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-152",
+    "job_description": "RJ NOBLE ANAHEIM 91940",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-153",
+    "job_description": "RJ NOBLE RIVERSIDE 91944",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-154",
+    "job_description": "RJ NOBLE ANAHEIM 91934",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-155",
+    "job_description": "GACEPOINT CHURCH YUCAPA",
+    "company_name": "GRACE FELLOWSHIP CHURCH"
+  },
+  {
+    "rj_number": "RJ25-156",
+    "job_description": "MAXWELL N LA COUNTY-PALMDALE",
+    "company_name": "Maxwell Products"
+  },
+  {
+    "rj_number": "RJ25-157",
+    "job_description": "WESTERN PAVING CHULA VISTA5635",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-158",
+    "job_description": "WESTERN PAVING IRVINE 15161",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-159",
+    "job_description": "ALL AMERICAN HERMOSA 36807",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-16",
+    "job_description": "HARDY HARPER INDIAN WELLS24341",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-160",
+    "job_description": "4D REDLANDS",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-161",
+    "job_description": "ALL AMERICAN ONTARIO 34902",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-162",
+    "job_description": "SB COUNTY BIG BEAR 6789/151050",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-163",
+    "job_description": "ONYX WILDOMAR",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-164",
+    "job_description": "ALL AMERICAN ONTARIO 36827",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-165",
+    "job_description": "LEE & STIRES AZUSA 25043",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-166",
+    "job_description": "ROMERO ESCONDIDO 21529",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-167",
+    "job_description": "MANHOLE COLTON GS25-32402",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-168",
+    "job_description": "LEE & STIRES MENIFEE",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-169",
+    "job_description": "4D TUSTIN 25-059",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-17",
+    "job_description": "ONYX IRVINE 24-032",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-170",
+    "job_description": "MZ COMMUNICATION NORTHRIDGE",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-171",
+    "job_description": "ALL AMERICAN LAGUNA NIG. 36703",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-172",
+    "job_description": "ALL AMERICAN CARSON 36834",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-173",
+    "job_description": "ALL AMERICAN LAGUNA HILLS33023",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-174",
+    "job_description": "ALL AMERICAN ALHAMBRA 36514",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-175",
+    "job_description": "ARIJET COMM TUSTIN",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-176",
+    "job_description": "ALL AMERICAN SANTA ANA 36282",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-177",
+    "job_description": "GRIFFITH BURBANK AIRPORT",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-178",
+    "job_description": "LM70 INDIO",
+    "company_name": "LM-70 COMPANY"
+  },
+  {
+    "rj_number": "RJ25-179",
+    "job_description": "PROACTIVE SITE SERV WILDOMAR",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-18",
+    "job_description": "BARAJAS PAVING IRVINE",
+    "company_name": "BARAJAS PAVING"
+  },
+  {
+    "rj_number": "RJ25-180",
+    "job_description": "ROMERO SAN DIEGO 24537.12",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-181",
+    "job_description": "RJ NOBLE SANTA ANA 91952",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-182",
+    "job_description": "H&H GENERAL SANTA ANA 91952",
+    "company_name": "H & H General Contractors"
+  },
+  {
+    "rj_number": "RJ25-183",
+    "job_description": "MAXWELL S LA COUNTY - WHITTIER",
+    "company_name": "Maxwell Products"
+  },
+  {
+    "rj_number": "RJ25-184",
+    "job_description": "MANHOLE RANCHO MIRAGE",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-185",
+    "job_description": "SEPIPELINE CHATSWORTH PAV43812",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-186",
+    "job_description": "WESTERN PAVING BURBANK 5565",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-187",
+    "job_description": "CALMEX SAN DIEGO (78/15)",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-188",
+    "job_description": "GRIFFITH SAN DIEGO AIRPORT",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-189",
+    "job_description": "CUNNINGHAM ROWLAND HEIGHTS",
+    "company_name": "CUNNINGHAM DAVIS CORP"
+  },
+  {
+    "rj_number": "RJ25-19",
+    "job_description": "MARTIN CONST WESTLAKE VILLAGE",
+    "company_name": "MARTIN CONSTRUCTION, INC."
+  },
+  {
+    "rj_number": "RJ25-190",
+    "job_description": "T MAUS ADELANTO",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-191",
+    "job_description": "ONYX COSTA MESA",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-192",
+    "job_description": "CM PAVING LA",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ25-193",
+    "job_description": "PRECISION TEMPLE CITY",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-194",
+    "job_description": "MANHOLE POMONA GS25-32397",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-195",
+    "job_description": "ALL AMERICAN ARCADIA MONROVIA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-196",
+    "job_description": "PRECISION RIALTO",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-197",
+    "job_description": "LEE & STIRES MO VAL 23147",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-198",
+    "job_description": "MANHOLE PALM DESERT MS25-14339",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-199",
+    "job_description": "PRECISION OXNARD",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-20",
+    "job_description": "GRIFFITH SD 20020",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-200",
+    "job_description": "ELITE EARTHWORKS BANNING",
+    "company_name": "ELITE EARTHWORKS & ENG."
+  },
+  {
+    "rj_number": "RJ25-201",
+    "job_description": "PRECISION SAN DIEGO ELEMTNARY",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-202",
+    "job_description": "4D SAN BERNARDINO",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-203",
+    "job_description": "ALL AMERICAN PASADENA 36572",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-204",
+    "job_description": "UNIVERSAL CONSTR. MECCA",
+    "company_name": "UNIVERSAL CONSTRUCTION & ENG."
+  },
+  {
+    "rj_number": "RJ25-205",
+    "job_description": "4D PLACENTIA",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-206",
+    "job_description": "4D LAKE ARROWHEAD",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-207",
+    "job_description": "SB COUNTY HELENDALE BID#6803",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-208",
+    "job_description": "SULLY JOHNWAYAIRPORT 10347618",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-209",
+    "job_description": "NPG ROSEMEAD",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-21",
+    "job_description": "T MAUS WILDOMAR",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-210",
+    "job_description": "B-81 YUCAIPA - SUJNLIGHT DR",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ25-211",
+    "job_description": "XTREME PAVING WESTMINISTER",
+    "company_name": "XTREME PAVING & GRADING"
+  },
+  {
+    "rj_number": "RJ25-212",
+    "job_description": "CHINO HILLS BOYS REPUBLIC",
+    "company_name": "BOYS REPUBLIC"
+  },
+  {
+    "rj_number": "RJ25-213",
+    "job_description": "ALL AMERICAN SAN JUAN CAPISTRA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-214",
+    "job_description": "GRIFFITH AZUSA",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-215",
+    "job_description": "MZ COMMUNICATION EL MONTE",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-216",
+    "job_description": "LEE & STIRES LA QUINTA 24163",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-217",
+    "job_description": "PRECISION AND GRADNIG FONTANA",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-218",
+    "job_description": "sully miller ontario 1033648",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-219",
+    "job_description": "Bellflower Street Rehabilitati",
+    "company_name": "CITY OF ADELANTO"
+  },
+  {
+    "rj_number": "RJ25-22",
+    "job_description": "NPG ESCONDIDO 24247",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-220",
+    "job_description": "GRIFFITH BURBANK ARPRT 10874.1",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-221",
+    "job_description": "ALL AMERICAN PERRIS 36614",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-222",
+    "job_description": "SULLY JOHNSON VALLEY 10349257",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-223",
+    "job_description": "FERRIERA SANTA CLARITA 5729",
+    "company_name": "Ferreira Construction"
+  },
+  {
+    "rj_number": "RJ25-224",
+    "job_description": "PRECISION WESTLAKE VILLAGE",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-225",
+    "job_description": "MANHOLE POMONA GS25-32398",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-226",
+    "job_description": "ONYX PASADENA 25-043",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-227",
+    "job_description": "4D GARDEN GROVE 7653",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-228",
+    "job_description": "PRECISION  MONTCLAIR",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-229",
+    "job_description": "HARDY HARPER SAN BERN 24498",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-23",
+    "job_description": "PRECISION SAN DEIGO",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-230",
+    "job_description": "SULLY MILLER LA 10345302",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-231",
+    "job_description": "FERRIERA SAN BERNARDINO FCC 57",
+    "company_name": "Ferreira Construction"
+  },
+  {
+    "rj_number": "RJ25-232",
+    "job_description": "PRECISION RIALTO HS",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-233",
+    "job_description": "MANHOLE NORWALK GS25-42404",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-234",
+    "job_description": "SB COUNTY - JENKS RD BID 6814",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-235",
+    "job_description": "GRIFFITH SD HWY 52 20023.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-236",
+    "job_description": "ROMERO SAN DIEGO 24537.15",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-237",
+    "job_description": "RJ NOBLE SEAL BEACH",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-238",
+    "job_description": "YUCAIPA",
+    "company_name": "City of Yucaipa"
+  },
+  {
+    "rj_number": "RJ25-239",
+    "job_description": "RJ NOBLE ANAHEIM",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-24",
+    "job_description": "4D MILLING BARSTOW",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-240",
+    "job_description": "GRIFFITH CAMP PENALTON",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-241",
+    "job_description": "ROMERO MORENO VALLEY 23526",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-242",
+    "job_description": "ROMERO ESCONDIDO 23538",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-243",
+    "job_description": "ADVANCED ASPHALT AZUSA",
+    "company_name": "ADVANCED CONCRETE TECHNOLOGIES"
+  },
+  {
+    "rj_number": "RJ25-244",
+    "job_description": "PRECISION LANCASTER CANCELLED",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-245",
+    "job_description": "SULLY MILLER LANDERS 10339257",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-246",
+    "job_description": "MZ COMMUNICATION ANAHEIM",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-247",
+    "job_description": "ALL AMERICAN RIVERSIDE 36950",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-248",
+    "job_description": "MARTIN CO PALMDALE",
+    "company_name": "MARTIN CONSTRUCTION, INC."
+  },
+  {
+    "rj_number": "RJ25-249",
+    "job_description": "CM PAVING LAKEWOOD",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ25-25",
+    "job_description": "HARDY HARPER BELLGARDEN 24346",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-250",
+    "job_description": "PRECISION COLD PLANING HIGHLAN",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-251",
+    "job_description": "CALMEX ORANGE 25-1199",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-252",
+    "job_description": "LEE & STIRES CHINO HILLS 25047",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-253",
+    "job_description": "CITY SERVICES LOMITA",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ25-254",
+    "job_description": "ALL AMERICAN TUSTIN 36832",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-255",
+    "job_description": "ALL AMERICAN TUSTIN 36832",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-256",
+    "job_description": "ALL AMERICAN GLENDORA 34447",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-257",
+    "job_description": "ALL AMERICAN COSTA MESA 35382",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-258",
+    "job_description": "CM PAVING IRVINE",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ25-259",
+    "job_description": "HEMET-JOSH ADAMS",
+    "company_name": "JOSH ADAMS"
+  },
+  {
+    "rj_number": "RJ25-26",
+    "job_description": "BORDEN YUCAIPA OAK HILLS",
+    "company_name": "BORDEN EXCAVATING INC."
+  },
+  {
+    "rj_number": "RJ25-260",
+    "job_description": "ALL AMER. GLENDALE 36657",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-261",
+    "job_description": "ALL AMERI. COSTA MESA 36132",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-262",
+    "job_description": "RJ NOBLE LONG BEACH 91904",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-263",
+    "job_description": "BENS ASPHALT-RIALTO 11384JR-2",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-264",
+    "job_description": "ALL AMER. MISSIONVIEJO 36615",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-265",
+    "job_description": "PRECISION COLD ORANGE 11113PP",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-266",
+    "job_description": "BENS-PRECISION CYPRESS 11404JZ",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-267",
+    "job_description": "PRECISION COLD-IRVINE",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-268",
+    "job_description": "SEQUEL CONST - CHINO HILLS 634",
+    "company_name": "SEQUEL CONTRACTORS"
+  },
+  {
+    "rj_number": "RJ25-269",
+    "job_description": "4D NORTHRIDGE CALIBER PAVING",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-27",
+    "job_description": "4D IRVINE 4DM 25-17",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-270",
+    "job_description": "ASPHALT PROFESSIONALS FONTANA",
+    "company_name": "ASPHALT PROFESSIONALS, INC."
+  },
+  {
+    "rj_number": "RJ25-271",
+    "job_description": "PRECISION COLD THOUSAND OAKS",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-272",
+    "job_description": "PRECISION COLD SPRINGS LAKE",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-273",
+    "job_description": "ONYX MAYWOOD 25-007",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-274",
+    "job_description": "JACOBSSON TEJON 387",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-275",
+    "job_description": "LEE & STIRES CATHEDRAL 23157",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-276",
+    "job_description": "MARK CO HACIENDA HEIGHTS 4688",
+    "company_name": "MARK COMPANY"
+  },
+  {
+    "rj_number": "RJ25-277",
+    "job_description": "SB COUNTY JENKS LAKE BID.6714",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-278",
+    "job_description": "MANHOLE COLTON GS25-42414",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-279",
+    "job_description": "ONYX SIMI VALLEY 25-048",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-28",
+    "job_description": "GRIFFITH PALMDALE 10871.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-280",
+    "job_description": "ONYX PALMDALE",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-281",
+    "job_description": "LEE & STIRES SAN BERN 24053",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-282",
+    "job_description": "GRIFFITH OCEANSIDE 20024.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-283",
+    "job_description": "ALL AMERICAN ANAHEIM 36536",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-284",
+    "job_description": "PRECISION PIPELINE EL CAJON",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-285",
+    "job_description": "PRIDE PAVING SANTA BARBARA",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-286",
+    "job_description": "ONYX RIVERSIDE 24-110",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-287",
+    "job_description": "ALL AMERICAN LAGUNA WOODS 359",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-288",
+    "job_description": "ARIJET COMMUN UPLAND PO#2515S",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-289",
+    "job_description": "ALL AMERICAN NORWALK 36852",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-29",
+    "job_description": "MZ COMMUNICATION CORONA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-290",
+    "job_description": "SB COUNTY TIPPACANOE BID.6824",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-291",
+    "job_description": "EBS RANCHO CUCAMONGA 22222",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-292",
+    "job_description": "SE PIPELINE EL MONTE - YARD",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-293",
+    "job_description": "ALL AMERICAN WOODCREST 36830",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-294",
+    "job_description": "PRECISION COLD YORBA LINDA",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-295",
+    "job_description": "MANHOLE POMONA GS25-32416",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-296",
+    "job_description": "ALL AMERICAN BREA 36699",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-297",
+    "job_description": "ALL AMERICAN MISSION VIEJO",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-298",
+    "job_description": "4D BAY CITIES - GARDENA",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-299",
+    "job_description": "ARIJET COMMUNICATION ANAHEIM",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-30",
+    "job_description": "RIVERSIDE CONST RANCHO MIRAGE",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-300",
+    "job_description": "BENS ASPHALT FONTANA",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-301",
+    "job_description": "4D (TRIPLE H) EL SEGUNDO",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-302",
+    "job_description": "EBS LONG BEACH 25303",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-303",
+    "job_description": "GRIFFITH BURBANK APORT 10895.1",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-304",
+    "job_description": "NPG RANCHO MIRAGE 25220",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-305",
+    "job_description": "GRIFFITH LA 110785.10 LAVC",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-306",
+    "job_description": "APACHE FONTANA",
+    "company_name": "APACHE PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-307",
+    "job_description": "ALL AMERICNA CANCELHEMET 36892",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-308",
+    "job_description": "ALL AMERICAN IRVINE JOB# 36732",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-309",
+    "job_description": "ADELANTO PERCOLATION  POND",
+    "company_name": "CITY OF ADELANTO"
+  },
+  {
+    "rj_number": "RJ25-31",
+    "job_description": "AAA PAVING PALM DESERT 25-002",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-310",
+    "job_description": "ARIJET COMMUN ORANGE PO# 2515-",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-311",
+    "job_description": "LEE & STIRES MO VAL 24048",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-312",
+    "job_description": "hardy harper barstow 24517",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-313",
+    "job_description": "ALL AMERICAN IRVINE 34033",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-314",
+    "job_description": "ALLIED PAVING MO VAL",
+    "company_name": "ALLIED PAVING  CO."
+  },
+  {
+    "rj_number": "RJ25-315",
+    "job_description": "4D CALIBER PAVING COTO DE CAZA",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-317",
+    "job_description": "GRIFFITH LAX 10841.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-318",
+    "job_description": "PRECISION PIPE SD 6157",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-319",
+    "job_description": "PRECISION PIPE PALM DESERT6219",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-32",
+    "job_description": "ONYX SAN FERNANDO 24-064",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-320",
+    "job_description": "ALL AMERICAN INGLEWOOD 36199",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-321",
+    "job_description": "GT GENERAL RANCHO CUCAMONGA",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ25-322",
+    "job_description": "FELLOWSHIP CHURCH BEAUMONT",
+    "company_name": "FELLOWSHIP CHURCH"
+  },
+  {
+    "rj_number": "RJ25-323",
+    "job_description": "ARIJET COMMUNICATION ANAHEIM",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-324",
+    "job_description": "COOLEY CONSTRUCTION",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-325",
+    "job_description": "MANHOLE PALMDALE",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-326",
+    "job_description": "4D CULVER CITY 25-107",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-327",
+    "job_description": "WESTERN PAV BURBANK 5565",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-328",
+    "job_description": "WESTERN PAV MARTINE WAY 5700",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-329",
+    "job_description": "4D THOUSAND OAKS PO 10783",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-33",
+    "job_description": "CONCEPT PAVING ANAHEIM 25-012",
+    "company_name": "CONCEPT PAVING SOLUTIONS"
+  },
+  {
+    "rj_number": "RJ25-330",
+    "job_description": "NPG LAKE ELSINORE 25003L",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-331",
+    "job_description": "ADVANCED ASPHALT FONTANA",
+    "company_name": "ADVANCED ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-332",
+    "job_description": "QUALITY GRADING & PAVING FNTN",
+    "company_name": "Quality Grading & Paving Inc."
+  },
+  {
+    "rj_number": "RJ25-333",
+    "job_description": "LEE & STIRES TEMECULA 22188",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-334",
+    "job_description": "GRIFFITH MUGU NAVAL BASE 10810",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-336",
+    "job_description": "MDB GENERAL ENG. INC RIALTO",
+    "company_name": "MDB GENERAL ENG., INC."
+  },
+  {
+    "rj_number": "RJ25-337",
+    "job_description": "LEE & STIRES BANNING 25062",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-338",
+    "job_description": "DPE YUMA AZ",
+    "company_name": "DPE CONSTRUCTION, INC."
+  },
+  {
+    "rj_number": "RJ25-339",
+    "job_description": "ALL AMERICAN SANTA MONICA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-34",
+    "job_description": "SE PIPELINE ANAHEIM PAV43397",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-340",
+    "job_description": "IE GENERAL BANNING",
+    "company_name": "IE GENERAL ENGINEERING, INC."
+  },
+  {
+    "rj_number": "RJ25-341",
+    "job_description": "ADVANCED ASPHALT SAN BERN",
+    "company_name": "ADVANCED CONCRETE TECHNOLOGIES"
+  },
+  {
+    "rj_number": "RJ25-342",
+    "job_description": "GRIFFITH PALA HWY 76 20022.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-343",
+    "job_description": "GONZALES TRACTOR-PALMDALE",
+    "company_name": "GONZALES TRACTOR SERVICE, INC."
+  },
+  {
+    "rj_number": "RJ25-344",
+    "job_description": "GONZALEZ TRACTOR SUPPLY CASTAI",
+    "company_name": "GONZALES TRACTOR SERVICE, INC."
+  },
+  {
+    "rj_number": "RJ25-345",
+    "job_description": "MANHOLE PALMDALE GS25-42410",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-346",
+    "job_description": "bens asphalt Anaheim 11465CP",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-347",
+    "job_description": "ONYX YORBA LINDA 25-036",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-348",
+    "job_description": "ALL AMERICAN WE HOLLYWOOD",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-349",
+    "job_description": "UNIVERSAL MECCA 2025-05",
+    "company_name": "UNIVERSAL CONSTRUCTION & ENG."
+  },
+  {
+    "rj_number": "RJ25-35",
+    "job_description": "TRIPLE H MENIFEE",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ25-350",
+    "job_description": "PRECISION COLD MISSION VIEJO",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-351",
+    "job_description": "PETERSON COSTA MESA",
+    "company_name": "Peterson Grading & Paving, Inc"
+  },
+  {
+    "rj_number": "RJ25-352",
+    "job_description": "4D SANTA FE SPRINGS (CALIBER)",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-353",
+    "job_description": "BENS - PRECISION FONTANA 11443",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-354",
+    "job_description": "GRIFFITH MONTEBELLO BNSF",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-355",
+    "job_description": "CALMEX - ALPINE",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-356",
+    "job_description": "PRECISION EASTVALE",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-357",
+    "job_description": "ALL AMERICAN  MONROVIA 36836",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-358",
+    "job_description": "SB COUNTY NEWBERRY 6831",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-359",
+    "job_description": "4D MILLING CALABASAS",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-36",
+    "job_description": "CHP SB86 - THERMAL 25-0202",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ25-360",
+    "job_description": "PROACTIVE - REDLANDS",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-361",
+    "job_description": "APACHE WHITTIER 0016",
+    "company_name": "APACHE PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-362",
+    "job_description": "BENS ASPHALT - INDUSTRY",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-363",
+    "job_description": "CITY SERVICE - CLAREMONT",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ25-364",
+    "job_description": "BENS ASPHALT - PRECISION TUSTI",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-365",
+    "job_description": "BANS ASPHALT ANAHEIM 11465CP",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-366",
+    "job_description": "BENS / PRECISION - LA 10846NB",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-367",
+    "job_description": "4D CALIBER PAVING LAKE ELSINOR",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-368",
+    "job_description": "ALL AMERICAN SAN JUAN CAP 3688",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-369",
+    "job_description": "MANHOLE NORWALK GS25-42411",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-37",
+    "job_description": "MZ COMMUNICATION SANTA ANA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-370",
+    "job_description": "RJ NOBLE FOUNTAIN VALLEY 91958",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-371",
+    "job_description": "BENS ASPAHLT - HEMET 11521JT",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-372",
+    "job_description": "NATIONAL PAVING - ANAHEIM 2824",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ25-373",
+    "job_description": "GRIFFITH CO COGSWELL",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-374",
+    "job_description": "SE PIPELINE PISMO BEACH",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ25-375",
+    "job_description": "COOLEY CONSTRUCTION FORT IRWI",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-376",
+    "job_description": "VANGAURD WILLDSHIRE 405 - LA",
+    "company_name": "VANGUARD CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ25-377",
+    "job_description": "NPG COLTON 25271",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-378",
+    "job_description": "ALL AMERICAN LONG BEACH 36675",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-379",
+    "job_description": "BENS ASPHALT - HACIENDA HE",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-38",
+    "job_description": "ONYX CARSON 24-069",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-380",
+    "job_description": "PRIDE PAVING REDLANDS",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-381",
+    "job_description": "ALL AMERICAN LAGUNA BEACH 3691",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-382",
+    "job_description": "CITY SERVICE PAVING BLYTHE",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ25-383",
+    "job_description": "4D HUNTINGTON BEACH 25-143",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-384",
+    "job_description": "MDB BEAUMONT",
+    "company_name": "MDB GENERAL ENG., INC."
+  },
+  {
+    "rj_number": "RJ25-385",
+    "job_description": "JACOBSSON ENG MAMMOTH",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-386",
+    "job_description": "NATIONAL PAVING PALM SPRINGS",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ25-387",
+    "job_description": "NATIONAL PAVING LAKE ELSINORE",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ25-388",
+    "job_description": "COOLEY CONSTRUCTION TRONA",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-389",
+    "job_description": "COOLEY CONSTRUCTION HESPERIA",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-39",
+    "job_description": "ELITE PAVING SANTA ANA",
+    "company_name": "ELITE PAVING"
+  },
+  {
+    "rj_number": "RJ25-390",
+    "job_description": "COOLEY CONSTRUCTION PALMDALE",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-391",
+    "job_description": "VANGUARD CULVER CITY",
+    "company_name": "VANGUARD CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ25-392",
+    "job_description": "ARIJET COMMUNICATION WHITTIER",
+    "company_name": "ARI JET COMMUNICATIONS"
+  },
+  {
+    "rj_number": "RJ25-393",
+    "job_description": "B-81 YUCAIPA",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ25-394",
+    "job_description": "SULLY APPLE VALLEY 10338907",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-395",
+    "job_description": "GRIFFITH SAN DIEGO",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-396",
+    "job_description": "EXCEL IRVINE",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-397",
+    "job_description": "4D TORRANCE 4DM1-142",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-398",
+    "job_description": "ALL AMERICAN PERRIS 36748",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-399",
+    "job_description": "ALL AMERICAN PERRIS 36397",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-40",
+    "job_description": "PROACTVE SITE SERVICES UPLAND",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-400",
+    "job_description": "NPG CHINO 25215",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-401",
+    "job_description": "PRECISION NEWBURY PARK",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-402",
+    "job_description": "GRIFFITH PALMDALE 10906.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-403",
+    "job_description": "ALL AMERICAN GLENDALE 35978",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-404",
+    "job_description": "PROACTIVE SITE - RIVERSIDE",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-406",
+    "job_description": "4D SANTA FE SPRINGS",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-407",
+    "job_description": "BENS ASPHALT NEWPORT BEACH",
+    "company_name": "BEN'S ASPHALT, INC."
+  },
+  {
+    "rj_number": "RJ25-408",
+    "job_description": "ONYX FONTANA 25-064",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-409",
+    "job_description": "PRIDE PAVING SD",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-410",
+    "job_description": "PRIDE PAVING VICTORVILLE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-411",
+    "job_description": "ALL AMERIC MISSION VIEJO 36478",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-412",
+    "job_description": "PRECISION COLD BAKERS 11225PP",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-413",
+    "job_description": "EGS CONTRACTORS PALM DESERT",
+    "company_name": "EGS CONTRACTORS, INC."
+  },
+  {
+    "rj_number": "RJ25-414",
+    "job_description": "VAN ENGINEERING MENIFEE 2506",
+    "company_name": "VAN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-415",
+    "job_description": "ALL AMERICAN IRVINE 36943",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-416",
+    "job_description": "PRIDE PAVING MIRA LOMAS",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-417",
+    "job_description": "SEAL COATING MENIFEE",
+    "company_name": "SEALCO"
+  },
+  {
+    "rj_number": "RJ25-418",
+    "job_description": "PRECISION COLD PLANING CAMARIL",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ25-419",
+    "job_description": "BEAR VALLEY PAVING - BIG BEAR",
+    "company_name": "BEAR VALLEY PAVING"
+  },
+  {
+    "rj_number": "RJ25-42",
+    "job_description": "TRIPLE H ANAHEIM  - CANCELLED",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ25-420",
+    "job_description": "GRIFFITH SAN ONoFRE 20029.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-421",
+    "job_description": "NATIONAL WILDOMAR 2425068",
+    "company_name": "NATIONIAL PAVING"
+  },
+  {
+    "rj_number": "RJ25-422",
+    "job_description": "MANHOLE ONTARIO GS25-42418",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-423",
+    "job_description": "WESTERN PAVING PLACENTIA 5696",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-424",
+    "job_description": "ALL AMERICAN BELL GARDEN 37046",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-425",
+    "job_description": "SULLY MILLER BARSTOW 10354983",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-426",
+    "job_description": "PROACTIVE SITE SERVICES MATERI",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-427",
+    "job_description": "ALL AMERICAN MO VAL 36862",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-428",
+    "job_description": "ALL AMERICAN HEMET 36884",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-429",
+    "job_description": "ALL AMERICAN LONG BEACH 36944",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-43",
+    "job_description": "MANHOLE PLACENTIA",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-430",
+    "job_description": "ALLIED PAVING MORENO VALLEY",
+    "company_name": "ALLIED PAVING  CO."
+  },
+  {
+    "rj_number": "RJ25-431",
+    "job_description": "WESTERN PAVING ANAHEIM 5714",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-432",
+    "job_description": "WESTERN PAVING WILDOMAR",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-433",
+    "job_description": "FERREIRA HEMET 5788",
+    "company_name": "Ferreira Construction"
+  },
+  {
+    "rj_number": "RJ25-434",
+    "job_description": "COOLEY CONSTR VICTORVILLE",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-435",
+    "job_description": "COOLEY CONSTR RIVERSIDE",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-436",
+    "job_description": "PRIDE PAVING RIVERSIDE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-437",
+    "job_description": "RJ NOBLE GARDEN GROVE 91964",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-438",
+    "job_description": "WESTERN COMPTON 5567",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-439",
+    "job_description": "AAA PAVING ONTARIO 25-045",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-44",
+    "job_description": "IE GENERAL FONTANA",
+    "company_name": "IE GENERAL ENGINEERING, INC."
+  },
+  {
+    "rj_number": "RJ25-440",
+    "job_description": "BENS ASPHALT COLTON",
+    "company_name": "BEN'S ASPHALT, INC."
+  },
+  {
+    "rj_number": "RJ25-441",
+    "job_description": "COOLEY CONSTRUCTION LANCASTE",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-442",
+    "job_description": "MANHOLE BELL GS25-32422",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-443",
+    "job_description": "POST BROS FOUNTAIN VALLEY 1059",
+    "company_name": "POST BROS CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ25-444",
+    "job_description": "PRIDE PAVING COMPTON 3290",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-445",
+    "job_description": "NPG TEMECULA 25257",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-446",
+    "job_description": "AAA PAVING REDLANDS 25-019",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-447",
+    "job_description": "4D CITY OF INDUSTRY 25-172",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-448",
+    "job_description": "4D ANAHEIM HILLS 25-168",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-449",
+    "job_description": "JACOBSSON ENG  PALM DESERT 350",
+    "company_name": "JACOBSSON ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-45",
+    "job_description": "SB COUNTY HELENDALE BID.6759",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-450",
+    "job_description": "AMS PAVING INDIAN WELLS",
+    "company_name": "AMS PAVING, INC."
+  },
+  {
+    "rj_number": "RJ25-451",
+    "job_description": "GRIFFITH 29 PALMS 10907.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-452",
+    "job_description": "SULLY MILLER ONTARIO 10340208",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-453",
+    "job_description": "WESTERN PAVING IRVINE 5458",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-454",
+    "job_description": "JIMENEZ PAVING  - GARDENA",
+    "company_name": "JIMENEZ PAVING LLC"
+  },
+  {
+    "rj_number": "RJ25-455",
+    "job_description": "GRIFFITH LAX 10893.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-456",
+    "job_description": "ALL AMERICAN ONTARIO 37080",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-457",
+    "job_description": "ALL AMERICAN COTO DE CAZA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-458",
+    "job_description": "ADVANCE ASPHALT SAN JACINTO",
+    "company_name": "ADVANCED ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-459",
+    "job_description": "PRIDE PAVING HUNTINGTON BEACH",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-46",
+    "job_description": "HAVASU BID. 6762 - JOB#405600",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-460",
+    "job_description": "H & H GENERAL WILDOMAR",
+    "company_name": "H & H General Contractors"
+  },
+  {
+    "rj_number": "RJ25-461",
+    "job_description": "GRIFFITH Long Beach 10897.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-462",
+    "job_description": "AAA PAVING ONTARIO 24-072",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-463",
+    "job_description": "NPG LAKE ELSINORE 25003R",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ25-464",
+    "job_description": "AAA PAVING HESPERIA 24-048",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-465",
+    "job_description": "ALL AMERICAN EASTVALE 37138",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-466",
+    "job_description": "ALL AMERICA HERMOSA 36741 - CA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-467",
+    "job_description": "4D DOWNEY 4DM1 25-169",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-468",
+    "job_description": "ONYX LAGUNA BEACH 25-076",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-469",
+    "job_description": "CALMEX CHULA VISTA 24-1161",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-47",
+    "job_description": "GPM ERIC CASTRO  FONTANA",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ25-470",
+    "job_description": "ALL AMERICAN IRVINE 37105",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-471",
+    "job_description": "EXCEL SANTA MONICA",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-472",
+    "job_description": "SULLY VAN NUYS  10344391",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-473",
+    "job_description": "NARROWPATH WINCHESTER 111",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ25-474",
+    "job_description": "ALL AMERICAN INGLEWOOD 36503",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-475",
+    "job_description": "MANHOLE GARDEN GROVE GS25-324",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-476",
+    "job_description": "VAN ENG ESCONDIDO",
+    "company_name": "VAN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ25-477",
+    "job_description": "ALL AMERICAN SANTA ANA 36405",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-478",
+    "job_description": "ALL AMERICAN ONTARIO 36485",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-479",
+    "job_description": "ALL AMERICAN MO VAL 36783",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-48",
+    "job_description": "GUZMAN LONG BEACH",
+    "company_name": "GUZMAN PAVING"
+  },
+  {
+    "rj_number": "RJ25-480",
+    "job_description": "ONYX ORANGE 25-035",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-481",
+    "job_description": "4D ANAHEIM 4D M1 25-193",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-482",
+    "job_description": "ALLIED PAVING 4412",
+    "company_name": "ALLIED PAVING  CO."
+  },
+  {
+    "rj_number": "RJ25-483",
+    "job_description": "MZ COMMUNICATION HEMET",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-484",
+    "job_description": "ALFARO COMMUNICATION CULVER CI",
+    "company_name": "ALFARO COMMUNICATIONS CONST. I"
+  },
+  {
+    "rj_number": "RJ25-485",
+    "job_description": "ELITE EARTHWORKS MURRIETA",
+    "company_name": "ELITE EARTHWORKS & ENG."
+  },
+  {
+    "rj_number": "RJ25-486",
+    "job_description": "ALL AMERICAN POMONA 33386",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-487",
+    "job_description": "SULLY MILLER NEEDLES",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-488",
+    "job_description": "ALL AMERICAN SAN BERN 36519",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-489",
+    "job_description": "4D CARSON 4DM1 25-205",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-49",
+    "job_description": "ONYX VICTORVILLE 7006",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-490",
+    "job_description": "WESTERN PAVING PASADENA",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-491",
+    "job_description": "DT STELLAR BEAUMONT",
+    "company_name": "DT STELLAR GENERAL ENG."
+  },
+  {
+    "rj_number": "RJ25-492",
+    "job_description": "T MAUS MURRIETA",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-493",
+    "job_description": "SULLY IRWINDALE 10347828",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-494",
+    "job_description": "HARDY HARPER LAKEWOOD",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-495",
+    "job_description": "4D SAN DIEGO 4DM1 25-206`",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-496",
+    "job_description": "CALMEX EL MONTE 24-1153",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-497",
+    "job_description": "WESTERN PAVING BELL GARDEN",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-498",
+    "job_description": "COOLEY CONST SAN BERN",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-499",
+    "job_description": "GENE VANCE JOB - PALM DESERT",
+    "company_name": "GENE VANCE"
+  },
+  {
+    "rj_number": "RJ25-50",
+    "job_description": "MANHOLE CALEXICO GS25-12400",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-500",
+    "job_description": "WESTERN ALHRAMBA 5597",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-501",
+    "job_description": "4D ANAHEIM 4DM1 25-209",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-502",
+    "job_description": "ALLIED PAVING DHS 25-1013",
+    "company_name": "ALLIED PAVING  CO."
+  },
+  {
+    "rj_number": "RJ25-503",
+    "job_description": "ALL AMERICAN PARAMOUNT",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-504",
+    "job_description": "4D SAN BERNARDINO 25-218",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-505",
+    "job_description": "ALL AMERICAN LONG BEACH 36782",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-506",
+    "job_description": "CHP BANNING",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ25-507",
+    "job_description": "EXCEL SANTA MONICA 6059",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-508",
+    "job_description": "CALMEX ANAHEIM 24-1160",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-509",
+    "job_description": "MANHOLE RIVERSIDE-25-32412",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-51",
+    "job_description": "BEACH PAVING - LA MIRADA",
+    "company_name": "BEACH PAVING, INC."
+  },
+  {
+    "rj_number": "RJ25-510",
+    "job_description": "WESTERN PAVING LA 5549",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-511",
+    "job_description": "QD CONSTRUCTION AIRPORT",
+    "company_name": "Q&D CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ25-512",
+    "job_description": "ABC RESOURCES AZUSA",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-513",
+    "job_description": "PRIDE PAVING GLENDALE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-514",
+    "job_description": "ARMAN BROS -  CANYON COUNTRY",
+    "company_name": "ARMAN BROTHERS GENERAL ENG."
+  },
+  {
+    "rj_number": "RJ25-515",
+    "job_description": "GRIFFITH LA JOLLA 10909.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-516",
+    "job_description": "ALL AMERICAN CANYON LAKE",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-517",
+    "job_description": "MANHOLE YORBA LINDA",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-518",
+    "job_description": "COUNTY OF RIVERSIDE MECCA",
+    "company_name": "COUNTY OF RIVERSIDE"
+  },
+  {
+    "rj_number": "RJ25-519",
+    "job_description": "ALL AMERICAN CORONA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-52",
+    "job_description": "ONYX PICO RIVERA 24-089",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-520",
+    "job_description": "CHP RUNNING SPRINGS",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ25-521",
+    "job_description": "PROACTIVE SITE - MORENO VALLEY",
+    "company_name": "ProActive Site Services"
+  },
+  {
+    "rj_number": "RJ25-522",
+    "job_description": "GRIFFITH AEROJUST ROCKET",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-523",
+    "job_description": "STELLAR - VICTORVILLE 2025-12",
+    "company_name": "DT STELLAR GENERAL ENG."
+  },
+  {
+    "rj_number": "RJ25-524",
+    "job_description": "EXCEL WHITTIER 5985",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-525",
+    "job_description": "ALL AMERICAN GARDENA 36527",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-526",
+    "job_description": "GRIFFITH ONTARIO 10887.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-527",
+    "job_description": "METRO BUILDERS & ENG",
+    "company_name": "METRO BUILDERS &ENGINEERS GROU"
+  },
+  {
+    "rj_number": "RJ25-528",
+    "job_description": "ALL AMERICAN SANTA ANA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-529",
+    "job_description": "PRIDE PAVING COMMERCE",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-53",
+    "job_description": "ONYX  APPLE VALLEY 25-005",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-530",
+    "job_description": "MZ COMMUNC NORWALK",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-531",
+    "job_description": "4D LOS ANGELES 4DM1 25-230",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-532",
+    "job_description": "MANHOLE ADJ MURRIETA 32423",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-533",
+    "job_description": "ALL AMERICAN INGLEWOOD 37115",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-534",
+    "job_description": "CALMEX SANTA CLARITA 1060",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-535",
+    "job_description": "BLACK DIAMOND INDIO",
+    "company_name": "BLACK DIAMOND ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-536",
+    "job_description": "ALL AMERICAN MISSION VIEJO",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-537",
+    "job_description": "ALL AMERICAN ONTARIO 36806",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-538",
+    "job_description": "EXCEL COMPTON 6016",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-539",
+    "job_description": "CHRISTENSEN APPLE VALLEY",
+    "company_name": "Christensen Brothers General E"
+  },
+  {
+    "rj_number": "RJ25-54",
+    "job_description": "SB COUNTY WRIGHTWOOD BID. 6756",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-540",
+    "job_description": "ABC RESOURCES WINCHESTER",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-541",
+    "job_description": "CHP ESSEX",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ25-542",
+    "job_description": "COOLEY CONSTR SAN BERN 4120",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ25-543",
+    "job_description": "CITY OF BANNING PW",
+    "company_name": "CITY OF BANNING PUBLIC WORKS"
+  },
+  {
+    "rj_number": "RJ25-544",
+    "job_description": "MANHOLE POMONA 3298",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-545",
+    "job_description": "MANHOLE WALNUT 32412",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-546",
+    "job_description": "CALMEX GRANITE HILLS 25-1215",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-547",
+    "job_description": "GT GENERAL FONTANA 371",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ25-548",
+    "job_description": "County of San Berdo Crestline",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-549",
+    "job_description": "RJ25-549 EBS La Mirada",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-55",
+    "job_description": "BLACK DIAMOND IRVINE",
+    "company_name": "BLACK DIAMOND ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-550",
+    "job_description": "ADVANCED ASPHALT PALMDALE",
+    "company_name": "ADVANCED ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-551",
+    "job_description": "GPM Constr Goleta 7744MHC1",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ25-552",
+    "job_description": "4D GEO PAVING LAGUNA BEACH",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-553",
+    "job_description": "AVAILABLE",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ25-554",
+    "job_description": "PRIDE PAVING LANCASTER",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-555",
+    "job_description": "GUZMAN GRADING AND PAVING SD",
+    "company_name": "GUZMAN PAVING"
+  },
+  {
+    "rj_number": "RJ25-556",
+    "job_description": "EXCEL SANTA ANA 6094",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-557",
+    "job_description": "AAA PAVING JURUPA VALLEY",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-558",
+    "job_description": "KYA CENTENTIAL PARK - SANTA AN",
+    "company_name": "KYA SERVICES LLC"
+  },
+  {
+    "rj_number": "RJ25-559",
+    "job_description": "CM PAVING GARDENA",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ25-56",
+    "job_description": "PRECISION MORENO VALLEY 6214",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-560",
+    "job_description": "ALL AMERICAN SANTA CLARITA",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-561",
+    "job_description": "ALL AMERICAN MENIFEE 37164",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-562",
+    "job_description": "EXCEL SANTA MONICA",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-563",
+    "job_description": "RJ25-563 All American Perris",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-564",
+    "job_description": "MZ COMMUNICATION BURBANK",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-565",
+    "job_description": "Sequel Cudahy 643",
+    "company_name": "SEQUEL CONTRACTORS"
+  },
+  {
+    "rj_number": "RJ25-566",
+    "job_description": "4D DHS 4DM1 25-252",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ25-567",
+    "job_description": "RJ25-567 ABC Resources San Ber",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-568",
+    "job_description": "T MAUS CORONA - DE PALMA RD",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-569",
+    "job_description": "RJ25-569GT General Fontana 368",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ25-57",
+    "job_description": "LEE&STIRES PALM SPRINGS 24085",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-570",
+    "job_description": "Onyx Ontario 24-098",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-571",
+    "job_description": "Onyx Ontario 25-041",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-572",
+    "job_description": "4D- City Service Lake Elsinore",
+    "company_name": "4D SURFACE MANAGMENT  INC."
+  },
+  {
+    "rj_number": "RJ25-573",
+    "job_description": "EBS La Mirada 25136",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-574",
+    "job_description": "Griffith El Cajon 50005.50",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-575",
+    "job_description": "GRIFFITH FALLBROOK 20027.20",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-576",
+    "job_description": "Griffith West Covina-JOB#10829",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-577",
+    "job_description": "T Maus Murrieta - Bennett S Be",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-578",
+    "job_description": "EXCEL IRVINE 6072",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-579",
+    "job_description": "WARREN  DUNCAN SAN JACINTO",
+    "company_name": "WARREN DUNCAN CONTRACTING"
+  },
+  {
+    "rj_number": "RJ25-58",
+    "job_description": "HARDY HARPER MOTEBELLO 24344",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-580",
+    "job_description": "ALL AMERICAN HEMET 36771",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-581",
+    "job_description": "MZ COMMUNICATION - ANAHEIM",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-582",
+    "job_description": "All American Carson 37223",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-583",
+    "job_description": "All American Menifee 36914",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-584",
+    "job_description": "All American Bellflower",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-585",
+    "job_description": "T Maus Winchester",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-586",
+    "job_description": "ABC RESOURCES RANCHO CUCAMO",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-587",
+    "job_description": "Romero Temecula 25539",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-588",
+    "job_description": "Romero Chino 25524",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-589",
+    "job_description": "Onyx Ontario 25-050",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ25-59",
+    "job_description": "SB COUNTY WRIGHTWOOD 6766",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-590",
+    "job_description": "Griffith San Diego 50006.50",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-591",
+    "job_description": "Pride Paving Riverside 3491-JC",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-592",
+    "job_description": "MZ Communications LA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-593",
+    "job_description": "GT General Riverside QG",
+    "company_name": "GT General"
+  },
+  {
+    "rj_number": "RJ25-594",
+    "job_description": "CM Paving Glendale 6240",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ25-596",
+    "job_description": "Sully San Pedro 10345303",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ25-597",
+    "job_description": "ABC Resources Pearblossom 5263",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-598",
+    "job_description": "ABC Resources LA 5496",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ25-599",
+    "job_description": "EBS Monterey Park 25113",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-60",
+    "job_description": "HARDY HARPER CAT CITY 24378",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ25-600",
+    "job_description": "EBS Perris 24117",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ25-601",
+    "job_description": "Lee & Stires Highland 25027",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-602",
+    "job_description": "All American Duarte 37018",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-603",
+    "job_description": "LM70 MURRIETA",
+    "company_name": "LM-70 COMPANY"
+  },
+  {
+    "rj_number": "RJ25-604",
+    "job_description": "Western Irvine 5576",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-605",
+    "job_description": "T Maus Moves",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-606",
+    "job_description": "GRIFFITH LAX 10896.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-607",
+    "job_description": "Mark Co Sylmar 5648",
+    "company_name": "MARK COMPANY"
+  },
+  {
+    "rj_number": "RJ25-608",
+    "job_description": "T MAUS San Bernardino - Paseo",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ25-61",
+    "job_description": "B-81 - YUCAIPA",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ25-62",
+    "job_description": "SB COUNTY MT BALDY",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ25-63",
+    "job_description": "GRIFFITH INDIO CHIRACO 10883.1",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-64",
+    "job_description": "LEE & STIRES INDIO  24133",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ25-65",
+    "job_description": "PRIDE PAVING LANCASTER",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-66",
+    "job_description": "RJ NOBLE DOWNEY 91945",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ25-67",
+    "job_description": "MANHOLE CHINO GS25-32395",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-69",
+    "job_description": "PREICISION WESTLAKE VILLAGE",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-70",
+    "job_description": "CALMEX INDIO 24-1188",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-71",
+    "job_description": "B-81 RANCHO PALOS VERDES",
+    "company_name": "B-81 PAVING  INC."
+  },
+  {
+    "rj_number": "RJ25-72",
+    "job_description": "PETERSON CHASE BARSTOW",
+    "company_name": "PETERSON-CHASE GENERAL ENG. CO"
+  },
+  {
+    "rj_number": "RJ25-73",
+    "job_description": "WESTERN ORO GRANDE 5587",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ25-74",
+    "job_description": "PRIDE PAVING MORENO VALLEY",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-75",
+    "job_description": "GRIFFITH ANAHEIM 10880.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-76",
+    "job_description": "ALL AMERICAN SANTA ANA 36407",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-77",
+    "job_description": "ALL AMERICAN SANTA ANA 32489",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-78",
+    "job_description": "ALL AMERICAN CYPRESS 36624",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-79",
+    "job_description": "CALMEX CHINO HILLS 22-1107",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ25-80",
+    "job_description": "PRECISION PERRIS LOWES",
+    "company_name": "PRECISION PIPELINE  INC."
+  },
+  {
+    "rj_number": "RJ25-81",
+    "job_description": "ALL AMERICAN LONG BEACH 36711",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-82",
+    "job_description": "ALL AMERICAN LAKE AMERICAN",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ25-83",
+    "job_description": "MZ COMMUNICATION LA",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ25-84",
+    "job_description": "AAA PAVING SAN JACINTO 24-078",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-85",
+    "job_description": "EXCEL LOS ANGELES 5791.01",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ25-86",
+    "job_description": "HERCON APPLE VALLEY H143",
+    "company_name": "Hercon Construction Services"
+  },
+  {
+    "rj_number": "RJ25-87",
+    "job_description": "PRIDE PAVING POMONA",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-88",
+    "job_description": "MAXWELL - DEMO CREW RANCHO",
+    "company_name": "Maxwell Products"
+  },
+  {
+    "rj_number": "RJ25-89",
+    "job_description": "PRIDE PAVING CORONA",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ25-90",
+    "job_description": "AAA PAVING MENIFEE 25-006",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ25-91",
+    "job_description": "ROMERO SAN DIEGO",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ25-92",
+    "job_description": "MANHOLE DOWNEY GS25-42401",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ25-93",
+    "job_description": "TRIPLE H - ANAHEIM",
+    "company_name": "Triple H Construction Inc."
+  },
+  {
+    "rj_number": "RJ25-94",
+    "job_description": "MARTIN CO - PALMDALE 2525",
+    "company_name": "MARTIN CONSTRUCTION, INC."
+  },
+  {
+    "rj_number": "RJ25-95",
+    "job_description": "XTREME COLTON",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ25-96",
+    "job_description": "NARROW PATH SAN JACINTO",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ25-97",
+    "job_description": "XTREME PAVING MONTEBELLO",
+    "company_name": "Miscellaneous Customer"
+  },
+  {
+    "rj_number": "RJ25-98",
+    "job_description": "GRIFFITH ONTARIO",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ25-99",
+    "job_description": "ROMERO SAN DIEGO 24537.13",
+    "company_name": "Romero General Construction Co"
+  },
+  {
+    "rj_number": "RJ26-01",
+    "job_description": "Onyx Desert Hot Springs 25-071",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ26-02",
+    "job_description": "All American Costa Mesa 37128",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-03",
+    "job_description": "SB County Keenbrook 460250 010",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ26-04",
+    "job_description": "Barajas Mission Viejo - Crown",
+    "company_name": "BARAJAS PAVING"
+  },
+  {
+    "rj_number": "RJ26-05",
+    "job_description": "EBS Wildomar",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ26-06",
+    "job_description": "SB County 782350 010 2629",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ26-07",
+    "job_description": "SB County - Cajon 199950 060 2",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ26-08",
+    "job_description": "Excel Santa Monica 5973",
+    "company_name": "Excel Paving"
+  },
+  {
+    "rj_number": "RJ26-09",
+    "job_description": "ABC Pasadena 5489",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ26-10",
+    "job_description": "Steve Rados Hwy 138 #777",
+    "company_name": "STEVE RADOS, INC."
+  },
+  {
+    "rj_number": "RJ26-100",
+    "job_description": "All American Perris 37287",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-101",
+    "job_description": "Western Paving Palm Desert 575",
+    "company_name": "WESTERN PAVING"
+  },
+  {
+    "rj_number": "RJ26-102",
+    "job_description": "Onyx Ontario 24-093",
+    "company_name": "ONYX PAVING CO."
+  },
+  {
+    "rj_number": "RJ26-11",
+    "job_description": "SE Pipeline Franklin Cyn Reser",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-12",
+    "job_description": "RJ Noble Placentia 61969",
+    "company_name": "RJ Noble"
+  },
+  {
+    "rj_number": "RJ26-13",
+    "job_description": "DT Stellar Fontana 2525",
+    "company_name": "DT STELLAR GENERAL ENG."
+  },
+  {
+    "rj_number": "RJ26-14",
+    "job_description": "Lee & Stires Rancho Cuc 24501",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-15",
+    "job_description": "Van Eng Laguna Niguel",
+    "company_name": "VAN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ26-16",
+    "job_description": "RivCon Murrieta 25006",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-17",
+    "job_description": "MZ Comm Mead Valley",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-18",
+    "job_description": "Sully POLB 10345302",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ26-19",
+    "job_description": "Granite Ojai Hwy 33",
+    "company_name": "GRANITE CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ26-20",
+    "job_description": "All American Jurupa Valley",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-21",
+    "job_description": "Pride Gardena 149924",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ26-22",
+    "job_description": "Pride Hawthorne 149926",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ26-23",
+    "job_description": "La Strada Temescal Valley",
+    "company_name": "LA STRADA CONTRACTING"
+  },
+  {
+    "rj_number": "RJ26-24",
+    "job_description": "J&E PAVING SIGNAL HILL",
+    "company_name": "J&E PAVING, INC"
+  },
+  {
+    "rj_number": "RJ26-25",
+    "job_description": "Elite Paving West Covina",
+    "company_name": "ELITE PAVING"
+  },
+  {
+    "rj_number": "RJ26-26",
+    "job_description": "ABC Resources Victorville",
+    "company_name": "ABC RESOURCES, INC."
+  },
+  {
+    "rj_number": "RJ26-27",
+    "job_description": "SULLY BARSTOW 10355258",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ26-28",
+    "job_description": "CM Paving Lakewood",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ26-29",
+    "job_description": "SE Pipeline Arleta",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-30",
+    "job_description": "Sully Santa Clarita 10360050",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ26-31",
+    "job_description": "MZ Communications Oceanside",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-32",
+    "job_description": "Marathon General Riverside 25-",
+    "company_name": "MARATHON GENERAL INC."
+  },
+  {
+    "rj_number": "RJ26-33",
+    "job_description": "CM Paving Culver City",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ26-34",
+    "job_description": "Hardy Norwalk 24152",
+    "company_name": "HARDY & HARPER"
+  },
+  {
+    "rj_number": "RJ26-35",
+    "job_description": "Griffith Spring Valley 50003.5",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ26-36",
+    "job_description": "Mark Co Tustin",
+    "company_name": "MARK COMPANY"
+  },
+  {
+    "rj_number": "RJ26-37",
+    "job_description": "Sully Santa Monica 10348043",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ26-38",
+    "job_description": "Griffith Burbank 10873.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ26-39",
+    "job_description": "EBS Indio 24209",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ26-40",
+    "job_description": "AAA Riverside 25-016",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ26-41",
+    "job_description": "RivCon Indio 24003",
+    "company_name": "RIVERSIDE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-42",
+    "job_description": "Lee & Stires Fountain Valley 2",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-43",
+    "job_description": "Nationwide Contractors Temecul",
+    "company_name": "NATIONWIDE GENERAL CONSTRUCTIO"
+  },
+  {
+    "rj_number": "RJ26-44",
+    "job_description": "MZ Communications Anaheim",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-45",
+    "job_description": "CM Paving Fullerton",
+    "company_name": "CM PAVING"
+  },
+  {
+    "rj_number": "RJ26-46",
+    "job_description": "Black Diamond Indio",
+    "company_name": "BLACK DIAMOND ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-47",
+    "job_description": "All American Norwalk 36910",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-48",
+    "job_description": "S Christiansen Fort Irwin",
+    "company_name": "S. CHRISTENSEN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ26-49",
+    "job_description": "Griffith LAX 10916.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ26-50",
+    "job_description": "AAA Chino 25-065",
+    "company_name": "AAA PAVING"
+  },
+  {
+    "rj_number": "RJ26-51",
+    "job_description": "SB Cnty 460 250 010 2632C Keen",
+    "company_name": "COUNTY OF SAN BERNARDINO"
+  },
+  {
+    "rj_number": "RJ26-52",
+    "job_description": "Pride LA 3643-JC",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ26-53",
+    "job_description": "Lee & Stires Yucaipa 26009",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-54",
+    "job_description": "Calmex Chula Vista 25-1201",
+    "company_name": "CALMEX Engineering  Inc."
+  },
+  {
+    "rj_number": "RJ26-55",
+    "job_description": "Pride Woodland Hills 5312",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ26-56",
+    "job_description": "Lee & Stires Thermal 25061",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-57",
+    "job_description": "Lee & Stires Fontana 23062",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-58",
+    "job_description": "SE Pipeline LA 25-0483",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-59",
+    "job_description": "MZ Comm Oceanside - Carey & Mi",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-60",
+    "job_description": "SE Pipeline Moreno Valley 7033",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-61",
+    "job_description": "Marathon General Banning 24-92",
+    "company_name": "MARATHON GENERAL INC."
+  },
+  {
+    "rj_number": "RJ26-62",
+    "job_description": "Lee & Stires Indio 23180",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-63",
+    "job_description": "Manhole Adj Riverside GS25-824",
+    "company_name": "Manhole Adjusting"
+  },
+  {
+    "rj_number": "RJ26-64",
+    "job_description": "CHP Banning 25-1102",
+    "company_name": "CALIFORNIA HIGHWAY PRODUCTS"
+  },
+  {
+    "rj_number": "RJ26-65",
+    "job_description": "MZ Communications San Diego",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-66",
+    "job_description": "SE Pipeline Goleta",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-67",
+    "job_description": "Precision Cold Planing Walnut",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ26-68",
+    "job_description": "MZ Comm Hemet Sanderson Ave",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-69",
+    "job_description": "S Christensen Hesperia 2026-14",
+    "company_name": "S. CHRISTENSEN ENGINEERING"
+  },
+  {
+    "rj_number": "RJ26-70",
+    "job_description": "Sully Colima Rd 10326154",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  },
+  {
+    "rj_number": "RJ26-71",
+    "job_description": "Griffith National City 20031",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ26-72",
+    "job_description": "NPG Hemet 26052",
+    "company_name": "NPG"
+  },
+  {
+    "rj_number": "RJ26-73",
+    "job_description": "Tri City Stan Boyd Murrieta",
+    "company_name": "TRI-CITY GRADING & EXCAVATING"
+  },
+  {
+    "rj_number": "RJ26-74",
+    "job_description": "Griffith Compton 10919.10",
+    "company_name": "GRIFFITH CO."
+  },
+  {
+    "rj_number": "RJ26-75",
+    "job_description": "MZ Comm Inglewood - Century Bl",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-76",
+    "job_description": "SE Pipeline Claremont 26-4214",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-77",
+    "job_description": "JP Arman Santa Clarita",
+    "company_name": "JP ARMAN ARMAN CONSTRUCTION"
+  },
+  {
+    "rj_number": "RJ26-78",
+    "job_description": "J&S Asphalt Camp Pendleton 240",
+    "company_name": "J&S ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-79",
+    "job_description": "EBS Indio 26104",
+    "company_name": "EBS"
+  },
+  {
+    "rj_number": "RJ26-80",
+    "job_description": "Cooley Palmdale 4211",
+    "company_name": "COOLEY CONSTRUCTION , INC."
+  },
+  {
+    "rj_number": "RJ26-81",
+    "job_description": "SE Pipeline Dana Point 26-2414",
+    "company_name": "SE PIPE LINE CONSTRUCTION CO."
+  },
+  {
+    "rj_number": "RJ26-82",
+    "job_description": "Pride Paving Covina 3671-JC",
+    "company_name": "PRIDE PAVING"
+  },
+  {
+    "rj_number": "RJ26-83",
+    "job_description": "GPM Oxnard 13181 MDC1",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ26-84",
+    "job_description": "GPM Edwards AFB 2766URC1",
+    "company_name": "GPM  PAVEMENT MANAGEMENT"
+  },
+  {
+    "rj_number": "RJ26-85",
+    "job_description": "T Maus Indio -TBU Madison & 49",
+    "company_name": "T MAUS GRADING & PAVING"
+  },
+  {
+    "rj_number": "RJ26-86",
+    "job_description": "Lee & Stires Indio 25020",
+    "company_name": "LEE & STIRES"
+  },
+  {
+    "rj_number": "RJ26-87",
+    "job_description": "All American Industry 327227",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-88",
+    "job_description": "All American San Berdo 37214",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-89",
+    "job_description": "CA Rasmussen LA 2411",
+    "company_name": "CA RASMUSSEN"
+  },
+  {
+    "rj_number": "RJ26-90",
+    "job_description": "Mark Co Irvine 4690",
+    "company_name": "MARK COMPANY"
+  },
+  {
+    "rj_number": "RJ26-91",
+    "job_description": "Rushmore LAX 10900",
+    "company_name": "RUSHMORE CONSTRUCTION COMPANY"
+  },
+  {
+    "rj_number": "RJ26-92",
+    "job_description": "4D Long Beach 4DM1 26-80",
+    "company_name": "4D MILLING, INC."
+  },
+  {
+    "rj_number": "RJ26-93",
+    "job_description": "All American Montebello 37340",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-94",
+    "job_description": "All American Long Beach 37155",
+    "company_name": "ALL AMERICAN ASPHALT"
+  },
+  {
+    "rj_number": "RJ26-95",
+    "job_description": "MZ Comm Chino - Merril Ave",
+    "company_name": "Medina-Zendejas Communications"
+  },
+  {
+    "rj_number": "RJ26-96",
+    "job_description": "Precision Cold Planing San Die",
+    "company_name": "PRECISION COLD PLANING, INC."
+  },
+  {
+    "rj_number": "RJ26-97",
+    "job_description": "City Service Riverside 1000",
+    "company_name": "CITY SERVICE PAVING"
+  },
+  {
+    "rj_number": "RJ26-98",
+    "job_description": "Narrow Path Sage - Rawson Rd",
+    "company_name": "NARROW PATH ENG."
+  },
+  {
+    "rj_number": "RJ26-99",
+    "job_description": "Sully China Lake 10345237",
+    "company_name": "SULLY MILLER/Blue Diamond"
+  }
 ]
