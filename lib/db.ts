@@ -64,8 +64,13 @@ export interface Customer {
 // ─── Connection ───────────────────────────────────────────────────────────────
 
 export function getSql() {
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL environment variable is not set");
+  const rawUrl = process.env.DATABASE_URL;
+  if (!rawUrl) throw new Error("DATABASE_URL environment variable is not set");
+  // Strip channel_binding parameter — not supported by Neon's HTTP/serverless driver
+  const url = rawUrl
+    .replace(/&channel_binding=[^&#]*/gi, "")
+    .replace(/\?channel_binding=[^&#]*&/gi, "?")
+    .replace(/\?channel_binding=[^&#]*/gi, "");
   return neon(url);
 }
 
@@ -75,7 +80,8 @@ let _initialized = false;
 
 export async function initDb() {
   if (_initialized) return;
-  const sql = getSql();
+  try {
+    const sql = getSql();
 
   // ── billing_entries ─────────────────────────────────────────────────────────
   await sql`
@@ -152,10 +158,15 @@ export async function initDb() {
     )
   `;
 
-  // ── Seed from jobs.json if tables are empty ─────────────────────────────────
-  await seedFromJobsJson();
+    // ── Seed from jobs.json if tables are empty ───────────────────────────────
+    await seedFromJobsJson();
 
-  _initialized = true;
+    _initialized = true;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[db] initDb() failed:", message);
+    throw err;
+  }
 }
 
 // ─── Seeder ───────────────────────────────────────────────────────────────────
