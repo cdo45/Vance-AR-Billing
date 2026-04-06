@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const { rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, invoice_number, notes } = body;
+  const { rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, invoice_number, notes, work_description } = body;
 
   if (!rj_number || !company_name || !week_start) {
     return NextResponse.json({ error: "rj_number, company_name, and week_start are required" }, { status: 400 });
@@ -41,11 +41,11 @@ export async function POST(req: NextRequest) {
 
   const rows = await sql`
     INSERT INTO billing_entries
-      (rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, week_total, invoice_number, notes)
+      (rj_number, company_name, job_description, week_start, sun, mon, tue, wed, thu, fri, sat, week_total, invoice_number, notes, work_description)
     VALUES
       (${rj_number}, ${company_name}, ${job_description || ""}, ${week_start},
        ${s}, ${m}, ${t}, ${w}, ${th}, ${f}, ${sa}, ${week_total},
-       ${invoice_number || ""}, ${notes || ""})
+       ${invoice_number || ""}, ${notes || ""}, ${work_description || ""})
     RETURNING *
   ` as BillingEntry[];
 

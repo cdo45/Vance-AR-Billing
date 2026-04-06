@@ -16,6 +16,7 @@ export interface BillingEntry {
   week_total: number;
   invoice_number: string;
   notes: string;
+  work_description: string;
   created_at: string;
 }
 
@@ -29,33 +30,39 @@ export async function initDb() {
   const sql = getSql();
   await sql`
     CREATE TABLE IF NOT EXISTS billing_entries (
-      id             SERIAL PRIMARY KEY,
-      rj_number      TEXT    NOT NULL,
-      company_name   TEXT    NOT NULL,
-      job_description TEXT   NOT NULL DEFAULT '',
-      week_start     TEXT    NOT NULL,
-      sun            NUMERIC NOT NULL DEFAULT 0,
-      mon            NUMERIC NOT NULL DEFAULT 0,
-      tue            NUMERIC NOT NULL DEFAULT 0,
-      wed            NUMERIC NOT NULL DEFAULT 0,
-      thu            NUMERIC NOT NULL DEFAULT 0,
-      fri            NUMERIC NOT NULL DEFAULT 0,
-      sat            NUMERIC NOT NULL DEFAULT 0,
-      week_total     NUMERIC NOT NULL DEFAULT 0,
-      invoice_number TEXT    NOT NULL DEFAULT '',
-      notes          TEXT    NOT NULL DEFAULT '',
-      created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      id               SERIAL PRIMARY KEY,
+      rj_number        TEXT    NOT NULL,
+      company_name     TEXT    NOT NULL,
+      job_description  TEXT    NOT NULL DEFAULT '',
+      week_start       TEXT    NOT NULL,
+      sun              NUMERIC NOT NULL DEFAULT 0,
+      mon              NUMERIC NOT NULL DEFAULT 0,
+      tue              NUMERIC NOT NULL DEFAULT 0,
+      wed              NUMERIC NOT NULL DEFAULT 0,
+      thu              NUMERIC NOT NULL DEFAULT 0,
+      fri              NUMERIC NOT NULL DEFAULT 0,
+      sat              NUMERIC NOT NULL DEFAULT 0,
+      week_total       NUMERIC NOT NULL DEFAULT 0,
+      invoice_number   TEXT    NOT NULL DEFAULT '',
+      notes            TEXT    NOT NULL DEFAULT '',
+      work_description TEXT    NOT NULL DEFAULT '',
+      created_at       TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
+  `;
+  // Add work_description to existing databases that pre-date this column
+  await sql`
+    ALTER TABLE billing_entries
+    ADD COLUMN IF NOT EXISTS work_description TEXT NOT NULL DEFAULT ''
   `;
   await sql`CREATE INDEX IF NOT EXISTS idx_week_start ON billing_entries(week_start)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_rj_number  ON billing_entries(rj_number)`;
   await sql`
     CREATE TABLE IF NOT EXISTS custom_jobs (
-      id             SERIAL PRIMARY KEY,
-      rj_number      TEXT    UNIQUE NOT NULL,
-      company_name   TEXT    NOT NULL,
-      job_description TEXT   NOT NULL DEFAULT '',
-      created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      id              SERIAL PRIMARY KEY,
+      rj_number       TEXT    UNIQUE NOT NULL,
+      company_name    TEXT    NOT NULL,
+      job_description TEXT    NOT NULL DEFAULT '',
+      created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
   `;
 }
