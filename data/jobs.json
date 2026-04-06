@@ -1,0 +1,12 @@
+[
+  { "rj_number": "RJ26-01", "job_description": "Paving – Main St Phase 1", "company_name": "Acme Paving Co" },
+  { "rj_number": "RJ26-02", "job_description": "Base Grading – Industrial Park", "company_name": "Desert Sun Contractors" },
+  { "rj_number": "RJ26-03", "job_description": "Overlay – Commerce Blvd", "company_name": "SoCal Road Builders" },
+  { "rj_number": "RJ26-04", "job_description": "Milling – Hwy 38 Corridor", "company_name": "Inland Asphalt Inc" },
+  { "rj_number": "RJ25-143", "job_description": "Widening – Valley Ave", "company_name": "Acme Paving Co" },
+  { "rj_number": "RJ25-143 (8)", "job_description": "Widening – Valley Ave (Return 8)", "company_name": "Acme Paving Co" },
+  { "rj_number": "RJ25-143 (9)", "job_description": "Widening – Valley Ave (Return 9)", "company_name": "Acme Paving Co" },
+  { "rj_number": "RJ26-43", "job_description": "Chip Seal – Airport Rd", "company_name": "Premier Paving LLC" },
+  { "rj_number": "RJ26-44", "job_description": "Grading – Logistics Center", "company_name": "Desert Sun Contractors" },
+  { "rj_number": "RJ26-45", "job_description": "Paving – Retail Complex", "company_name": "SoCal Road Builders" }
+]
