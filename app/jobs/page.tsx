@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import NavBar from "@/app/components/NavBar";
+import SiteHeader from "@/app/components/SiteHeader";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Job {
@@ -27,7 +27,7 @@ type SortCol = "rj_number" | "company_name" | "status" | "total_billed" | "last_
 // ─── Constants ────────────────────────────────────────────────────────────────
 const NAVY    = "#1F3864";
 const TEAL    = "#1F6B6B";
-const ORANGE  = "#C55A11";
+const ORANGE  = "#C8102E";
 const DKGREEN = "#1E6B1E";
 const LTGRAY  = "#F2F2F2";
 
@@ -189,11 +189,7 @@ export default function JobsPage() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="text-white px-8 py-4 shadow-lg" style={{ background: NAVY }}>
-        <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp — Rental Billing</h1>
-      </header>
-      <NavBar />
+      <SiteHeader />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
 
@@ -204,7 +200,7 @@ export default function JobsPage() {
               <h2 className="text-2xl font-bold uppercase tracking-wider" style={{ color: NAVY }}>
                 Jobs / RJ Numbers
               </h2>
-              <p className="text-sm text-gray-500 mt-0.5">{activeCount} active jobs</p>
+              <p className="text-sm text-gray-500 mt-0.5 uppercase tracking-wider">{activeCount} active jobs</p>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
               <input type="text" placeholder="Search RJ#, company, or description…"
@@ -221,7 +217,7 @@ export default function JobsPage() {
                 <option value="inactive">Inactive</option>
               </select>
               <button onClick={openAdd}
-                className="text-white text-sm font-bold px-5 py-2.5 rounded-xl transition hover:opacity-80 whitespace-nowrap"
+                className="text-white text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition hover:opacity-80 whitespace-nowrap"
                 style={{ background: NAVY }}>
                 + Add New Job
               </button>
@@ -232,7 +228,7 @@ export default function JobsPage() {
         {/* Table */}
         <div className="bg-white rounded-2xl shadow overflow-hidden">
           {loading ? (
-            <p className="text-center text-gray-400 py-16">Loading jobs…</p>
+            <p className="text-center text-gray-400 py-16 uppercase tracking-widest font-semibold">Loading jobs…</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -266,7 +262,7 @@ export default function JobsPage() {
                 <tbody>
                   {sorted.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="px-4 py-16 text-center text-gray-400">
+                      <td colSpan={8} className="px-4 py-16 text-center text-gray-400 uppercase tracking-widest font-semibold">
                         {search || statusFilter ? "No jobs match your filters." : "No jobs yet."}
                       </td>
                     </tr>
@@ -301,7 +297,7 @@ export default function JobsPage() {
                       </td>
                       <td className="px-4 py-3">
                         <button onClick={() => openEdit(j)}
-                          className="text-xs px-3 py-1.5 rounded-lg border font-semibold transition hover:opacity-80"
+                          className="text-xs px-3 py-1.5 rounded-lg border font-bold uppercase tracking-wider transition hover:opacity-80"
                           style={{ color: TEAL, borderColor: TEAL }}>
                           Edit
                         </button>
@@ -463,7 +459,7 @@ export default function JobsPage() {
                   className="w-4 h-4 accent-teal-700"
                 />
                 <label htmlFor="cert_payroll"
-                  className="text-sm font-semibold cursor-pointer"
+                  className="text-sm font-semibold uppercase tracking-wider cursor-pointer"
                   style={{ color: NAVY }}>
                   Certified Payroll Required
                 </label>
@@ -483,11 +479,11 @@ export default function JobsPage() {
 
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)}
-                  className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold text-gray-500 hover:border-gray-400 transition">
+                  className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold uppercase tracking-wider text-gray-500 hover:border-gray-400 transition">
                   Cancel
                 </button>
                 <button type="submit" disabled={saving}
-                  className="flex-1 text-white font-bold py-3 rounded-xl transition hover:opacity-80 disabled:opacity-50"
+                  className="flex-1 text-white font-bold uppercase tracking-wider py-3 rounded-xl transition hover:opacity-80 disabled:opacity-50"
                   style={{ background: NAVY }}>
                   {saving ? "Saving…" : "Save Job"}
                 </button>

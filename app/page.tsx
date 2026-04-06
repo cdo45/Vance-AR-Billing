@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
 } from "recharts";
-import NavBar from "@/app/components/NavBar";
+import SiteHeader from "@/app/components/SiteHeader";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Job {
@@ -44,7 +44,7 @@ const DAY_LABELS = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 const EMPTY_AMOUNTS: DayAmounts = { sun:"",mon:"",tue:"",wed:"",thu:"",fri:"",sat:"" };
 const NAVY = "#1F3864";
 const TEAL = "#1F6B6B";
-const ORANGE = "#C55A11";
+const ORANGE = "#C8102E";
 const DKGREEN = "#1E6B1E";
 const LTGRAY = "#F2F2F2";
 
@@ -110,6 +110,22 @@ export default function EntryForm() {
   const [submitting, setSubmitting] = useState(false);
   const [deleting, setDeleting]   = useState<number|null>(null);
   const [entries, setEntries]     = useState<BillingEntry[]>([]);
+
+  // Edit entry modal state
+  const [editEntry, setEditEntry]   = useState<BillingEntry|null>(null);
+  const [editAmounts, setEditAmounts] = useState<DayAmounts>(EMPTY_AMOUNTS);
+  const [editInvoice, setEditInvoice] = useState("");
+  const [editNotes, setEditNotes]     = useState("");
+  const [editWorkDesc, setEditWorkDesc] = useState("");
+  const [editPrelim, setEditPrelim]   = useState("");
+  const [editReason, setEditReason]   = useState("");
+  const [editSaving, setEditSaving]   = useState(false);
+
+  // Audit history modal state
+  interface AuditRow { id: number; entry_id: number; field_changed: string; old_value: string; new_value: string; reason: string; edited_at: string; edited_by: string; }
+  const [auditEntry, setAuditEntry]   = useState<BillingEntry|null>(null);
+  const [auditLog, setAuditLog]       = useState<AuditRow[]>([]);
+  const [auditLoading, setAuditLoading] = useState(false);
 
   // ── Load jobs from API ──
   useEffect(() => {
@@ -308,6 +324,65 @@ export default function EntryForm() {
     finally { setDeleting(null); }
   }
 
+  function openEditEntry(entry: BillingEntry) {
+    setEditEntry(entry);
+    setEditAmounts({
+      sun: entry.sun > 0 ? fmtBlur(Number(entry.sun)) : "",
+      mon: entry.mon > 0 ? fmtBlur(Number(entry.mon)) : "",
+      tue: entry.tue > 0 ? fmtBlur(Number(entry.tue)) : "",
+      wed: entry.wed > 0 ? fmtBlur(Number(entry.wed)) : "",
+      thu: entry.thu > 0 ? fmtBlur(Number(entry.thu)) : "",
+      fri: entry.fri > 0 ? fmtBlur(Number(entry.fri)) : "",
+      sat: entry.sat > 0 ? fmtBlur(Number(entry.sat)) : "",
+    });
+    setEditInvoice(entry.invoice_number || "");
+    setEditNotes(entry.notes || "");
+    setEditWorkDesc(entry.work_description || "");
+    setEditPrelim(entry.prelim_date || "");
+    setEditReason("");
+  }
+
+  async function handleEditSave(e: React.FormEvent) {
+    e.preventDefault();
+    if (!editEntry) return;
+    if (!editReason.trim()) {
+      setToast({msg:"Reason for edit is required.",type:"error"}); return;
+    }
+    setEditSaving(true);
+    try {
+      const r = await fetch(`/api/entries/${editEntry.id}`, {
+        method:"PUT",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          sun:parseDollar(editAmounts.sun), mon:parseDollar(editAmounts.mon),
+          tue:parseDollar(editAmounts.tue), wed:parseDollar(editAmounts.wed),
+          thu:parseDollar(editAmounts.thu), fri:parseDollar(editAmounts.fri),
+          sat:parseDollar(editAmounts.sat),
+          invoice_number:editInvoice, notes:editNotes,
+          work_description:editWorkDesc, prelim_date:editPrelim||null,
+          reason:editReason,
+        }),
+      });
+      if (!r.ok) { const err=await r.json(); throw new Error(err.error||"Server error"); }
+      setToast({msg:"Entry updated.",type:"success"});
+      setEditEntry(null);
+      await fetchEntries();
+    } catch(err) {
+      setToast({msg:`Error: ${err instanceof Error?err.message:"Unknown"}`,type:"error"});
+    } finally { setEditSaving(false); }
+  }
+
+  async function openHistory(entry: BillingEntry) {
+    setAuditEntry(entry);
+    setAuditLog([]);
+    setAuditLoading(true);
+    try {
+      const r = await fetch(`/api/entries/${entry.id}/audit`);
+      if (r.ok) setAuditLog(await r.json());
+    } catch { /* ignore */ }
+    finally { setAuditLoading(false); }
+  }
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen" style={{background:LTGRAY,fontFamily:"Arial,Helvetica,sans-serif"}}>
@@ -320,25 +395,20 @@ export default function EntryForm() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="text-white px-8 py-4 flex items-center justify-between shadow-lg"
-        style={{background:NAVY}}>
-        <div>
-          <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp — Rental Billing</h1>
+      <SiteHeader />
+
+      {/* DB status + date bar */}
+      <div className="max-w-7xl mx-auto px-4 pt-3 flex items-center justify-between text-xs text-gray-500">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2 h-2 rounded-full flex-shrink-0" style={{
+            background: dbStatus==="ok" ? "#22c55e" : dbStatus==="error" ? "#ef4444" : "#9ca3af"
+          }}/>
+          <span className="uppercase tracking-wider font-semibold">
+            {dbStatus==="loading" ? "Connecting…" : dbStatus==="ok" ? "DB Connected" : "DB Error"}
+          </span>
         </div>
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 text-sm">
-            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{
-              background: dbStatus==="ok" ? "#22c55e" : dbStatus==="error" ? "#ef4444" : "#9ca3af"
-            }}/>
-            <span className="opacity-75">
-              {dbStatus==="loading" ? "Connecting…" : dbStatus==="ok" ? "DB Connected" : "DB Error"}
-            </span>
-          </div>
-          <p className="text-sm opacity-75">{formatTodayLong()}</p>
-        </div>
-      </header>
-      <NavBar />
+        <p className="uppercase tracking-wider">{formatTodayLong()}</p>
+      </div>
 
       {/* Week Selector — full width above both columns */}
       <div className="max-w-7xl mx-auto px-4 pt-6">
@@ -396,7 +466,7 @@ export default function EntryForm() {
                         className="px-5 py-3 cursor-pointer border-t-2 flex items-center gap-2 font-semibold text-sm"
                         style={{borderColor:TEAL,color:TEAL,background:"#f0fafa"}}>
                         <span className="text-lg font-bold">+</span>
-                        Add new job: <span className="font-bold" style={{color:NAVY}}>{query}</span>
+                        <span className="uppercase tracking-wider">Add New Job:</span>{" "}<span className="font-bold" style={{color:NAVY}}>{query}</span>
                       </li>
                     )}
                   </ul>
@@ -412,7 +482,7 @@ export default function EntryForm() {
                     <p className="text-sm text-gray-600 mt-0.5">{selectedJob.company_name}</p>
                   </div>
                   <button type="button" onClick={clearJob}
-                    className="text-sm text-gray-400 hover:text-red-500 px-3 py-1 border rounded-lg hover:border-red-400 transition"
+                    className="text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-red-500 px-3 py-1 border rounded-lg hover:border-red-400 transition"
                     style={{borderColor:"#d1d5db"}}>Change</button>
                 </div>
               )}
@@ -423,7 +493,7 @@ export default function EntryForm() {
                   <div className="flex items-center justify-between mb-1">
                     <p className="text-sm font-bold" style={{color:NAVY}}>New Job: <span style={{color:TEAL}}>{query}</span></p>
                     <button type="button" onClick={cancelCustom}
-                      className="text-xs text-gray-400 hover:text-red-500 transition">✕ Cancel</button>
+                      className="text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-red-500 transition">✕ Cancel</button>
                   </div>
                   <div ref={companyRef} className="relative">
                     <input type="text" placeholder="Company Name (required)"
@@ -471,14 +541,14 @@ export default function EntryForm() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
-                  Prelim Date <span className="text-gray-400 normal-case font-normal">(optional)</span>
+                  Prelim Date <span className="text-gray-400 font-normal">(Optional)</span>
                 </label>
                 <input type="date"
                   value={prelimDate} onChange={e=>setPrelimDate(e.target.value)}
                   className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
                   style={{borderColor:prelimDate?TEAL:undefined}}
                 />
-                <p className="text-xs text-gray-400 mt-1">Date prelim was sent to customer</p>
+                <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">Date prelim was sent to customer</p>
               </div>
             </div>
 
@@ -526,7 +596,7 @@ export default function EntryForm() {
                 className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
                 style={{borderColor:invoiceNum?TEAL:undefined}}
               />
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
                 One invoice number covers all days billed this week for this job
               </p>
               {/* FIX 5: Duplicate invoice warning */}
@@ -546,7 +616,7 @@ export default function EntryForm() {
             {/* Notes */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
-                Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
+                Notes <span className="text-gray-400 font-normal">(Optional)</span>
               </label>
               <input type="text" placeholder="Any remarks…"
                 value={notes} onChange={e=>setNotes(e.target.value)}
@@ -577,7 +647,7 @@ export default function EntryForm() {
 
               {/* Dispatch grid — FIX 4 */}
               {entries.length===0 ? (
-                <p className="text-gray-400 text-sm py-6 text-center">No entries yet for this week.</p>
+                <p className="text-gray-400 text-xs py-6 text-center uppercase tracking-widest font-semibold">No entries yet for this week.</p>
               ) : (
                 <div className="overflow-x-auto">
                   <table className="w-full text-xs border-collapse">
@@ -649,13 +719,24 @@ export default function EntryForm() {
                               style={{color:ORANGE}}>
                               {fmtCurrency(Number(entry.week_total))}
                             </td>
-                            {/* Delete */}
+                            {/* Actions */}
                             <td className="px-1 py-2 text-center">
-                              <button onClick={()=>handleDelete(entry.id)}
-                                disabled={deleting===entry.id}
-                                className="text-xs text-gray-300 hover:text-red-500 transition px-1 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
-                                {deleting===entry.id?"…":"✕"}
-                              </button>
+                              <div className="flex flex-col gap-1">
+                                <button onClick={()=>openEditEntry(entry)}
+                                  className="text-xs font-bold uppercase tracking-wider transition px-1 py-0.5 rounded border disabled:opacity-40"
+                                  style={{color:TEAL,borderColor:TEAL}}>
+                                  Edit
+                                </button>
+                                <button onClick={()=>openHistory(entry)}
+                                  className="text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-600 transition px-1 py-0.5 rounded border border-gray-300">
+                                  Hist
+                                </button>
+                                <button onClick={()=>handleDelete(entry.id)}
+                                  disabled={deleting===entry.id}
+                                  className="text-xs font-bold uppercase tracking-wider text-gray-300 hover:text-red-500 transition px-1 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
+                                  {deleting===entry.id?"…":"Del"}
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         );
@@ -715,6 +796,138 @@ export default function EntryForm() {
 
         </div>
       </div>
+
+      {/* ── Edit Entry Modal ── */}
+      {editEntry && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white" style={{borderColor:"#e5e7eb"}}>
+              <div>
+                <h3 className="text-lg font-bold uppercase tracking-wider" style={{color:NAVY}}>Edit Entry</h3>
+                <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wider">{editEntry.rj_number} · {editEntry.company_name}</p>
+              </div>
+              <button onClick={()=>setEditEntry(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">✕</button>
+            </div>
+            <form onSubmit={handleEditSave} className="p-6 space-y-4">
+              {/* Work Description */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Work Description</label>
+                <input type="text" value={editWorkDesc} onChange={e=>setEditWorkDesc(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                  style={{borderColor:editWorkDesc?TEAL:undefined}}/>
+              </div>
+              {/* Daily Amounts */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>Daily Amounts</label>
+                <div className="grid grid-cols-7 gap-2">
+                  {DAYS.map((day,i)=>(
+                    <div key={day} className="flex flex-col items-center gap-1">
+                      <span className="text-xs font-bold tracking-widest"
+                        style={{color:day==="sun"||day==="sat"?ORANGE:"#6b7280"}}>{DAY_LABELS[i]}</span>
+                      <input type="text" inputMode="decimal" placeholder="—"
+                        value={editAmounts[day]}
+                        onChange={e=>setEditAmounts(p=>({...p,[day]:e.target.value}))}
+                        onFocus={()=>{const v=parseDollar(editAmounts[day]);setEditAmounts(p=>({...p,[day]:v>0?String(v):""}));}}
+                        onBlur={()=>{const v=parseDollar(editAmounts[day]);setEditAmounts(p=>({...p,[day]:fmtBlur(v)}));}}
+                        className="w-full border-2 border-gray-300 rounded-xl px-1 py-3 text-center text-sm font-semibold focus:outline-none tabular-nums placeholder:text-gray-300"
+                        style={{borderColor:parseDollar(editAmounts[day])>0?TEAL:undefined}}/>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center justify-end gap-3">
+                  <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Week Total</span>
+                  <span className="text-2xl font-bold tabular-nums" style={{color:ORANGE}}>
+                    {fmtCurrency(DAYS.reduce((s,d)=>s+parseDollar(editAmounts[d]),0))}
+                  </span>
+                </div>
+              </div>
+              {/* Invoice + Prelim */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Invoice #</label>
+                  <input type="text" value={editInvoice} onChange={e=>setEditInvoice(e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                    style={{borderColor:editInvoice?TEAL:undefined}}/>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Prelim Date</label>
+                  <input type="date" value={editPrelim} onChange={e=>setEditPrelim(e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                    style={{borderColor:editPrelim?TEAL:undefined}}/>
+                </div>
+              </div>
+              {/* Notes */}
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Notes</label>
+                <input type="text" value={editNotes} onChange={e=>setEditNotes(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"/>
+              </div>
+              {/* Reason — required */}
+              <div className="rounded-xl border-2 p-4" style={{borderColor:ORANGE,background:"#fff7f7"}}>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:ORANGE}}>
+                  Reason for Edit <span className="text-red-500">*</span>
+                </label>
+                <input type="text" value={editReason} onChange={e=>setEditReason(e.target.value)}
+                  placeholder="Required — describe why this entry is being changed"
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                  style={{borderColor:editReason.trim()?ORANGE:undefined}}/>
+              </div>
+              <div className="flex gap-3 pt-2">
+                <button type="button" onClick={()=>setEditEntry(null)}
+                  className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold uppercase tracking-wider text-gray-500 hover:border-gray-400 transition">
+                  Cancel
+                </button>
+                <button type="submit" disabled={editSaving}
+                  className="flex-1 text-white font-bold uppercase tracking-wider py-3 rounded-xl transition hover:opacity-80 disabled:opacity-50"
+                  style={{background:NAVY}}>
+                  {editSaving?"Saving…":"Save Changes"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ── Audit History Modal ── */}
+      {auditEntry && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[80vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white" style={{borderColor:"#e5e7eb"}}>
+              <div>
+                <h3 className="text-lg font-bold uppercase tracking-wider" style={{color:NAVY}}>Edit History</h3>
+                <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wider">{auditEntry.rj_number} · {auditEntry.company_name}</p>
+              </div>
+              <button onClick={()=>setAuditEntry(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">✕</button>
+            </div>
+            <div className="p-6">
+              {auditLoading ? (
+                <p className="text-center text-gray-400 py-8 uppercase tracking-widest text-sm font-semibold">Loading…</p>
+              ) : auditLog.length === 0 ? (
+                <p className="text-center text-gray-400 py-8 uppercase tracking-widest text-sm font-semibold">No edit history for this entry.</p>
+              ) : (
+                <div className="space-y-3">
+                  {auditLog.map(row => (
+                    <div key={row.id} className="rounded-xl border p-4" style={{borderColor:"#e5e7eb"}}>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs font-bold uppercase tracking-widest" style={{color:TEAL}}>{row.field_changed}</span>
+                        <span className="text-xs text-gray-400 uppercase tracking-wider">
+                          {new Date(row.edited_at).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",hour:"2-digit",minute:"2-digit"})}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm mb-2">
+                        <span className="line-through text-gray-400">{row.old_value || "—"}</span>
+                        <span className="text-gray-300">→</span>
+                        <span className="font-semibold" style={{color:NAVY}}>{row.new_value || "—"}</span>
+                      </div>
+                      <p className="text-xs text-gray-500 italic">&ldquo;{row.reason}&rdquo; — {row.edited_by}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
