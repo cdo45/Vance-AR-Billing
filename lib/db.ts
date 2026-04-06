@@ -64,8 +64,13 @@ export interface Customer {
 // ─── Connection ───────────────────────────────────────────────────────────────
 
 export function getSql() {
-  const url = process.env.DATABASE_URL;
-  if (!url) throw new Error("DATABASE_URL environment variable is not set");
+  const rawUrl = process.env.DATABASE_URL;
+  if (!rawUrl) throw new Error("DATABASE_URL environment variable is not set");
+  // Strip channel_binding parameter — not supported by Neon's HTTP/serverless driver
+  const url = rawUrl
+    .replace(/&channel_binding=[^&#]*/gi, "")
+    .replace(/\?channel_binding=[^&#]*&/gi, "?")
+    .replace(/\?channel_binding=[^&#]*/gi, "");
   return neon(url);
 }
 
@@ -75,7 +80,8 @@ let _initialized = false;
 
 export async function initDb() {
   if (_initialized) return;
-  const sql = getSql();
+  try {
+    const sql = getSql();
 
   // ── billing_entries ─────────────────────────────────────────────────────────
   await sql`
@@ -152,10 +158,15 @@ export async function initDb() {
     )
   `;
 
-  // ── Seed from jobs.json if tables are empty ─────────────────────────────────
-  await seedFromJobsJson();
+    // ── Seed from jobs.json if tables are empty ───────────────────────────────
+    await seedFromJobsJson();
 
-  _initialized = true;
+    _initialized = true;
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[db] initDb() failed:", message);
+    throw err;
+  }
 }
 
 // ─── Seeder ───────────────────────────────────────────────────────────────────
@@ -179,7 +190,7 @@ async function seedFromJobsJson() {
 
   console.log(`[db] Seeding ${staticJobs.length} jobs + customers from jobs.json…`);
 
-  // Seed customers (distinct company names) in chunks of 500
+  // ── Seed customers — individual INSERT per company (reliable, no array tricks) ──
   const seen = new Set<string>();
   const distinctCompanies: string[] = [];
   for (const j of staticJobs) {
@@ -188,31 +199,48 @@ async function seedFromJobsJson() {
       distinctCompanies.push(j.company_name);
     }
   }
-  const CCHUNK = 500;
-  for (let i = 0; i < distinctCompanies.length; i += CCHUNK) {
-    const chunk = distinctCompanies.slice(i, i + CCHUNK);
-    await sql`
-      INSERT INTO customers (company_name)
-      SELECT unnest(${chunk}::text[])
-      ON CONFLICT (company_name) DO NOTHING
-    `;
-  }
 
-  // Seed jobs in chunks of 500
-  const JCHUNK = 500;
+  let custSeeded = 0;
+  for (const company of distinctCompanies) {
+    try {
+      await sql`
+        INSERT INTO customers (company_name)
+        VALUES (${company})
+        ON CONFLICT (company_name) DO NOTHING
+      `;
+      custSeeded++;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`[db] Failed to insert customer "${company}": ${msg}`);
+    }
+  }
+  console.log(`[db] Seeded ${custSeeded} / ${distinctCompanies.length} customers`);
+
+  // ── Seed jobs — multi-value INSERT using SQL function form, 200 rows/chunk ──
+  const JCHUNK = 200;
+  let jobsSeeded = 0;
   for (let i = 0; i < staticJobs.length; i += JCHUNK) {
     const slice = staticJobs.slice(i, i + JCHUNK);
-    const rjNums    = slice.map(j => j.rj_number);
-    const descs     = slice.map(j => j.job_description || "");
-    const companies = slice.map(j => j.company_name);
-    await sql`
-      INSERT INTO jobs (rj_number, job_description, company_name)
-      SELECT t.rj, t.desc, t.co
-      FROM unnest(${rjNums}::text[], ${descs}::text[], ${companies}::text[])
-        AS t(rj, desc, co)
-      ON CONFLICT (rj_number) DO NOTHING
-    `;
+    const placeholders = slice
+      .map((_, idx) => `($${idx * 3 + 1}, $${idx * 3 + 2}, $${idx * 3 + 3})`)
+      .join(", ");
+    const params: string[] = slice.flatMap(j => [
+      j.rj_number,
+      j.job_description || "",
+      j.company_name,
+    ]);
+    try {
+      await (sql as unknown as (q: string, p: string[]) => Promise<unknown>)(
+        `INSERT INTO jobs (rj_number, job_description, company_name) VALUES ${placeholders} ON CONFLICT (rj_number) DO NOTHING`,
+        params
+      );
+      jobsSeeded += slice.length;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.warn(`[db] Failed to seed jobs chunk ${i}–${i + JCHUNK}: ${msg}`);
+    }
   }
+  console.log(`[db] Seeded up to ${jobsSeeded} jobs`);
 
   // Link jobs → customers
   await sql`
