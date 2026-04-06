@@ -175,6 +175,25 @@ export default function EntryForm() {
 
   const weekTotal = DAYS.reduce((s,d) => s+parseDollar(amounts[d]), 0);
 
+  // Day dates for the selected week (used in both form labels and right panel)
+  const dayDates = DAYS.map((_, i) => {
+    const d = new Date(weekStart);
+    d.setDate(d.getDate() + i);
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  });
+
+  // How many entries per company this week (for orange multi-job highlight)
+  const companyCount: Record<string, number> = {};
+  for (const e of entries) {
+    companyCount[e.company_name] = (companyCount[e.company_name] || 0) + 1;
+  }
+
+  // Invoice duplicate check (FIX 5) — purely derived from existing entries state
+  const invoiceTrim = invoiceNum.trim().toUpperCase();
+  const duplicateInvoice = invoiceTrim
+    ? entries.find(e => e.invoice_number.trim().toUpperCase() === invoiceTrim) ?? null
+    : null;
+
   // Chart data: daily totals for the week
   const chartData = DAYS.map((day,i) => ({
     day: DAY_LABELS[i],
@@ -469,17 +488,13 @@ export default function EntryForm() {
                 Daily Amounts
               </label>
               <div className="grid grid-cols-7 gap-2">
-                {DAYS.map((day,i)=>{
-                  const dayDate = new Date(weekStart);
-                  dayDate.setDate(dayDate.getDate() + i);
-                  const dateLabel = dayDate.toLocaleDateString("en-US",{month:"short",day:"numeric"});
-                  return (
+                {DAYS.map((day,i)=>(
                   <div key={day} className="flex flex-col items-center gap-1">
                     <span className="text-xs font-bold tracking-widest"
                       style={{color:day==="sun"||day==="sat"?ORANGE:"#6b7280"}}>
                       {DAY_LABELS[i]}
                     </span>
-                    <span className="text-xs text-gray-400 leading-none mb-0.5">{dateLabel}</span>
+                    <span className="text-xs text-gray-400 leading-none mb-0.5">{dayDates[i]}</span>
                     <input type="text" inputMode="decimal" placeholder="—"
                       value={amounts[day]}
                       onChange={e=>setAmounts(p=>({...p,[day]:e.target.value}))}
@@ -490,8 +505,7 @@ export default function EntryForm() {
                       style={{borderColor:parseDollar(amounts[day])>0?TEAL:undefined}}
                     />
                   </div>
-                  );
-                })}
+                ))}
               </div>
               {/* Week Total */}
               <div className="mt-4 flex items-center justify-end gap-3 pr-1">
@@ -502,24 +516,42 @@ export default function EntryForm() {
               </div>
             </div>
 
-            {/* Invoice & Notes */}
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>Invoice #</label>
-                <input type="text" placeholder="INV-2026-0001"
-                  value={invoiceNum} onChange={e=>setInvoiceNum(e.target.value)}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
-                  Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
-                </label>
-                <input type="text" placeholder="Any remarks…"
-                  value={notes} onChange={e=>setNotes(e.target.value)}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
-                />
-              </div>
+            {/* Invoice # — FIX 3: prominent with helper text */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                Invoice #
+              </label>
+              <input type="text" placeholder="INV-2026-0001"
+                value={invoiceNum} onChange={e=>setInvoiceNum(e.target.value)}
+                className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                style={{borderColor:invoiceNum?TEAL:undefined}}
+              />
+              <p className="text-xs text-gray-400 mt-1">
+                One invoice number covers all days billed this week for this job
+              </p>
+              {/* FIX 5: Duplicate invoice warning */}
+              {duplicateInvoice && (
+                <div className="mt-2 flex items-start gap-2 px-3 py-2.5 rounded-lg text-xs font-medium"
+                  style={{background:"#fefce8",border:"1px solid #fbbf24",color:"#78350f"}}>
+                  <span className="flex-shrink-0 font-bold text-sm leading-none">⚠</span>
+                  <span>
+                    Invoice <span className="font-bold">{invoiceNum}</span> already used this week for{" "}
+                    <span className="font-bold">{duplicateInvoice.rj_number}</span> — {duplicateInvoice.company_name}.{" "}
+                    Add another entry to the same invoice?
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* Notes */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
+              </label>
+              <input type="text" placeholder="Any remarks…"
+                value={notes} onChange={e=>setNotes(e.target.value)}
+                className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+              />
             </div>
 
             {/* Submit */}
@@ -543,72 +575,109 @@ export default function EntryForm() {
                 )}
               </h2>
 
-              {/* Entries table */}
+              {/* Dispatch grid — FIX 4 */}
               {entries.length===0 ? (
                 <p className="text-gray-400 text-sm py-6 text-center">No entries yet for this week.</p>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-xs">
+                  <table className="w-full text-xs border-collapse">
                     <thead>
-                      <tr className="text-white text-xs uppercase tracking-wider" style={{background:NAVY}}>
-                        <th className="px-3 py-2 text-left">RJ #</th>
-                        <th className="px-3 py-2 text-left">Company</th>
-                        {DAY_LABELS.map(d=><th key={d} className="px-1 py-2 text-center">{d}</th>)}
-                        <th className="px-3 py-2 text-right">Total</th>
-                        <th className="px-2 py-2 text-left">Prelim</th>
-                        <th className="px-2 py-2"></th>
+                      <tr style={{background:NAVY}} className="text-white">
+                        {/* Job column */}
+                        <th className="px-3 py-2 text-left text-xs uppercase tracking-wider font-bold min-w-[130px]">
+                          Job
+                        </th>
+                        {/* Day columns with date */}
+                        {DAYS.map((day,i)=>(
+                          <th key={day} className="px-1 py-2 text-center text-xs uppercase tracking-wider font-bold min-w-[52px]">
+                            <div style={{color:day==="sun"||day==="sat"?"#fca5a5":"white"}}>{DAY_LABELS[i]}</div>
+                            <div className="text-xs font-normal opacity-60">{dayDates[i]}</div>
+                          </th>
+                        ))}
+                        {/* Invoice + Total */}
+                        <th className="px-2 py-2 text-left text-xs uppercase tracking-wider font-bold min-w-[90px]">Inv #</th>
+                        <th className="px-3 py-2 text-right text-xs uppercase tracking-wider font-bold whitespace-nowrap">Total</th>
+                        <th className="px-1 py-2 w-8"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {entries.map((entry,i)=>(
-                        <tr key={entry.id} style={{background:i%2===0?"white":LTGRAY}}>
-                          <td className="px-3 py-2 font-bold whitespace-nowrap" style={{color:NAVY}}>
-                            {entry.rj_number}
-                          </td>
-                          <td className="px-3 py-2 max-w-[140px]">
-                            <div className="text-gray-600 truncate whitespace-nowrap">{entry.company_name}</div>
-                            {entry.work_description && (
-                              <div className="text-gray-400 text-xs truncate whitespace-nowrap italic">{entry.work_description}</div>
-                            )}
-                          </td>
-                          {DAYS.map(day=>(
-                            <td key={day} className="px-1 py-2 text-center tabular-nums"
-                              style={{color:Number(entry[day])>0?"#374151":"#d1d5db"}}>
-                              {fmtCell(Number(entry[day]))}
+                      {entries.map((entry,i)=>{
+                        const multiJob = companyCount[entry.company_name] > 1;
+                        return (
+                          <tr key={entry.id} style={{background:i%2===0?"white":LTGRAY}}>
+                            {/* Job info cell */}
+                            <td className="px-3 py-2">
+                              <div className="font-bold whitespace-nowrap" style={{color:NAVY}}>{entry.rj_number}</div>
+                              <div className="text-xs whitespace-nowrap leading-tight mt-0.5"
+                                style={{color:multiJob?ORANGE:"#6b7280",fontWeight:multiJob?700:400}}>
+                                {entry.company_name}
+                              </div>
+                              {entry.work_description && (
+                                <div className="text-xs text-gray-400 italic truncate max-w-[120px] leading-tight">
+                                  {entry.work_description}
+                                </div>
+                              )}
                             </td>
-                          ))}
-                          <td className="px-3 py-2 text-right font-bold tabular-nums whitespace-nowrap"
-                            style={{color:ORANGE}}>
-                            {fmtCurrency(Number(entry.week_total))}
-                          </td>
-                          <td className="px-2 py-2 text-xs text-gray-500 whitespace-nowrap">
-                            {entry.prelim_date
-                              ? new Date(entry.prelim_date + "T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})
-                              : "—"}
-                          </td>
-                          <td className="px-2 py-2 text-center">
-                            <button onClick={()=>handleDelete(entry.id)}
-                              disabled={deleting===entry.id}
-                              className="text-xs text-gray-300 hover:text-red-500 transition px-1.5 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
-                              {deleting===entry.id?"…":"Del"}
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                            {/* Day amount cells */}
+                            {DAYS.map(day=>{
+                              const amt = Number(entry[day]);
+                              return (
+                                <td key={day}
+                                  className="px-1 py-2 text-center tabular-nums"
+                                  style={{
+                                    background: amt>0 ? "#d1fae5" : undefined,
+                                    color:      amt>0 ? "#065f46" : "#d1d5db",
+                                    fontWeight: amt>0 ? 600 : 400,
+                                  }}>
+                                  {amt>0 ? fmtCell(amt) : "—"}
+                                </td>
+                              );
+                            })}
+                            {/* Invoice + prelim */}
+                            <td className="px-2 py-2">
+                              <div className="text-gray-700 font-medium whitespace-nowrap">
+                                {entry.invoice_number || <span className="text-gray-300">—</span>}
+                              </div>
+                              {entry.prelim_date && (
+                                <div className="text-xs text-gray-400 whitespace-nowrap">
+                                  P: {new Date(entry.prelim_date + "T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+                                </div>
+                              )}
+                            </td>
+                            {/* Week total */}
+                            <td className="px-3 py-2 text-right font-bold tabular-nums whitespace-nowrap"
+                              style={{color:ORANGE}}>
+                              {fmtCurrency(Number(entry.week_total))}
+                            </td>
+                            {/* Delete */}
+                            <td className="px-1 py-2 text-center">
+                              <button onClick={()=>handleDelete(entry.id)}
+                                disabled={deleting===entry.id}
+                                className="text-xs text-gray-300 hover:text-red-500 transition px-1 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
+                                {deleting===entry.id?"…":"✕"}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
+                    {/* Daily totals footer */}
                     <tfoot>
                       <tr className="text-white text-xs font-bold" style={{background:NAVY}}>
-                        <td colSpan={2} className="px-3 py-2 text-right uppercase tracking-wider text-xs">Totals</td>
+                        <td className="px-3 py-2 uppercase tracking-wider text-xs">Daily Totals</td>
                         {DAYS.map(day=>{
                           const s=entries.reduce((t,e)=>t+Number(e[day]),0);
-                          return <td key={day} className="px-1 py-2 text-center tabular-nums">
-                            {s>0?fmtBlur(s):<span className="opacity-40">—</span>}
-                          </td>;
+                          return (
+                            <td key={day} className="px-1 py-2 text-center tabular-nums"
+                              style={{color: s>0 ? "#6ee7b7" : undefined}}>
+                              {s>0 ? fmtBlur(s) : <span className="opacity-30">—</span>}
+                            </td>
+                          );
                         })}
-                        <td className="px-3 py-2 text-right tabular-nums" style={{color:ORANGE}}>
+                        <td className="px-2 py-2"></td>
+                        <td className="px-3 py-2 text-right tabular-nums" style={{color:"#fcd34d"}}>
                           {fmtCurrency(grandTotal)}
                         </td>
-                        <td></td>
                         <td></td>
                       </tr>
                     </tfoot>
