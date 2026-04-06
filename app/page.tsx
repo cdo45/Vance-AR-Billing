@@ -4,12 +4,14 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
 } from "recharts";
+import NavBar from "@/app/components/NavBar";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Job {
   rj_number: string;
   job_description: string;
   company_name: string;
+  customer_id?: number | null;
 }
 
 interface DayAmounts {
@@ -29,6 +31,7 @@ interface BillingEntry {
   invoice_number: string;
   notes: string;
   work_description: string;
+  prelim_date: string | null;
   created_at: string;
 }
 
@@ -75,9 +78,10 @@ export default function EntryForm() {
   const [weekStart, setWeekStart] = useState<Date>(() => getSundayOfWeek(new Date()));
 
   // Search / selection
-  const [query, setQuery]           = useState("");
-  const [showDrop, setShowDrop]     = useState(false);
-  const [selectedJob, setSelectedJob] = useState<Job|null>(null);
+  const [query, setQuery]                       = useState("");
+  const [showDrop, setShowDrop]                 = useState(false);
+  const [selectedJob, setSelectedJob]           = useState<Job|null>(null);
+  const [selectedCustomerId, setSelectedCustomerId] = useState<number|null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef  = useRef<HTMLInputElement>(null);
 
@@ -91,8 +95,9 @@ export default function EntryForm() {
   const [invoiceNum, setInvoiceNum] = useState("");
   const [notes, setNotes]           = useState("");
 
-  // Work description
-  const [workDesc, setWorkDesc] = useState("");
+  // Work description + prelim date
+  const [workDesc, setWorkDesc]     = useState("");
+  const [prelimDate, setPrelimDate] = useState("");
 
   // DB status & company autocomplete
   const [dbStatus, setDbStatus]     = useState<"loading"|"ok"|"error">("loading");
@@ -181,18 +186,21 @@ export default function EntryForm() {
   function pickJob(job: Job) {
     setSelectedJob(job); setQuery(""); setShowDrop(false);
     setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setSelectedCustomerId(job.customer_id ?? null);
   }
   function pickCustom() {
     setIsCustom(true); setShowDrop(false); setSelectedJob(null);
     setCustomCompany(""); setCustomDesc("");
   }
   function cancelCustom() {
-    setIsCustom(false); setCustomCompany(""); setCustomDesc(""); setWorkDesc("");
+    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setWorkDesc(""); setPrelimDate(""); setSelectedCustomerId(null);
     setTimeout(() => inputRef.current?.focus(), 50);
   }
   function clearJob() {
-    setSelectedJob(null); setQuery("");
-    setIsCustom(false); setCustomCompany(""); setCustomDesc(""); setWorkDesc("");
+    setSelectedJob(null); setQuery(""); setSelectedCustomerId(null);
+    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setWorkDesc(""); setPrelimDate("");
     setTimeout(() => inputRef.current?.focus(), 50);
   }
   function advanceWeek(delta: number) {
@@ -253,13 +261,16 @@ export default function EntryForm() {
           sat:parseDollar(amounts.sat),
           invoice_number:invoiceNum, notes,
           work_description:workDesc,
+          prelim_date:prelimDate||null,
+          customer_id:selectedCustomerId,
         }),
       });
       if (!res.ok) { const err=await res.json(); throw new Error(err.error||"Server error"); }
 
       setToast({msg:`✓ Saved — ${rj} · ${fmtCurrency(weekTotal)}`,type:"success"});
       setSelectedJob(null); setQuery(""); setAmounts(EMPTY_AMOUNTS);
-      setInvoiceNum(""); setNotes(""); setWorkDesc(""); setIsCustom(false);
+      setInvoiceNum(""); setNotes(""); setWorkDesc(""); setPrelimDate("");
+      setSelectedCustomerId(null); setIsCustom(false);
       setCustomCompany(""); setCustomDesc("");
       await fetchEntries();
     } catch(err) {
@@ -308,6 +319,7 @@ export default function EntryForm() {
           <p className="text-sm opacity-75">{formatTodayLong()}</p>
         </div>
       </header>
+      <NavBar />
 
       {/* Week Selector — full width above both columns */}
       <div className="max-w-7xl mx-auto px-4 pt-6">
@@ -436,18 +448,38 @@ export default function EntryForm() {
               />
             </div>
 
+            {/* Prelim Date */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                  Prelim Date <span className="text-gray-400 normal-case font-normal">(optional)</span>
+                </label>
+                <input type="date"
+                  value={prelimDate} onChange={e=>setPrelimDate(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                  style={{borderColor:prelimDate?TEAL:undefined}}
+                />
+                <p className="text-xs text-gray-400 mt-1">Date prelim was sent to customer</p>
+              </div>
+            </div>
+
             {/* Day Amount Inputs */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest mb-3" style={{color:TEAL}}>
                 Daily Amounts
               </label>
               <div className="grid grid-cols-7 gap-2">
-                {DAYS.map((day,i)=>(
+                {DAYS.map((day,i)=>{
+                  const dayDate = new Date(weekStart);
+                  dayDate.setDate(dayDate.getDate() + i);
+                  const dateLabel = dayDate.toLocaleDateString("en-US",{month:"short",day:"numeric"});
+                  return (
                   <div key={day} className="flex flex-col items-center gap-1">
                     <span className="text-xs font-bold tracking-widest"
                       style={{color:day==="sun"||day==="sat"?ORANGE:"#6b7280"}}>
                       {DAY_LABELS[i]}
                     </span>
+                    <span className="text-xs text-gray-400 leading-none mb-0.5">{dateLabel}</span>
                     <input type="text" inputMode="decimal" placeholder="—"
                       value={amounts[day]}
                       onChange={e=>setAmounts(p=>({...p,[day]:e.target.value}))}
@@ -458,7 +490,8 @@ export default function EntryForm() {
                       style={{borderColor:parseDollar(amounts[day])>0?TEAL:undefined}}
                     />
                   </div>
-                ))}
+                  );
+                })}
               </div>
               {/* Week Total */}
               <div className="mt-4 flex items-center justify-end gap-3 pr-1">
@@ -522,6 +555,7 @@ export default function EntryForm() {
                         <th className="px-3 py-2 text-left">Company</th>
                         {DAY_LABELS.map(d=><th key={d} className="px-1 py-2 text-center">{d}</th>)}
                         <th className="px-3 py-2 text-right">Total</th>
+                        <th className="px-2 py-2 text-left">Prelim</th>
                         <th className="px-2 py-2"></th>
                       </tr>
                     </thead>
@@ -547,6 +581,11 @@ export default function EntryForm() {
                             style={{color:ORANGE}}>
                             {fmtCurrency(Number(entry.week_total))}
                           </td>
+                          <td className="px-2 py-2 text-xs text-gray-500 whitespace-nowrap">
+                            {entry.prelim_date
+                              ? new Date(entry.prelim_date + "T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})
+                              : "—"}
+                          </td>
                           <td className="px-2 py-2 text-center">
                             <button onClick={()=>handleDelete(entry.id)}
                               disabled={deleting===entry.id}
@@ -569,6 +608,7 @@ export default function EntryForm() {
                         <td className="px-3 py-2 text-right tabular-nums" style={{color:ORANGE}}>
                           {fmtCurrency(grandTotal)}
                         </td>
+                        <td></td>
                         <td></td>
                       </tr>
                     </tfoot>

@@ -6,13 +6,14 @@ export async function GET() {
     await initDb();
     const sql = getSql();
 
-    // Pull distinct company names from both billing_entries and custom_jobs
     const rows = await sql`
       SELECT DISTINCT company_name
       FROM (
+        SELECT company_name FROM customers       WHERE company_name <> ''
+        UNION
         SELECT company_name FROM billing_entries WHERE company_name <> ''
         UNION
-        SELECT company_name FROM custom_jobs   WHERE company_name <> ''
+        SELECT company_name FROM custom_jobs     WHERE company_name <> ''
       ) combined
       ORDER BY company_name ASC
     `;
@@ -22,6 +23,6 @@ export async function GET() {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("[companies] Failed to fetch company names:", message);
-    return NextResponse.json([], { status: 200 }); // graceful fallback
+    return NextResponse.json([], { status: 200 });
   }
 }
