@@ -49,4 +49,19 @@ export async function initDb() {
   `;
   await sql`CREATE INDEX IF NOT EXISTS idx_week_start ON billing_entries(week_start)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_rj_number  ON billing_entries(rj_number)`;
+  await sql`
+    CREATE TABLE IF NOT EXISTS custom_jobs (
+      id             SERIAL PRIMARY KEY,
+      rj_number      TEXT    UNIQUE NOT NULL,
+      company_name   TEXT    NOT NULL,
+      job_description TEXT   NOT NULL DEFAULT '',
+      created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    )
+  `;
+}
+
+export interface JobRecord {
+  rj_number: string;
+  company_name: string;
+  job_description: string;
 }
