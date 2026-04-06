@@ -32,7 +32,18 @@ interface BillingEntry {
   notes: string;
   work_description: string;
   prelim_date: string | null;
+  status: string;
   created_at: string;
+}
+
+interface GridRow {
+  rj_number: string;
+  company_name: string;
+  rowStatus: string;
+  invoices: string[];
+  days: Record<string, { total: number; descs: string[] }>;
+  rowTotal: number;
+  entries: BillingEntry[];
 }
 
 interface Toast { msg: string; type: "success" | "error"; }
@@ -42,11 +53,20 @@ const DAYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
 type Day = typeof DAYS[number];
 const DAY_LABELS = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
 const EMPTY_AMOUNTS: DayAmounts = { sun:"",mon:"",tue:"",wed:"",thu:"",fri:"",sat:"" };
-const NAVY = "#1F3864";
-const TEAL = "#1F6B6B";
+const NAVY   = "#1F3864";
+const TEAL   = "#1F6B6B";
 const ORANGE = "#C8102E";
 const DKGREEN = "#1E6B1E";
-const LTGRAY = "#F2F2F2";
+const LTGRAY  = "#F2F2F2";
+
+const STATUS_ORDER = ["pending","invoiced","received"] as const;
+type EntryStatus = typeof STATUS_ORDER[number];
+const STATUS_ROW_BG:     Record<string,string> = { pending:"#EFF6FF", invoiced:"#FEFCE8", received:"#F0FDF4" };
+const STATUS_BADGE_BG:   Record<string,string> = { pending:"#DBEAFE", invoiced:"#FEF9C3", received:"#DCFCE7" };
+const STATUS_BADGE_CLR:  Record<string,string> = { pending:"#1e40af", invoiced:"#92400e", received:"#14532d" };
+const STATUS_FORM_BG:    Record<string,string> = { pending:"#DBEAFE", invoiced:"#FEF9C3", received:"#DCFCE7" };
+const STATUS_FORM_BORDER:Record<string,string> = { pending:"#93c5fd", invoiced:"#fbbf24", received:"#86efac" };
+const STATUS_FORM_TEXT:  Record<string,string> = { pending:NAVY,      invoiced:"#78350f", received:DKGREEN  };
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function getSundayOfWeek(d: Date): Date {
@@ -66,7 +86,7 @@ function formatTodayLong() {
 function parseDollar(v: string) { const n=parseFloat(v.replace(/[^0-9.]/g,"")); return isNaN(n)?0:n; }
 function fmtBlur(n: number) { return n>0?n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):""; }
 function fmtCurrency(n: number) { return n.toLocaleString("en-US",{style:"currency",currency:"USD"}); }
-function fmtCell(n: number) { return n>0?n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—"; }
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function EntryForm() {
@@ -104,6 +124,9 @@ export default function EntryForm() {
   const [companies, setCompanies]   = useState<string[]>([]);
   const [showCompanyDrop, setShowCompanyDrop] = useState(false);
   const companyRef = useRef<HTMLDivElement>(null);
+
+  // Entry status
+  const [entryStatus, setEntryStatus] = useState<EntryStatus>("pending");
 
   // UI state
   const [toast, setToast]         = useState<Toast|null>(null);
@@ -217,6 +240,32 @@ export default function EntryForm() {
   }));
   const grandTotal = entries.reduce((s,e) => s+Number(e.week_total), 0);
 
+  // Grouped rows: collapse multiple entries with same RJ# into one grid row
+  const rowMap: Record<string, GridRow> = {};
+  for (const e of entries) {
+    if (!rowMap[e.rj_number]) {
+      rowMap[e.rj_number] = {
+        rj_number: e.rj_number, company_name: e.company_name,
+        rowStatus: "received", invoices: [], days: {}, rowTotal: 0, entries: [],
+      };
+    }
+    const g = rowMap[e.rj_number];
+    g.entries.push(e);
+    if (e.invoice_number && !g.invoices.includes(e.invoice_number)) g.invoices.push(e.invoice_number);
+    for (const day of DAYS) {
+      const amt = Number(e[day]);
+      if (!g.days[day]) g.days[day] = { total: 0, descs: [] };
+      g.days[day].total += amt;
+      if (amt > 0 && e.work_description && !g.days[day].descs.includes(e.work_description))
+        g.days[day].descs.push(e.work_description);
+    }
+    g.rowTotal += Number(e.week_total);
+    const eStat = (e.status || "pending") as EntryStatus;
+    if (STATUS_ORDER.indexOf(eStat) < STATUS_ORDER.indexOf(g.rowStatus as EntryStatus))
+      g.rowStatus = eStat;
+  }
+  const gridRows = Object.values(rowMap);
+
   // ── Actions ──
   function pickJob(job: Job) {
     setSelectedJob(job); setQuery(""); setShowDrop(false);
@@ -298,6 +347,7 @@ export default function EntryForm() {
           work_description:workDesc,
           prelim_date:prelimDate||null,
           customer_id:selectedCustomerId,
+          status:entryStatus,
         }),
       });
       if (!res.ok) { const err=await res.json(); throw new Error(err.error||"Server error"); }
@@ -306,7 +356,7 @@ export default function EntryForm() {
       setSelectedJob(null); setQuery(""); setAmounts(EMPTY_AMOUNTS);
       setInvoiceNum(""); setNotes(""); setWorkDesc(""); setPrelimDate("");
       setSelectedCustomerId(null); setIsCustom(false);
-      setCustomCompany(""); setCustomDesc("");
+      setCustomCompany(""); setCustomDesc(""); setEntryStatus("pending");
       await fetchEntries();
     } catch(err) {
       setToast({msg:`Error: ${err instanceof Error?err.message:"Unknown"}`,type:"error"});
@@ -383,6 +433,19 @@ export default function EntryForm() {
     finally { setAuditLoading(false); }
   }
 
+  async function cycleStatus(entry: BillingEntry) {
+    const cur = (entry.status || "pending") as EntryStatus;
+    const next = STATUS_ORDER[(STATUS_ORDER.indexOf(cur) + 1) % STATUS_ORDER.length];
+    setEntries(prev => prev.map(e => e.id === entry.id ? { ...e, status: next } : e));
+    try {
+      await fetch(`/api/entries/${entry.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: next }),
+      });
+    } catch { /* revert on failure is not critical */ }
+  }
+
   // ── Render ────────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen" style={{background:LTGRAY,fontFamily:"Arial,Helvetica,sans-serif"}}>
@@ -398,7 +461,7 @@ export default function EntryForm() {
       <SiteHeader />
 
       {/* DB status + date bar */}
-      <div className="max-w-7xl mx-auto px-4 pt-3 flex items-center justify-between text-xs text-gray-500">
+      <div className="w-full px-4 md:px-6 lg:px-8 pt-3 flex items-center justify-between text-xs text-gray-500">
         <div className="flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full flex-shrink-0" style={{
             background: dbStatus==="ok" ? "#22c55e" : dbStatus==="error" ? "#ef4444" : "#9ca3af"
@@ -411,7 +474,7 @@ export default function EntryForm() {
       </div>
 
       {/* Week Selector — full width above both columns */}
-      <div className="max-w-7xl mx-auto px-4 pt-6">
+      <div className="w-full px-2 md:px-4 lg:px-8 pt-6">
         <div className="bg-white rounded-2xl shadow px-6 py-4 flex items-center gap-4 mb-6">
           <button type="button" onClick={()=>advanceWeek(-1)}
             className="w-10 h-10 rounded-full text-white text-xl font-bold flex items-center justify-center transition hover:opacity-80"
@@ -427,11 +490,11 @@ export default function EntryForm() {
       </div>
 
       {/* Two-column body */}
-      <div className="max-w-7xl mx-auto px-4 pb-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      <div className="w-full px-2 md:px-4 lg:px-8 pb-10">
+        <div className="flex flex-col lg:flex-row gap-6 items-start">
 
           {/* ── LEFT: Entry Form ── */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="w-full lg:w-[40%] flex-shrink-0 bg-white rounded-2xl shadow p-6 space-y-6">
 
             {/* Job Search */}
             <div>
@@ -613,6 +676,26 @@ export default function EntryForm() {
               )}
             </div>
 
+            {/* Status */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                Status
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {STATUS_ORDER.map(s => (
+                  <button key={s} type="button" onClick={()=>setEntryStatus(s)}
+                    className="py-3 rounded-xl text-sm font-bold uppercase tracking-wider border-2 transition"
+                    style={{
+                      background:   entryStatus===s ? STATUS_FORM_BG[s]     : "white",
+                      color:        entryStatus===s ? STATUS_FORM_TEXT[s]   : "#9ca3af",
+                      borderColor:  entryStatus===s ? STATUS_FORM_BORDER[s] : "#e5e7eb",
+                    }}>
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Notes */}
             <div>
               <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
@@ -633,164 +716,171 @@ export default function EntryForm() {
             </button>
           </form>
 
-          {/* ── RIGHT: This Week at a Glance ── */}
-          <div className="space-y-4">
-            <div className="bg-white rounded-2xl shadow p-6">
-              <h2 className="text-xs font-bold uppercase tracking-widest mb-4" style={{color:TEAL}}>
-                This Week at a Glance
+          {/* ── RIGHT: Dispatch Grid (unified card) ── */}
+          <div className="w-full lg:flex-1 min-w-0">
+            <div className="bg-white rounded-2xl shadow border border-gray-100 overflow-hidden">
+
+              {/* Card header */}
+              <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+                <h2 className="text-xs font-bold uppercase tracking-widest" style={{color:TEAL}}>
+                  This Week at a Glance
+                </h2>
                 {entries.length>0 && (
-                  <span className="ml-2 text-gray-400 font-normal normal-case">
-                    — {entries.length} entr{entries.length===1?"y":"ies"}
+                  <span className="text-xs text-gray-400 uppercase tracking-wider">
+                    {gridRows.length} job{gridRows.length!==1?"s":""} · {entries.length} entr{entries.length===1?"y":"ies"}
                   </span>
                 )}
-              </h2>
+              </div>
 
-              {/* Dispatch grid — FIX 4 */}
+              {/* Dispatch grid */}
               {entries.length===0 ? (
-                <p className="text-gray-400 text-xs py-6 text-center uppercase tracking-widest font-semibold">No entries yet for this week.</p>
+                <p className="text-gray-400 text-xs py-10 text-center uppercase tracking-widest font-semibold">
+                  No entries yet for this week.
+                </p>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-xs border-collapse">
-                    <thead>
-                      <tr style={{background:NAVY}} className="text-white">
-                        {/* Job column */}
-                        <th className="px-3 py-2 text-left text-xs uppercase tracking-wider font-bold min-w-[130px]">
-                          Job
+                <table className="w-full table-fixed text-xs border-collapse">
+                  <colgroup>
+                    <col style={{width:"18%"}}/>
+                    {DAYS.map(d=><col key={d} style={{width:"8%"}}/>)}
+                    <col style={{width:"10%"}}/>
+                    <col style={{width:"8%"}}/>
+                    <col style={{width:"8%"}}/>
+                  </colgroup>
+                  <thead>
+                    <tr style={{background:NAVY}} className="text-white">
+                      <th className="px-2 py-1.5 text-left uppercase tracking-wider font-bold text-[11px]">Job</th>
+                      {DAYS.map((day,i)=>(
+                        <th key={day} className="px-0.5 py-1.5 text-right font-bold leading-tight">
+                          <div className="text-[10px] uppercase tracking-wide"
+                            style={{color:day==="sun"||day==="sat"?"#fca5a5":"white"}}>
+                            {DAY_LABELS[i]}
+                          </div>
+                          <div className="text-[9px] font-normal opacity-50">{dayDates[i]}</div>
                         </th>
-                        {/* Day columns with date */}
-                        {DAYS.map((day,i)=>(
-                          <th key={day} className="px-1 py-2 text-center text-xs uppercase tracking-wider font-bold min-w-[52px]">
-                            <div style={{color:day==="sun"||day==="sat"?"#fca5a5":"white"}}>{DAY_LABELS[i]}</div>
-                            <div className="text-xs font-normal opacity-60">{dayDates[i]}</div>
-                          </th>
-                        ))}
-                        {/* Invoice + Total */}
-                        <th className="px-2 py-2 text-left text-xs uppercase tracking-wider font-bold min-w-[90px]">Inv #</th>
-                        <th className="px-3 py-2 text-right text-xs uppercase tracking-wider font-bold whitespace-nowrap">Total</th>
-                        <th className="px-1 py-2 w-8"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {entries.map((entry,i)=>{
-                        const multiJob = companyCount[entry.company_name] > 1;
+                      ))}
+                      <th className="px-1 py-1.5 text-left uppercase tracking-wider font-bold text-[10px]">Inv #</th>
+                      <th className="px-1 py-1.5 text-right uppercase tracking-wider font-bold text-[11px]">Total</th>
+                      <th className="px-1 py-1.5"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {gridRows.map((row)=>{
+                      const bdg = { bg: STATUS_BADGE_BG[row.rowStatus]??"#DBEAFE", clr: STATUS_BADGE_CLR[row.rowStatus]??"#1e40af" };
+                      return (
+                        <tr key={row.rj_number}
+                          style={{background: STATUS_ROW_BG[row.rowStatus]??"white"}}
+                          className="border-b border-gray-100 last:border-0">
+                          {/* Job cell */}
+                          <td className="px-2 py-1 align-top">
+                            <div className="font-bold text-[11px] truncate leading-tight" style={{color:NAVY}}>{row.rj_number}</div>
+                            <div className="text-[10px] truncate leading-tight text-gray-500">{row.company_name}</div>
+                            <span className="mt-0.5 inline-block text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none"
+                              style={{background:bdg.bg,color:bdg.clr}}>
+                              {row.rowStatus.toUpperCase()}
+                            </span>
+                          </td>
+                          {/* Day cells */}
+                          {DAYS.map(day=>{
+                            const d = row.days[day];
+                            const amt = d?.total ?? 0;
+                            return (
+                              <td key={day} className="px-0.5 py-1 text-right align-top tabular-nums"
+                                style={{
+                                  background: amt>0 ? "#d1fae5" : undefined,
+                                  color:      amt>0 ? "#065f46" : "#e5e7eb",
+                                  fontWeight: amt>0 ? 600 : 400,
+                                }}>
+                                {amt>0 ? (
+                                  <>
+                                    <div className="text-[11px]">{amt.toLocaleString("en-US",{maximumFractionDigits:0})}</div>
+                                    {d?.descs.map((desc,di)=>(
+                                      <div key={di} className="text-[9px] italic text-gray-400 leading-tight truncate">{desc}</div>
+                                    ))}
+                                  </>
+                                ) : <span className="text-[11px]">—</span>}
+                              </td>
+                            );
+                          })}
+                          {/* Invoices */}
+                          <td className="px-1 py-1 align-top text-[10px] text-gray-600">
+                            <div className="truncate leading-tight">
+                              {row.invoices.length>0 ? row.invoices.join(", ") : <span className="text-gray-300">—</span>}
+                            </div>
+                          </td>
+                          {/* Total */}
+                          <td className="px-1 py-1 text-right font-bold tabular-nums align-top text-[11px]" style={{color:ORANGE}}>
+                            {fmtCurrency(row.rowTotal)}
+                          </td>
+                          {/* Actions — one button set per sub-entry */}
+                          <td className="px-1 py-1 align-top">
+                            <div className="flex flex-col gap-0.5">
+                              {row.entries.map(e=>(
+                                <div key={e.id} className="flex items-center gap-0.5">
+                                  <button type="button" onClick={()=>openEditEntry(e)} title="Edit"
+                                    className="text-sm leading-none hover:opacity-60 transition" style={{color:TEAL}}>✏️</button>
+                                  <button type="button" onClick={()=>openHistory(e)} title="History"
+                                    className="text-sm leading-none text-gray-400 hover:text-gray-600 transition">🕐</button>
+                                  <button type="button" onClick={()=>cycleStatus(e)} title={`Cycle status (${e.status||"pending"})`}
+                                    className="text-sm leading-none hover:opacity-60 transition" style={{color:bdg.clr}}>🔄</button>
+                                  <button type="button" onClick={()=>handleDelete(e.id)} disabled={deleting===e.id} title="Delete"
+                                    className="text-sm leading-none text-gray-300 hover:text-red-500 transition disabled:opacity-40">
+                                    {deleting===e.id?"…":"🗑️"}
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  <tfoot>
+                    <tr className="text-white text-[11px] font-bold" style={{background:NAVY}}>
+                      <td className="px-2 py-1.5 uppercase tracking-wider">Totals</td>
+                      {DAYS.map(day=>{
+                        const s=entries.reduce((t,e)=>t+Number(e[day]),0);
                         return (
-                          <tr key={entry.id} style={{background:i%2===0?"white":LTGRAY}}>
-                            {/* Job info cell */}
-                            <td className="px-3 py-2">
-                              <div className="font-bold whitespace-nowrap" style={{color:NAVY}}>{entry.rj_number}</div>
-                              <div className="text-xs whitespace-nowrap leading-tight mt-0.5"
-                                style={{color:multiJob?ORANGE:"#6b7280",fontWeight:multiJob?700:400}}>
-                                {entry.company_name}
-                              </div>
-                              {entry.work_description && (
-                                <div className="text-xs text-gray-400 italic truncate max-w-[120px] leading-tight">
-                                  {entry.work_description}
-                                </div>
-                              )}
-                            </td>
-                            {/* Day amount cells */}
-                            {DAYS.map(day=>{
-                              const amt = Number(entry[day]);
-                              return (
-                                <td key={day}
-                                  className="px-1 py-2 text-center tabular-nums"
-                                  style={{
-                                    background: amt>0 ? "#d1fae5" : undefined,
-                                    color:      amt>0 ? "#065f46" : "#d1d5db",
-                                    fontWeight: amt>0 ? 600 : 400,
-                                  }}>
-                                  {amt>0 ? fmtCell(amt) : "—"}
-                                </td>
-                              );
-                            })}
-                            {/* Invoice + prelim */}
-                            <td className="px-2 py-2">
-                              <div className="text-gray-700 font-medium whitespace-nowrap">
-                                {entry.invoice_number || <span className="text-gray-300">—</span>}
-                              </div>
-                              {entry.prelim_date && (
-                                <div className="text-xs text-gray-400 whitespace-nowrap">
-                                  P: {new Date(entry.prelim_date + "T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
-                                </div>
-                              )}
-                            </td>
-                            {/* Week total */}
-                            <td className="px-3 py-2 text-right font-bold tabular-nums whitespace-nowrap"
-                              style={{color:ORANGE}}>
-                              {fmtCurrency(Number(entry.week_total))}
-                            </td>
-                            {/* Actions */}
-                            <td className="px-1 py-2 text-center">
-                              <div className="flex flex-col gap-1">
-                                <button onClick={()=>openEditEntry(entry)}
-                                  className="text-xs font-bold uppercase tracking-wider transition px-1 py-0.5 rounded border disabled:opacity-40"
-                                  style={{color:TEAL,borderColor:TEAL}}>
-                                  Edit
-                                </button>
-                                <button onClick={()=>openHistory(entry)}
-                                  className="text-xs font-bold uppercase tracking-wider text-gray-400 hover:text-gray-600 transition px-1 py-0.5 rounded border border-gray-300">
-                                  Hist
-                                </button>
-                                <button onClick={()=>handleDelete(entry.id)}
-                                  disabled={deleting===entry.id}
-                                  className="text-xs font-bold uppercase tracking-wider text-gray-300 hover:text-red-500 transition px-1 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
-                                  {deleting===entry.id?"…":"Del"}
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
+                          <td key={day} className="px-0.5 py-1.5 text-right tabular-nums"
+                            style={{color:s>0?"#6ee7b7":undefined}}>
+                            {s>0 ? s.toLocaleString("en-US",{maximumFractionDigits:0}) : <span className="opacity-30">—</span>}
+                          </td>
                         );
                       })}
-                    </tbody>
-                    {/* Daily totals footer */}
-                    <tfoot>
-                      <tr className="text-white text-xs font-bold" style={{background:NAVY}}>
-                        <td className="px-3 py-2 uppercase tracking-wider text-xs">Daily Totals</td>
-                        {DAYS.map(day=>{
-                          const s=entries.reduce((t,e)=>t+Number(e[day]),0);
-                          return (
-                            <td key={day} className="px-1 py-2 text-center tabular-nums"
-                              style={{color: s>0 ? "#6ee7b7" : undefined}}>
-                              {s>0 ? fmtBlur(s) : <span className="opacity-30">—</span>}
-                            </td>
-                          );
-                        })}
-                        <td className="px-2 py-2"></td>
-                        <td className="px-3 py-2 text-right tabular-nums" style={{color:"#fcd34d"}}>
-                          {fmtCurrency(grandTotal)}
-                        </td>
-                        <td></td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
+                      <td className="px-1 py-1.5"></td>
+                      <td className="px-1 py-1.5 text-right tabular-nums" style={{color:"#fcd34d"}}>{fmtCurrency(grandTotal)}</td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
               )}
-            </div>
 
-            {/* Daily Totals Bar Chart */}
-            {entries.length>0 && (
-              <div className="bg-white rounded-2xl shadow p-6">
-                <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{color:TEAL}}>
-                  Daily Totals
-                </h3>
-                <ResponsiveContainer width="100%" height={180}>
-                  <BarChart data={chartData} margin={{top:4,right:8,left:8,bottom:0}}>
-                    <XAxis dataKey="day" tick={{fontSize:11,fontWeight:600}} axisLine={false} tickLine={false}/>
-                    <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false}
-                      tickFormatter={v=>v===0?"":("$"+Number(v).toLocaleString())}/>
-                    <Tooltip
-                      formatter={(value)=>["$"+Number(value).toLocaleString("en-US",{minimumFractionDigits:2}),"Total"]}
-                      contentStyle={{borderRadius:"8px",border:"1px solid #e5e7eb",fontSize:"12px"}}
-                    />
-                    <Bar dataKey="total" radius={[4,4,0,0]}>
-                      {chartData.map((entry,i)=>(
-                        <Cell key={i} fill={entry.total>0?NAVY:"#e5e7eb"}/>
-                      ))}
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-            )}
+              {/* Chart — merged inside same card */}
+              {entries.length>0 && (
+                <>
+                  <div className="border-t border-gray-100"/>
+                  <div className="px-4 pb-4 pt-3">
+                    <h3 className="text-xs font-bold uppercase tracking-widest mb-3" style={{color:TEAL}}>Daily Totals</h3>
+                    <ResponsiveContainer width="100%" height={160}>
+                      <BarChart data={chartData} margin={{top:4,right:8,left:8,bottom:0}}>
+                        <XAxis dataKey="day" tick={{fontSize:11,fontWeight:600}} axisLine={false} tickLine={false}/>
+                        <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false}
+                          tickFormatter={v=>v===0?"":("$"+Number(v).toLocaleString())}/>
+                        <Tooltip
+                          formatter={(value)=>["$"+Number(value).toLocaleString("en-US",{minimumFractionDigits:2}),"Total"]}
+                          contentStyle={{borderRadius:"8px",border:"1px solid #e5e7eb",fontSize:"12px"}}
+                        />
+                        <Bar dataKey="total" radius={[4,4,0,0]}>
+                          {chartData.map((entry,i)=>(
+                            <Cell key={i} fill={entry.total>0?NAVY:"#e5e7eb"}/>
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </>
+              )}
+
+            </div>
           </div>
           {/* end right column */}
 

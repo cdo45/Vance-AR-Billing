@@ -110,6 +110,7 @@ export async function initDb() {
   await sql`ALTER TABLE billing_entries ADD COLUMN IF NOT EXISTS work_description TEXT NOT NULL DEFAULT ''`;
   await sql`ALTER TABLE billing_entries ADD COLUMN IF NOT EXISTS prelim_date DATE`;
   await sql`ALTER TABLE billing_entries ADD COLUMN IF NOT EXISTS customer_id INTEGER`;
+  await sql`ALTER TABLE billing_entries ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'pending'`;
   await sql`CREATE INDEX IF NOT EXISTS idx_week_start ON billing_entries(week_start)`;
   await sql`CREATE INDEX IF NOT EXISTS idx_rj_number  ON billing_entries(rj_number)`;
 

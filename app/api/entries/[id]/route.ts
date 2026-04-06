@@ -12,6 +12,23 @@ export async function PUT(
   const sql = getSql();
 
   const body = await req.json();
+
+  // Status-only update (cycle button — no reason required)
+  if ("status" in body && !("sun" in body)) {
+    const { status, edited_by } = body;
+    const existing = await sql`SELECT status FROM billing_entries WHERE id = ${id}`;
+    if (!existing.length) return NextResponse.json({ error: "Entry not found" }, { status: 404 });
+    const oldStatus = String((existing[0] as { status: string }).status ?? "pending");
+
+    await sql`UPDATE billing_entries SET status = ${status} WHERE id = ${id}`;
+    await sql`
+      INSERT INTO audit_log (entry_id, field_changed, old_value, new_value, reason, edited_by)
+      VALUES (${id}, 'status', ${oldStatus}, ${status}, 'Status updated via dispatch grid', ${edited_by || "Jill"})
+    `;
+    return NextResponse.json({ ok: true });
+  }
+
+  // Full edit (requires reason)
   const {
     sun, mon, tue, wed, thu, fri, sat,
     invoice_number, notes, work_description, prelim_date,
