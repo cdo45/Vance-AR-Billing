@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const TEAL   = "#1F6B6B";
-const ORANGE = "#C55A11";
+const ORANGE = "#C8102E";
 
 const LINKS = [
   { href: "/",          label: "ENTRY FORM"  },

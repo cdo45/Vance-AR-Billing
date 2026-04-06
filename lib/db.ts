@@ -158,7 +158,22 @@ export async function initDb() {
     )
   `;
 
-    // ── Seed from jobs.json if tables are empty ───────────────────────────────
+    // ── audit_log ────────────────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS audit_log (
+      id            SERIAL PRIMARY KEY,
+      entry_id      INTEGER NOT NULL REFERENCES billing_entries(id) ON DELETE CASCADE,
+      field_changed TEXT    NOT NULL,
+      old_value     TEXT    NOT NULL DEFAULT '',
+      new_value     TEXT    NOT NULL DEFAULT '',
+      reason        TEXT    NOT NULL,
+      edited_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      edited_by     TEXT    NOT NULL DEFAULT 'Jill'
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_audit_entry_id ON audit_log(entry_id)`;
+
+  // ── Seed from jobs.json if tables are empty ───────────────────────────────
     await seedFromJobsJson();
 
     _initialized = true;
@@ -171,11 +186,11 @@ export async function initDb() {
 
 // ─── Seeder ───────────────────────────────────────────────────────────────────
 
-async function seedFromJobsJson() {
+async function seedFromJobsJson(force = false) {
   const sql = getSql();
   const countRows = await sql`SELECT COUNT(*)::int AS n FROM jobs`;
   const count = (countRows[0] as { n: number }).n;
-  if (count > 0) return;
+  if (!force && count > 0) return;
 
   let staticJobs: JobRecord[] = [];
   try {
@@ -216,31 +231,26 @@ async function seedFromJobsJson() {
   }
   console.log(`[db] Seeded ${custSeeded} / ${distinctCompanies.length} customers`);
 
-  // ── Seed jobs — multi-value INSERT using SQL function form, 200 rows/chunk ──
-  const JCHUNK = 200;
+  // ── Seed jobs — individual INSERT per job (reliable) ─────────────────────
   let jobsSeeded = 0;
-  for (let i = 0; i < staticJobs.length; i += JCHUNK) {
-    const slice = staticJobs.slice(i, i + JCHUNK);
-    const placeholders = slice
-      .map((_, idx) => `($${idx * 3 + 1}, $${idx * 3 + 2}, $${idx * 3 + 3})`)
-      .join(", ");
-    const params: string[] = slice.flatMap(j => [
-      j.rj_number,
-      j.job_description || "",
-      j.company_name,
-    ]);
+  for (let i = 0; i < staticJobs.length; i++) {
+    const j = staticJobs[i];
     try {
-      await (sql as unknown as (q: string, p: string[]) => Promise<unknown>)(
-        `INSERT INTO jobs (rj_number, job_description, company_name) VALUES ${placeholders} ON CONFLICT (rj_number) DO NOTHING`,
-        params
-      );
-      jobsSeeded += slice.length;
+      await sql`
+        INSERT INTO jobs (rj_number, job_description, company_name)
+        VALUES (${j.rj_number}, ${j.job_description || ""}, ${j.company_name})
+        ON CONFLICT (rj_number) DO NOTHING
+      `;
+      jobsSeeded++;
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      console.warn(`[db] Failed to seed jobs chunk ${i}–${i + JCHUNK}: ${msg}`);
+      console.warn(`[db] Failed to seed job "${j.rj_number}": ${msg}`);
+    }
+    if ((i + 1) % 100 === 0) {
+      console.log(`[db] Seeded ${i + 1} / ${staticJobs.length} jobs…`);
     }
   }
-  console.log(`[db] Seeded up to ${jobsSeeded} jobs`);
+  console.log(`[db] Seeded ${jobsSeeded} / ${staticJobs.length} jobs total`);
 
   // Link jobs → customers
   await sql`
@@ -252,4 +262,10 @@ async function seedFromJobsJson() {
   `;
 
   console.log("[db] Seeding complete");
+}
+
+// ─── Public force-seed export ─────────────────────────────────────────────────
+
+export async function forceSeedJobs() {
+  return seedFromJobsJson(true);
 }

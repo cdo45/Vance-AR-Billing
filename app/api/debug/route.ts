@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSql, initDb } from "@/lib/db";
+import { getSql, initDb, forceSeedJobs } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -25,6 +25,28 @@ export async function GET() {
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("[debug] Failed:", message);
+    return NextResponse.json({ status: "error", message }, { status: 500 });
+  }
+}
+
+export async function POST() {
+  try {
+    await initDb();
+    const sql = getSql();
+
+    const before = await sql`SELECT COUNT(*)::int AS n FROM jobs`;
+    const beforeCount = (before[0] as { n: number }).n;
+
+    await forceSeedJobs();
+
+    const after = await sql`SELECT COUNT(*)::int AS n FROM jobs`;
+    const afterCount = (after[0] as { n: number }).n;
+
+    console.log(`[debug/seed] before=${beforeCount} after=${afterCount}`);
+    return NextResponse.json({ status: "ok", before: beforeCount, after: afterCount });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[debug/seed] Failed:", message);
     return NextResponse.json({ status: "error", message }, { status: 500 });
   }
 }

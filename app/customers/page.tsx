@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import NavBar from "@/app/components/NavBar";
+import SiteHeader from "@/app/components/SiteHeader";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Customer {
@@ -24,7 +24,7 @@ type SortCol = "company_name" | "job_count" | "total_billed_ytd" | "last_entry_d
 // ─── Constants ────────────────────────────────────────────────────────────────
 const NAVY   = "#1F3864";
 const TEAL   = "#1F6B6B";
-const ORANGE = "#C55A11";
+const ORANGE = "#C8102E";
 const DKGREEN = "#1E6B1E";
 const LTGRAY = "#F2F2F2";
 
@@ -148,11 +148,7 @@ export default function CustomersPage() {
         </div>
       )}
 
-      {/* Header */}
-      <header className="text-white px-8 py-4 shadow-lg" style={{ background: NAVY }}>
-        <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp — Rental Billing</h1>
-      </header>
-      <NavBar />
+      <SiteHeader />
 
       <div className="max-w-7xl mx-auto px-4 py-8">
 
@@ -161,7 +157,7 @@ export default function CustomersPage() {
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
               <h2 className="text-2xl font-bold uppercase tracking-wider" style={{ color: NAVY }}>Customers</h2>
-              <p className="text-sm text-gray-500 mt-0.5">{customers.length} total customers</p>
+              <p className="text-sm text-gray-500 mt-0.5 uppercase tracking-wider">{customers.length} total customers</p>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
               <input type="text" placeholder="Search by company name…"
@@ -170,7 +166,7 @@ export default function CustomersPage() {
                 style={{ borderColor: search ? TEAL : undefined }}
               />
               <button onClick={openAdd}
-                className="text-white text-sm font-bold px-5 py-2.5 rounded-xl transition hover:opacity-80 whitespace-nowrap"
+                className="text-white text-sm font-bold uppercase tracking-wider px-5 py-2.5 rounded-xl transition hover:opacity-80 whitespace-nowrap"
                 style={{ background: NAVY }}>
                 + Add New Customer
               </button>
@@ -181,7 +177,7 @@ export default function CustomersPage() {
         {/* Table */}
         <div className="bg-white rounded-2xl shadow overflow-hidden">
           {loading ? (
-            <p className="text-center text-gray-400 py-16">Loading customers…</p>
+            <p className="text-center text-gray-400 py-16 uppercase tracking-widest font-semibold">Loading customers…</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -200,7 +196,7 @@ export default function CustomersPage() {
                 <tbody>
                   {filtered.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-4 py-16 text-center text-gray-400">
+                      <td colSpan={5} className="px-4 py-16 text-center text-gray-400 uppercase tracking-widest font-semibold">
                         {search ? "No customers match your search." : "No customers yet."}
                       </td>
                     </tr>
@@ -225,7 +221,7 @@ export default function CustomersPage() {
                       </td>
                       <td className="px-4 py-3">
                         <button onClick={() => openEdit(c)}
-                          className="text-xs px-3 py-1.5 rounded-lg border font-semibold transition hover:opacity-80"
+                          className="text-xs px-3 py-1.5 rounded-lg border font-bold uppercase tracking-wider transition hover:opacity-80"
                           style={{ color: TEAL, borderColor: TEAL }}>
                           Edit
                         </button>
@@ -291,11 +287,11 @@ export default function CustomersPage() {
               </div>
               <div className="flex gap-3 pt-2">
                 <button type="button" onClick={() => setShowModal(false)}
-                  className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold text-gray-500 hover:border-gray-400 transition">
+                  className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold uppercase tracking-wider text-gray-500 hover:border-gray-400 transition">
                   Cancel
                 </button>
                 <button type="submit" disabled={saving}
-                  className="flex-1 text-white font-bold py-3 rounded-xl transition hover:opacity-80 disabled:opacity-50"
+                  className="flex-1 text-white font-bold uppercase tracking-wider py-3 rounded-xl transition hover:opacity-80 disabled:opacity-50"
                   style={{ background: NAVY }}>
                   {saving ? "Saving…" : "Save Customer"}
                 </button>
