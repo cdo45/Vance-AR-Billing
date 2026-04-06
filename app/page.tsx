@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import jobs from "@/data/jobs.json";
 
-// ── Types ──────────────────────────────────────────────────────────────────
+// ─── Types ────────────────────────────────────────────────────────────────────
 interface Job {
   rj_number: string;
   job_description: string;
@@ -39,28 +39,42 @@ interface BillingEntry {
   created_at: string;
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────────
+interface Toast {
+  msg: string;
+  type: "success" | "error";
+}
+
+// ─── Constants ────────────────────────────────────────────────────────────────
 const ALL_JOBS: Job[] = jobs as Job[];
 const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+type Day = typeof DAYS[number];
 const DAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+const EMPTY_AMOUNTS: DayAmounts = { sun: "", mon: "", tue: "", wed: "", thu: "", fri: "", sat: "" };
 
-function getSundayOfWeek(date: Date): Date {
-  const d = new Date(date);
-  d.setHours(0, 0, 0, 0);
-  d.setDate(d.getDate() - d.getDay());
-  return d;
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+function getSundayOfWeek(d: Date): Date {
+  const out = new Date(d);
+  out.setHours(0, 0, 0, 0);
+  out.setDate(out.getDate() - out.getDay());
+  return out;
+}
+
+function toISO(d: Date): string {
+  return d.toISOString().slice(0, 10);
 }
 
 function formatWeekRange(sunday: Date): string {
   const sat = new Date(sunday);
   sat.setDate(sunday.getDate() + 6);
-  const startStr = sunday.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  const endStr = sat.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  return `Week of ${startStr} – ${endStr}`;
+  const start = sunday.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const end = sat.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  return `Week of ${start} – ${end}`;
 }
 
-function toISO(date: Date): string {
-  return date.toISOString().slice(0, 10);
+function formatTodayLong(): string {
+  return new Date().toLocaleDateString("en-US", {
+    weekday: "long", month: "long", day: "numeric", year: "numeric",
+  });
 }
 
 function parseDollar(val: string): number {
@@ -68,81 +82,104 @@ function parseDollar(val: string): number {
   return isNaN(n) ? 0 : n;
 }
 
-function formatDollar(num: number): string {
-  if (num === 0) return "";
-  return num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+function fmtBlur(num: number): string {
+  return num > 0
+    ? num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : "";
 }
 
-function formatCurrency(num: number): string {
-  return num.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 });
+function fmtCurrency(num: number): string {
+  return num.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
 
-// ── Component ──────────────────────────────────────────────────────────────
+function fmtCell(num: number): string {
+  return num > 0
+    ? num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+    : "—";
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
 export default function EntryForm() {
+  // Week
   const [weekStart, setWeekStart] = useState<Date>(() => getSundayOfWeek(new Date()));
 
+  // Search / selection
   const [query, setQuery] = useState("");
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showDrop, setShowDrop] = useState(false);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [amounts, setAmounts] = useState<DayAmounts>({ sun: "", mon: "", tue: "", wed: "", thu: "", fri: "", sat: "" });
+  // Form
+  const [amounts, setAmounts] = useState<DayAmounts>(EMPTY_AMOUNTS);
   const [invoiceNum, setInvoiceNum] = useState("");
   const [notes, setNotes] = useState("");
 
-  const [toast, setToast] = useState<{ msg: string; type: "success" | "error" } | null>(null);
+  // UI
+  const [toast, setToast] = useState<Toast | null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [recentEntries, setRecentEntries] = useState<BillingEntry[]>([]);
+  const [deleting, setDeleting] = useState<number | null>(null);
+  const [entries, setEntries] = useState<BillingEntry[]>([]);
 
-  const filtered = query.trim().length === 0
-    ? ALL_JOBS.slice(0, 50)
+  // Derived
+  const filtered = query.trim() === ""
+    ? ALL_JOBS.slice(0, 60)
     : ALL_JOBS.filter(j =>
         j.rj_number.toLowerCase().includes(query.toLowerCase()) ||
-        j.company_name.toLowerCase().includes(query.toLowerCase()) ||
-        j.job_description.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 50);
+        j.company_name.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 60);
 
   const weekTotal = DAYS.reduce((sum, d) => sum + parseDollar(amounts[d]), 0);
 
-  const fetchRecent = useCallback(async () => {
+  // Fetch entries for current week
+  const fetchEntries = useCallback(async () => {
     try {
       const res = await fetch(`/api/entries?week=${toISO(weekStart)}`);
-      if (res.ok) setRecentEntries(await res.json());
+      if (res.ok) setEntries(await res.json());
     } catch {}
   }, [weekStart]);
 
-  useEffect(() => { fetchRecent(); }, [fetchRecent]);
+  useEffect(() => { fetchEntries(); }, [fetchEntries]);
 
+  // Close dropdown on outside click
   useEffect(() => {
-    function handler(e: MouseEvent) {
+    function onDown(e: MouseEvent) {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setShowDropdown(false);
+        setShowDrop(false);
       }
     }
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
   }, []);
 
+  // Auto-dismiss toast
   useEffect(() => {
     if (!toast) return;
-    const t = setTimeout(() => setToast(null), 4000);
+    const t = setTimeout(() => setToast(null), 4500);
     return () => clearTimeout(t);
   }, [toast]);
 
-  function selectJob(job: Job) {
+  function pickJob(job: Job) {
     setSelectedJob(job);
-    setQuery(job.rj_number);
-    setShowDropdown(false);
+    setQuery("");
+    setShowDrop(false);
+    inputRef.current?.blur();
   }
 
-  function handleAmountBlur(day: keyof DayAmounts) {
-    const val = parseDollar(amounts[day]);
-    setAmounts(prev => ({ ...prev, [day]: val > 0 ? formatDollar(val) : "" }));
+  function clearJob() {
+    setSelectedJob(null);
+    setQuery("");
+    setTimeout(() => inputRef.current?.focus(), 50);
   }
 
-  function handleAmountFocus(day: keyof DayAmounts) {
-    const val = parseDollar(amounts[day]);
-    setAmounts(prev => ({ ...prev, [day]: val > 0 ? String(val) : "" }));
+  function handleAmountFocus(day: Day) {
+    const v = parseDollar(amounts[day]);
+    setAmounts(p => ({ ...p, [day]: v > 0 ? String(v) : "" }));
+  }
+
+  function handleAmountBlur(day: Day) {
+    const v = parseDollar(amounts[day]);
+    setAmounts(p => ({ ...p, [day]: fmtBlur(v) }));
   }
 
   function advanceWeek(delta: number) {
@@ -155,7 +192,6 @@ export default function EntryForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-
     if (!selectedJob) {
       setToast({ msg: "Please select an RJ number before submitting.", type: "error" });
       return;
@@ -167,26 +203,24 @@ export default function EntryForm() {
 
     setSubmitting(true);
     try {
-      const payload = {
-        rj_number: selectedJob.rj_number,
-        company_name: selectedJob.company_name,
-        job_description: selectedJob.job_description,
-        week_start: toISO(weekStart),
-        sun: parseDollar(amounts.sun),
-        mon: parseDollar(amounts.mon),
-        tue: parseDollar(amounts.tue),
-        wed: parseDollar(amounts.wed),
-        thu: parseDollar(amounts.thu),
-        fri: parseDollar(amounts.fri),
-        sat: parseDollar(amounts.sat),
-        invoice_number: invoiceNum,
-        notes,
-      };
-
       const res = await fetch("/api/entries", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          rj_number: selectedJob.rj_number,
+          company_name: selectedJob.company_name,
+          job_description: selectedJob.job_description,
+          week_start: toISO(weekStart),
+          sun: parseDollar(amounts.sun),
+          mon: parseDollar(amounts.mon),
+          tue: parseDollar(amounts.tue),
+          wed: parseDollar(amounts.wed),
+          thu: parseDollar(amounts.thu),
+          fri: parseDollar(amounts.fri),
+          sat: parseDollar(amounts.sat),
+          invoice_number: invoiceNum,
+          notes,
+        }),
       });
 
       if (!res.ok) {
@@ -194,181 +228,202 @@ export default function EntryForm() {
         throw new Error(err.error || "Server error");
       }
 
-      setToast({ msg: `Entry saved — ${selectedJob.rj_number} · ${formatCurrency(weekTotal)}`, type: "success" });
+      setToast({
+        msg: `✓ Saved — ${selectedJob.rj_number} · ${fmtCurrency(weekTotal)}`,
+        type: "success",
+      });
 
+      // Reset form, keep week
       setSelectedJob(null);
       setQuery("");
-      setAmounts({ sun: "", mon: "", tue: "", wed: "", thu: "", fri: "", sat: "" });
+      setAmounts(EMPTY_AMOUNTS);
       setInvoiceNum("");
       setNotes("");
-
-      await fetchRecent();
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Unknown error";
-      setToast({ msg: `Error: ${msg}`, type: "error" });
+      await fetchEntries();
+    } catch (err) {
+      setToast({ msg: `Error: ${err instanceof Error ? err.message : "Unknown"}`, type: "error" });
     } finally {
       setSubmitting(false);
     }
   }
 
+  async function handleDelete(id: number) {
+    setDeleting(id);
+    try {
+      const res = await fetch(`/api/entries/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
+      setEntries(prev => prev.filter(e => e.id !== id));
+      setToast({ msg: "Entry deleted.", type: "success" });
+    } catch {
+      setToast({ msg: "Failed to delete entry.", type: "error" });
+    } finally {
+      setDeleting(null);
+    }
+  }
+
+  const colTotal = (day: Day) => entries.reduce((s, e) => s + Number(e[day]), 0);
+  const grandTotal = entries.reduce((s, e) => s + Number(e.week_total), 0);
+
+  // ── Render ──────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-ltgray">
-      {/* Header */}
-      <header className="bg-navy text-white px-6 py-4 flex items-center justify-between shadow-md">
-        <div>
-          <h1 className="text-xl font-bold tracking-wide">VANCE CORP</h1>
-          <p className="text-sm text-blue-200">AR Billing Tracker</p>
+    <div className="min-h-screen bg-[#F2F2F2]" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+
+      {/* ── Toast ── */}
+      {toast && (
+        <div
+          className={`fixed top-5 right-5 z-50 rounded-lg px-6 py-3 text-white text-sm font-semibold shadow-2xl
+            ${toast.type === "success" ? "bg-[#1E6B1E]" : "bg-red-600"}`}
+        >
+          {toast.msg}
         </div>
-        <span className="text-sm text-blue-200 italic">Dispatcher Entry</span>
+      )}
+
+      {/* ── Header ── */}
+      <header className="bg-[#1F3864] text-white px-8 py-4 flex items-center justify-between shadow-lg">
+        <div>
+          <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp</h1>
+          <p className="text-sm text-blue-200 tracking-wide mt-0.5">Rental Billing</p>
+        </div>
+        <p className="text-sm text-blue-200">{formatTodayLong()}</p>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-5xl mx-auto px-4 py-8 space-y-6">
 
-        {/* Toast */}
-        {toast && (
-          <div
-            className={`fixed top-4 right-4 z-50 rounded-lg px-5 py-3 text-white text-sm font-medium shadow-xl
-              ${toast.type === "success" ? "bg-dkgreen" : "bg-red-600"}`}
-          >
-            {toast.msg}
-          </div>
-        )}
-
-        {/* Week Selector */}
-        <section className="bg-white rounded-xl shadow p-4 flex items-center gap-4">
+        {/* ── Week Selector ── */}
+        <div className="bg-white rounded-2xl shadow-md px-6 py-4 flex items-center gap-4">
           <button
             type="button"
             onClick={() => advanceWeek(-1)}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-navy text-white hover:bg-teal transition text-lg font-bold"
-            aria-label="Previous week"
+            className="w-10 h-10 rounded-full bg-[#1F3864] text-white text-xl font-bold
+                       hover:bg-[#1F6B6B] transition flex items-center justify-center"
           >
             ‹
           </button>
           <div className="flex-1 text-center">
-            <p className="text-xs text-gray-500 uppercase tracking-widest mb-0.5">Billing Period</p>
-            <p className="text-lg font-semibold text-navy">{formatWeekRange(weekStart)}</p>
+            <p className="text-xs uppercase tracking-widest text-gray-400 mb-0.5">Billing Period</p>
+            <p className="text-xl font-bold text-[#1F3864]">{formatWeekRange(weekStart)}</p>
           </div>
           <button
             type="button"
             onClick={() => advanceWeek(1)}
-            className="w-9 h-9 flex items-center justify-center rounded-full bg-navy text-white hover:bg-teal transition text-lg font-bold"
-            aria-label="Next week"
+            className="w-10 h-10 rounded-full bg-[#1F3864] text-white text-xl font-bold
+                       hover:bg-[#1F6B6B] transition flex items-center justify-center"
           >
             ›
           </button>
-        </section>
+        </div>
 
-        {/* Entry Form */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow p-6 space-y-6">
+        {/* ── Entry Form ── */}
+        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md p-8 space-y-8">
 
-          {/* RJ Number search */}
+          {/* Job Search */}
           <div>
-            <label className="block text-xs font-semibold text-teal uppercase tracking-widest mb-1">
-              RJ Number
+            <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
+              RJ Number / Company
             </label>
             <div ref={searchRef} className="relative">
               <input
+                ref={inputRef}
                 type="text"
-                placeholder="Type RJ# or company name…"
+                placeholder="Type RJ number or company name…"
                 value={query}
-                onChange={e => {
-                  setQuery(e.target.value);
-                  setShowDropdown(true);
-                  if (!e.target.value) setSelectedJob(null);
-                }}
-                onFocus={() => setShowDropdown(true)}
-                className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:border-teal"
                 autoComplete="off"
+                onChange={e => { setQuery(e.target.value); setShowDrop(true); }}
+                onFocus={() => setShowDrop(true)}
+                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-lg
+                           focus:outline-none focus:border-[#1F6B6B] bg-white"
               />
-              {showDropdown && filtered.length > 0 && (
-                <ul className="absolute z-30 w-full bg-white border border-gray-200 rounded-lg mt-1 shadow-xl max-h-64 overflow-y-auto">
+              {showDrop && filtered.length > 0 && (
+                <ul className="absolute z-40 left-0 right-0 mt-1 bg-white border border-gray-200
+                               rounded-xl shadow-2xl max-h-72 overflow-y-auto">
                   {filtered.map(job => (
                     <li
                       key={job.rj_number}
-                      className="px-4 py-2.5 cursor-pointer hover:bg-ltgray border-b border-gray-100 last:border-0"
-                      onMouseDown={() => selectJob(job)}
+                      onMouseDown={() => pickJob(job)}
+                      className="px-5 py-3 cursor-pointer hover:bg-[#F2F2F2] border-b border-gray-100 last:border-0
+                                 flex items-baseline gap-3"
                     >
-                      <span className="font-semibold text-navy text-sm">{job.rj_number}</span>
-                      <span className="mx-2 text-gray-300">|</span>
-                      <span className="text-sm text-gray-700">{job.company_name}</span>
-                      <p className="text-xs text-gray-400 mt-0.5">{job.job_description}</p>
+                      <span className="font-bold text-[#1F3864] text-sm w-28 shrink-0">{job.rj_number}</span>
+                      <span className="text-gray-700 text-sm truncate">{job.company_name}</span>
                     </li>
                   ))}
                 </ul>
               )}
             </div>
+
+            {/* Selected job confirmation */}
+            {selectedJob && (
+              <div className="mt-4 flex items-center gap-4 px-5 py-4 bg-[#F2F2F2] rounded-xl border border-gray-200">
+                <div className="flex-1">
+                  <p className="text-2xl font-bold text-[#1F3864]">{selectedJob.rj_number}</p>
+                  <p className="text-base text-gray-600 mt-0.5">{selectedJob.company_name}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={clearJob}
+                  className="text-sm text-gray-400 hover:text-red-500 transition font-medium px-3 py-1
+                             border border-gray-300 rounded-lg hover:border-red-400"
+                >
+                  Change
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Auto-filled job info */}
-          {selectedJob && (
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Company</label>
-                <div className="bg-ltgray border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 font-medium">
-                  {selectedJob.company_name}
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-widest mb-1">Job Description</label>
-                <div className="bg-ltgray border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700">
-                  {selectedJob.job_description}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Day amounts */}
+          {/* Daily Amounts */}
           <div>
-            <label className="block text-xs font-semibold text-teal uppercase tracking-widest mb-2">
+            <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-3">
               Daily Amounts
             </label>
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid grid-cols-7 gap-3">
               {DAYS.map((day, i) => (
-                <div key={day} className="flex flex-col items-center gap-1">
+                <div key={day} className="flex flex-col items-center gap-2">
                   <span className={`text-xs font-bold tracking-widest
-                    ${day === "sun" || day === "sat" ? "text-orange" : "text-gray-500"}`}>
+                    ${day === "sun" || day === "sat" ? "text-[#C55A11]" : "text-gray-500"}`}>
                     {DAY_LABELS[i]}
                   </span>
                   <input
                     type="text"
                     inputMode="decimal"
-                    placeholder="0.00"
+                    placeholder="—"
                     value={amounts[day]}
-                    onChange={e => setAmounts(prev => ({ ...prev, [day]: e.target.value }))}
+                    onChange={e => setAmounts(p => ({ ...p, [day]: e.target.value }))}
                     onFocus={() => handleAmountFocus(day)}
                     onBlur={() => handleAmountBlur(day)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-2 py-3 text-center text-base font-medium
-                               focus:outline-none focus:border-teal placeholder:text-gray-300"
+                    className="w-full border-2 border-gray-300 rounded-xl px-1 py-4 text-center text-base
+                               font-semibold focus:outline-none focus:border-[#1F6B6B]
+                               placeholder:text-gray-300 tabular-nums"
                   />
                 </div>
               ))}
             </div>
+
+            {/* Week Total */}
+            <div className="mt-5 flex items-center justify-end gap-4 pr-1">
+              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Week Total</span>
+              <span className="text-3xl font-bold text-[#C55A11] tabular-nums">
+                {fmtCurrency(weekTotal)}
+              </span>
+            </div>
           </div>
 
-          {/* Week Total */}
-          <div className="flex items-center justify-end gap-3 px-1">
-            <span className="text-sm font-semibold text-gray-500 uppercase tracking-widest">Week Total</span>
-            <span className="text-2xl font-bold text-orange tabular-nums">
-              {formatCurrency(weekTotal)}
-            </span>
-          </div>
-
-          {/* Invoice # and Notes */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Invoice & Notes */}
+          <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-semibold text-teal uppercase tracking-widest mb-1">
+              <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
                 Invoice #
               </label>
               <input
                 type="text"
-                placeholder="e.g. INV-2026-0042"
+                placeholder="e.g. INV-2026-0001"
                 value={invoiceNum}
                 onChange={e => setInvoiceNum(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:border-teal"
+                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-base
+                           focus:outline-none focus:border-[#1F6B6B]"
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-teal uppercase tracking-widest mb-1">
+              <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
                 Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
               </label>
               <input
@@ -376,7 +431,8 @@ export default function EntryForm() {
                 placeholder="Any remarks…"
                 value={notes}
                 onChange={e => setNotes(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:border-teal"
+                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-base
+                           focus:outline-none focus:border-[#1F6B6B]"
               />
             </div>
           </div>
@@ -385,78 +441,102 @@ export default function EntryForm() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full bg-navy hover:bg-teal disabled:bg-gray-400 text-white font-bold text-lg
-                       py-4 rounded-xl transition-colors shadow-md tracking-wide uppercase"
+            className="w-full bg-[#1F3864] hover:bg-[#1F6B6B] disabled:bg-gray-400
+                       text-white font-bold text-xl py-5 rounded-xl transition-colors
+                       shadow-md tracking-wider uppercase"
           >
             {submitting ? "Saving…" : "Submit Entry"}
           </button>
         </form>
 
-        {/* Recent Entries Table */}
+        {/* ── Recent Entries Table ── */}
         <section>
-          <h2 className="text-xs font-bold text-teal uppercase tracking-widest mb-2 px-1">
-            Entries This Week
-            {recentEntries.length > 0 && (
-              <span className="ml-2 text-gray-400 font-normal normal-case">
-                ({recentEntries.length} record{recentEntries.length !== 1 ? "s" : ""})
+          <div className="flex items-baseline gap-3 mb-3 px-1">
+            <h2 className="text-xs font-bold text-[#1F6B6B] uppercase tracking-widest">
+              Entries This Week
+            </h2>
+            {entries.length > 0 && (
+              <span className="text-xs text-gray-400">
+                {entries.length} record{entries.length !== 1 ? "s" : ""}
               </span>
             )}
-          </h2>
+          </div>
 
-          {recentEntries.length === 0 ? (
-            <div className="bg-white rounded-xl shadow px-6 py-8 text-center text-gray-400 text-sm">
+          {entries.length === 0 ? (
+            <div className="bg-white rounded-2xl shadow-md px-8 py-10 text-center text-gray-400 text-sm">
               No entries yet for this week.
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow overflow-x-auto">
+            <div className="bg-white rounded-2xl shadow-md overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-navy text-white text-xs uppercase tracking-wider">
+                  <tr className="bg-[#1F3864] text-white text-xs uppercase tracking-wider">
                     <th className="px-4 py-3 text-left">RJ #</th>
                     <th className="px-4 py-3 text-left">Company</th>
-                    <th className="px-3 py-3 text-center">Sun</th>
-                    <th className="px-3 py-3 text-center">Mon</th>
-                    <th className="px-3 py-3 text-center">Tue</th>
-                    <th className="px-3 py-3 text-center">Wed</th>
-                    <th className="px-3 py-3 text-center">Thu</th>
-                    <th className="px-3 py-3 text-center">Fri</th>
-                    <th className="px-3 py-3 text-center">Sat</th>
+                    {DAY_LABELS.map(d => (
+                      <th key={d} className="px-2 py-3 text-center">{d}</th>
+                    ))}
                     <th className="px-4 py-3 text-right">Total</th>
                     <th className="px-4 py-3 text-left">Invoice</th>
+                    <th className="px-3 py-3"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {recentEntries.map((entry, i) => (
-                    <tr key={entry.id} className={i % 2 === 0 ? "bg-white" : "bg-ltgray"}>
-                      <td className="px-4 py-2.5 font-semibold text-navy whitespace-nowrap">{entry.rj_number}</td>
-                      <td className="px-4 py-2.5 text-gray-700 whitespace-nowrap max-w-[180px] truncate">{entry.company_name}</td>
+                  {entries.map((entry, i) => (
+                    <tr
+                      key={entry.id}
+                      className={`border-b border-gray-100 ${i % 2 === 0 ? "bg-white" : "bg-[#F2F2F2]"}`}
+                    >
+                      <td className="px-4 py-3 font-bold text-[#1F3864] whitespace-nowrap">
+                        {entry.rj_number}
+                      </td>
+                      <td className="px-4 py-3 text-gray-700 max-w-[180px] truncate whitespace-nowrap">
+                        {entry.company_name}
+                      </td>
                       {DAYS.map(day => (
-                        <td key={day} className="px-3 py-2.5 text-center tabular-nums text-gray-600">
-                          {entry[day] > 0 ? formatDollar(entry[day]) : <span className="text-gray-300">—</span>}
+                        <td
+                          key={day}
+                          className={`px-2 py-3 text-center tabular-nums
+                            ${Number(entry[day]) > 0 ? "text-gray-700" : "text-gray-300"}`}
+                        >
+                          {fmtCell(Number(entry[day]))}
                         </td>
                       ))}
-                      <td className="px-4 py-2.5 text-right font-bold text-orange tabular-nums whitespace-nowrap">
-                        {formatCurrency(entry.week_total)}
+                      <td className="px-4 py-3 text-right font-bold text-[#C55A11] tabular-nums whitespace-nowrap">
+                        {fmtCurrency(Number(entry.week_total))}
                       </td>
-                      <td className="px-4 py-2.5 text-gray-500 whitespace-nowrap">{entry.invoice_number || "—"}</td>
+                      <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
+                        {entry.invoice_number || "—"}
+                      </td>
+                      <td className="px-3 py-3 text-center">
+                        <button
+                          onClick={() => handleDelete(entry.id)}
+                          disabled={deleting === entry.id}
+                          className="text-xs text-gray-400 hover:text-red-600 transition font-medium
+                                     px-2 py-1 rounded border border-gray-200 hover:border-red-400
+                                     disabled:opacity-40"
+                          title="Delete this entry"
+                        >
+                          {deleting === entry.id ? "…" : "Del"}
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
                 <tfoot>
-                  <tr className="bg-navy text-white font-bold text-sm">
-                    <td colSpan={2} className="px-4 py-2.5 text-right text-xs uppercase tracking-wider">Week Total</td>
+                  <tr className="bg-[#1F3864] text-white font-bold text-sm">
+                    <td colSpan={2} className="px-4 py-3 text-right text-xs uppercase tracking-wider">
+                      Week Total
+                    </td>
                     {DAYS.map(day => (
-                      <td key={day} className="px-3 py-2.5 text-center tabular-nums">
-                        {(() => {
-                          const s = recentEntries.reduce((sum, e) => sum + e[day], 0);
-                          return s > 0 ? formatDollar(s) : <span className="opacity-40">—</span>;
-                        })()}
+                      <td key={day} className="px-2 py-3 text-center tabular-nums text-xs">
+                        {colTotal(day) > 0 ? fmtBlur(colTotal(day)) : <span className="opacity-40">—</span>}
                       </td>
                     ))}
-                    <td className="px-4 py-2.5 text-right text-orange tabular-nums">
-                      {formatCurrency(recentEntries.reduce((s, e) => s + e.week_total, 0))}
+                    <td className="px-4 py-3 text-right text-[#C55A11] tabular-nums">
+                      {fmtCurrency(grandTotal)}
                     </td>
-                    <td></td>
+                    <td colSpan={2}></td>
                   </tr>
                 </tfoot>
               </table>
