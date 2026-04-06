@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import jobs from "@/data/jobs.json";
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell,
+} from "recharts";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Job {
@@ -11,13 +13,8 @@ interface Job {
 }
 
 interface DayAmounts {
-  sun: string;
-  mon: string;
-  tue: string;
-  wed: string;
-  thu: string;
-  fri: string;
-  sat: string;
+  sun: string; mon: string; tue: string; wed: string;
+  thu: string; fri: string; sat: string;
 }
 
 interface BillingEntry {
@@ -26,524 +23,516 @@ interface BillingEntry {
   company_name: string;
   job_description: string;
   week_start: string;
-  sun: number;
-  mon: number;
-  tue: number;
-  wed: number;
-  thu: number;
-  fri: number;
-  sat: number;
+  sun: number; mon: number; tue: number; wed: number;
+  thu: number; fri: number; sat: number;
   week_total: number;
   invoice_number: string;
   notes: string;
   created_at: string;
 }
 
-interface Toast {
-  msg: string;
-  type: "success" | "error";
-}
+interface Toast { msg: string; type: "success" | "error"; }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const ALL_JOBS: Job[] = jobs as Job[];
-const DAYS = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
+const DAYS = ["sun","mon","tue","wed","thu","fri","sat"] as const;
 type Day = typeof DAYS[number];
-const DAY_LABELS = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const EMPTY_AMOUNTS: DayAmounts = { sun: "", mon: "", tue: "", wed: "", thu: "", fri: "", sat: "" };
+const DAY_LABELS = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+const EMPTY_AMOUNTS: DayAmounts = { sun:"",mon:"",tue:"",wed:"",thu:"",fri:"",sat:"" };
+const NAVY = "#1F3864";
+const TEAL = "#1F6B6B";
+const ORANGE = "#C55A11";
+const DKGREEN = "#1E6B1E";
+const LTGRAY = "#F2F2F2";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function getSundayOfWeek(d: Date): Date {
   const out = new Date(d);
-  out.setHours(0, 0, 0, 0);
+  out.setHours(0,0,0,0);
   out.setDate(out.getDate() - out.getDay());
   return out;
 }
-
-function toISO(d: Date): string {
-  return d.toISOString().slice(0, 10);
+function toISO(d: Date) { return d.toISOString().slice(0,10); }
+function formatWeekRange(sun: Date) {
+  const sat = new Date(sun); sat.setDate(sun.getDate()+6);
+  return `Week of ${sun.toLocaleDateString("en-US",{month:"short",day:"numeric"})} – ${sat.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}`;
 }
-
-function formatWeekRange(sunday: Date): string {
-  const sat = new Date(sunday);
-  sat.setDate(sunday.getDate() + 6);
-  const start = sunday.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-  const end = sat.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  return `Week of ${start} – ${end}`;
+function formatTodayLong() {
+  return new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"});
 }
-
-function formatTodayLong(): string {
-  return new Date().toLocaleDateString("en-US", {
-    weekday: "long", month: "long", day: "numeric", year: "numeric",
-  });
-}
-
-function parseDollar(val: string): number {
-  const n = parseFloat(val.replace(/[^0-9.]/g, ""));
-  return isNaN(n) ? 0 : n;
-}
-
-function fmtBlur(num: number): string {
-  return num > 0
-    ? num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    : "";
-}
-
-function fmtCurrency(num: number): string {
-  return num.toLocaleString("en-US", { style: "currency", currency: "USD" });
-}
-
-function fmtCell(num: number): string {
-  return num > 0
-    ? num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-    : "—";
-}
+function parseDollar(v: string) { const n=parseFloat(v.replace(/[^0-9.]/g,"")); return isNaN(n)?0:n; }
+function fmtBlur(n: number) { return n>0?n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):""; }
+function fmtCurrency(n: number) { return n.toLocaleString("en-US",{style:"currency",currency:"USD"}); }
+function fmtCell(n: number) { return n>0?n.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2}):"—"; }
 
 // ─── Component ────────────────────────────────────────────────────────────────
 export default function EntryForm() {
+  // Jobs
+  const [allJobs, setAllJobs]       = useState<Job[]>([]);
+  const [jobsLoaded, setJobsLoaded] = useState(false);
+
   // Week
   const [weekStart, setWeekStart] = useState<Date>(() => getSundayOfWeek(new Date()));
 
   // Search / selection
-  const [query, setQuery] = useState("");
-  const [showDrop, setShowDrop] = useState(false);
-  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [query, setQuery]           = useState("");
+  const [showDrop, setShowDrop]     = useState(false);
+  const [selectedJob, setSelectedJob] = useState<Job|null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef  = useRef<HTMLInputElement>(null);
+
+  // Custom job flow
+  const [isCustom, setIsCustom]         = useState(false);
+  const [customCompany, setCustomCompany] = useState("");
+  const [customDesc, setCustomDesc]       = useState("");
 
   // Form
-  const [amounts, setAmounts] = useState<DayAmounts>(EMPTY_AMOUNTS);
+  const [amounts, setAmounts]   = useState<DayAmounts>(EMPTY_AMOUNTS);
   const [invoiceNum, setInvoiceNum] = useState("");
-  const [notes, setNotes] = useState("");
+  const [notes, setNotes]           = useState("");
 
-  // UI
-  const [toast, setToast] = useState<Toast | null>(null);
+  // UI state
+  const [toast, setToast]         = useState<Toast|null>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [deleting, setDeleting] = useState<number | null>(null);
-  const [entries, setEntries] = useState<BillingEntry[]>([]);
+  const [deleting, setDeleting]   = useState<number|null>(null);
+  const [entries, setEntries]     = useState<BillingEntry[]>([]);
 
-  // Derived
-  const filtered = query.trim() === ""
-    ? ALL_JOBS.slice(0, 60)
-    : ALL_JOBS.filter(j =>
-        j.rj_number.toLowerCase().includes(query.toLowerCase()) ||
-        j.company_name.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 60);
-
-  const weekTotal = DAYS.reduce((sum, d) => sum + parseDollar(amounts[d]), 0);
-
-  // Fetch entries for current week
-  const fetchEntries = useCallback(async () => {
-    try {
-      const res = await fetch(`/api/entries?week=${toISO(weekStart)}`);
-      if (res.ok) setEntries(await res.json());
-    } catch {}
-  }, [weekStart]);
-
-  useEffect(() => { fetchEntries(); }, [fetchEntries]);
-
-  // Close dropdown on outside click
+  // ── Load jobs from API ──
   useEffect(() => {
-    function onDown(e: MouseEvent) {
-      if (searchRef.current && !searchRef.current.contains(e.target as Node)) {
-        setShowDrop(false);
-      }
-    }
-    document.addEventListener("mousedown", onDown);
-    return () => document.removeEventListener("mousedown", onDown);
+    fetch("/api/jobs")
+      .then(r => r.ok ? r.json() : [])
+      .then((data: Job[]) => { setAllJobs(Array.isArray(data)?data:[]); setJobsLoaded(true); })
+      .catch(() => { setAllJobs([]); setJobsLoaded(true); });
   }, []);
 
-  // Auto-dismiss toast
+  // ── Fetch entries for selected week ──
+  const fetchEntries = useCallback(async () => {
+    try {
+      const r = await fetch(`/api/entries?week=${toISO(weekStart)}`);
+      if (r.ok) setEntries(await r.json());
+    } catch {}
+  }, [weekStart]);
+  useEffect(() => { fetchEntries(); }, [fetchEntries]);
+
+  // ── Close dropdown on outside click ──
+  useEffect(() => {
+    function down(e: MouseEvent) {
+      if (searchRef.current && !searchRef.current.contains(e.target as Node)) setShowDrop(false);
+    }
+    document.addEventListener("mousedown", down);
+    return () => document.removeEventListener("mousedown", down);
+  }, []);
+
+  // ── Toast auto-dismiss ──
   useEffect(() => {
     if (!toast) return;
     const t = setTimeout(() => setToast(null), 4500);
     return () => clearTimeout(t);
   }, [toast]);
 
-  function pickJob(job: Job) {
-    setSelectedJob(job);
-    setQuery("");
-    setShowDrop(false);
-    inputRef.current?.blur();
-  }
+  // ── Derived ──
+  const queryLc = query.toLowerCase().trim();
+  const filtered = queryLc === ""
+    ? allJobs.slice(0,60)
+    : allJobs.filter(j =>
+        j.rj_number.toLowerCase().includes(queryLc) ||
+        j.company_name.toLowerCase().includes(queryLc)
+      ).slice(0,59);
 
-  function clearJob() {
-    setSelectedJob(null);
-    setQuery("");
+  const hasExactMatch = allJobs.some(j => j.rj_number.toLowerCase() === queryLc);
+  const showAddNew = queryLc !== "" && !hasExactMatch && !selectedJob && !isCustom;
+
+  const weekTotal = DAYS.reduce((s,d) => s+parseDollar(amounts[d]), 0);
+
+  // Chart data: daily totals for the week
+  const chartData = DAYS.map((day,i) => ({
+    day: DAY_LABELS[i],
+    total: entries.reduce((s,e) => s+Number(e[day]), 0),
+  }));
+  const grandTotal = entries.reduce((s,e) => s+Number(e.week_total), 0);
+
+  // ── Actions ──
+  function pickJob(job: Job) {
+    setSelectedJob(job); setQuery(""); setShowDrop(false);
+    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+  }
+  function pickCustom() {
+    setIsCustom(true); setShowDrop(false); setSelectedJob(null);
+    setCustomCompany(""); setCustomDesc("");
+  }
+  function cancelCustom() {
+    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
     setTimeout(() => inputRef.current?.focus(), 50);
   }
-
+  function clearJob() {
+    setSelectedJob(null); setQuery("");
+    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setTimeout(() => inputRef.current?.focus(), 50);
+  }
+  function advanceWeek(delta: number) {
+    setWeekStart(prev => { const d=new Date(prev); d.setDate(d.getDate()+delta*7); return d; });
+  }
   function handleAmountFocus(day: Day) {
     const v = parseDollar(amounts[day]);
-    setAmounts(p => ({ ...p, [day]: v > 0 ? String(v) : "" }));
+    setAmounts(p => ({...p,[day]:v>0?String(v):""}));
   }
-
   function handleAmountBlur(day: Day) {
     const v = parseDollar(amounts[day]);
-    setAmounts(p => ({ ...p, [day]: fmtBlur(v) }));
-  }
-
-  function advanceWeek(delta: number) {
-    setWeekStart(prev => {
-      const d = new Date(prev);
-      d.setDate(d.getDate() + delta * 7);
-      return d;
-    });
+    setAmounts(p => ({...p,[day]:fmtBlur(v)}));
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!selectedJob) {
-      setToast({ msg: "Please select an RJ number before submitting.", type: "error" });
-      return;
+
+    // Validation
+    if (!selectedJob && !isCustom) {
+      setToast({msg:"Please select an RJ number before submitting.",type:"error"}); return;
+    }
+    if (isCustom && !customCompany.trim()) {
+      setToast({msg:"Company Name is required for new jobs.",type:"error"}); return;
     }
     if (weekTotal === 0) {
-      setToast({ msg: "Enter at least one day amount before submitting.", type: "error" });
-      return;
+      setToast({msg:"Enter at least one day amount before submitting.",type:"error"}); return;
     }
 
     setSubmitting(true);
     try {
-      const res = await fetch("/api/entries", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          rj_number: selectedJob.rj_number,
-          company_name: selectedJob.company_name,
-          job_description: selectedJob.job_description,
-          week_start: toISO(weekStart),
-          sun: parseDollar(amounts.sun),
-          mon: parseDollar(amounts.mon),
-          tue: parseDollar(amounts.tue),
-          wed: parseDollar(amounts.wed),
-          thu: parseDollar(amounts.thu),
-          fri: parseDollar(amounts.fri),
-          sat: parseDollar(amounts.sat),
-          invoice_number: invoiceNum,
-          notes,
-        }),
-      });
+      const rj = selectedJob ? selectedJob.rj_number : query.trim();
+      const company = selectedJob ? selectedJob.company_name : customCompany.trim();
+      const description = selectedJob ? selectedJob.job_description : customDesc.trim();
 
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.error || "Server error");
+      // If it's a new custom job, save it to the database first
+      if (isCustom) {
+        await fetch("/api/jobs", {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({rj_number:rj, company_name:company, job_description:description}),
+        });
+        // Refresh the jobs list so it shows up next time
+        fetch("/api/jobs").then(r=>r.json()).then((d:Job[])=>setAllJobs(Array.isArray(d)?d:[])).catch(()=>{});
       }
 
-      setToast({
-        msg: `✓ Saved — ${selectedJob.rj_number} · ${fmtCurrency(weekTotal)}`,
-        type: "success",
+      const res = await fetch("/api/entries", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          rj_number:rj, company_name:company, job_description:description,
+          week_start:toISO(weekStart),
+          sun:parseDollar(amounts.sun), mon:parseDollar(amounts.mon),
+          tue:parseDollar(amounts.tue), wed:parseDollar(amounts.wed),
+          thu:parseDollar(amounts.thu), fri:parseDollar(amounts.fri),
+          sat:parseDollar(amounts.sat),
+          invoice_number:invoiceNum, notes,
+        }),
       });
+      if (!res.ok) { const err=await res.json(); throw new Error(err.error||"Server error"); }
 
-      // Reset form, keep week
-      setSelectedJob(null);
-      setQuery("");
-      setAmounts(EMPTY_AMOUNTS);
-      setInvoiceNum("");
-      setNotes("");
+      setToast({msg:`✓ Saved — ${rj} · ${fmtCurrency(weekTotal)}`,type:"success"});
+      setSelectedJob(null); setQuery(""); setAmounts(EMPTY_AMOUNTS);
+      setInvoiceNum(""); setNotes(""); setIsCustom(false);
+      setCustomCompany(""); setCustomDesc("");
       await fetchEntries();
-    } catch (err) {
-      setToast({ msg: `Error: ${err instanceof Error ? err.message : "Unknown"}`, type: "error" });
-    } finally {
-      setSubmitting(false);
-    }
+    } catch(err) {
+      setToast({msg:`Error: ${err instanceof Error?err.message:"Unknown"}`,type:"error"});
+    } finally { setSubmitting(false); }
   }
 
   async function handleDelete(id: number) {
     setDeleting(id);
     try {
-      const res = await fetch(`/api/entries/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Delete failed");
-      setEntries(prev => prev.filter(e => e.id !== id));
-      setToast({ msg: "Entry deleted.", type: "success" });
-    } catch {
-      setToast({ msg: "Failed to delete entry.", type: "error" });
-    } finally {
-      setDeleting(null);
-    }
+      const r = await fetch(`/api/entries/${id}`,{method:"DELETE"});
+      if (!r.ok) throw new Error("Delete failed");
+      setEntries(prev => prev.filter(e=>e.id!==id));
+      setToast({msg:"Entry deleted.",type:"success"});
+    } catch { setToast({msg:"Failed to delete entry.",type:"error"}); }
+    finally { setDeleting(null); }
   }
 
-  const colTotal = (day: Day) => entries.reduce((s, e) => s + Number(e[day]), 0);
-  const grandTotal = entries.reduce((s, e) => s + Number(e.week_total), 0);
-
-  // ── Render ──────────────────────────────────────────────────────────────────
+  // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#F2F2F2]" style={{ fontFamily: "Arial, Helvetica, sans-serif" }}>
+    <div className="min-h-screen" style={{background:LTGRAY,fontFamily:"Arial,Helvetica,sans-serif"}}>
 
-      {/* ── Toast ── */}
+      {/* Toast */}
       {toast && (
-        <div
-          className={`fixed top-5 right-5 z-50 rounded-lg px-6 py-3 text-white text-sm font-semibold shadow-2xl
-            ${toast.type === "success" ? "bg-[#1E6B1E]" : "bg-red-600"}`}
-        >
+        <div className="fixed top-5 right-5 z-50 rounded-xl px-6 py-3 text-white text-sm font-semibold shadow-2xl"
+          style={{background:toast.type==="success"?DKGREEN:"#dc2626"}}>
           {toast.msg}
         </div>
       )}
 
-      {/* ── Header ── */}
-      <header className="bg-[#1F3864] text-white px-8 py-4 flex items-center justify-between shadow-lg">
+      {/* Header */}
+      <header className="text-white px-8 py-4 flex items-center justify-between shadow-lg"
+        style={{background:NAVY}}>
         <div>
-          <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp</h1>
-          <p className="text-sm text-blue-200 tracking-wide mt-0.5">Rental Billing</p>
+          <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp — Rental Billing</h1>
         </div>
-        <p className="text-sm text-blue-200">{formatTodayLong()}</p>
+        <p className="text-sm opacity-75">{formatTodayLong()}</p>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 py-8 space-y-6">
-
-        {/* ── Week Selector ── */}
-        <div className="bg-white rounded-2xl shadow-md px-6 py-4 flex items-center gap-4">
-          <button
-            type="button"
-            onClick={() => advanceWeek(-1)}
-            className="w-10 h-10 rounded-full bg-[#1F3864] text-white text-xl font-bold
-                       hover:bg-[#1F6B6B] transition flex items-center justify-center"
-          >
-            ‹
-          </button>
+      {/* Week Selector — full width above both columns */}
+      <div className="max-w-7xl mx-auto px-4 pt-6">
+        <div className="bg-white rounded-2xl shadow px-6 py-4 flex items-center gap-4 mb-6">
+          <button type="button" onClick={()=>advanceWeek(-1)}
+            className="w-10 h-10 rounded-full text-white text-xl font-bold flex items-center justify-center transition hover:opacity-80"
+            style={{background:NAVY}}>‹</button>
           <div className="flex-1 text-center">
             <p className="text-xs uppercase tracking-widest text-gray-400 mb-0.5">Billing Period</p>
-            <p className="text-xl font-bold text-[#1F3864]">{formatWeekRange(weekStart)}</p>
+            <p className="text-xl font-bold" style={{color:NAVY}}>{formatWeekRange(weekStart)}</p>
           </div>
-          <button
-            type="button"
-            onClick={() => advanceWeek(1)}
-            className="w-10 h-10 rounded-full bg-[#1F3864] text-white text-xl font-bold
-                       hover:bg-[#1F6B6B] transition flex items-center justify-center"
-          >
-            ›
-          </button>
+          <button type="button" onClick={()=>advanceWeek(1)}
+            className="w-10 h-10 rounded-full text-white text-xl font-bold flex items-center justify-center transition hover:opacity-80"
+            style={{background:NAVY}}>›</button>
         </div>
+      </div>
 
-        {/* ── Entry Form ── */}
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-md p-8 space-y-8">
+      {/* Two-column body */}
+      <div className="max-w-7xl mx-auto px-4 pb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
-          {/* Job Search */}
-          <div>
-            <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
-              RJ Number / Company
-            </label>
-            <div ref={searchRef} className="relative">
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Type RJ number or company name…"
-                value={query}
-                autoComplete="off"
-                onChange={e => { setQuery(e.target.value); setShowDrop(true); }}
-                onFocus={() => setShowDrop(true)}
-                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-lg
-                           focus:outline-none focus:border-[#1F6B6B] bg-white"
-              />
-              {showDrop && filtered.length > 0 && (
-                <ul className="absolute z-40 left-0 right-0 mt-1 bg-white border border-gray-200
-                               rounded-xl shadow-2xl max-h-72 overflow-y-auto">
-                  {filtered.map(job => (
-                    <li
-                      key={job.rj_number}
-                      onMouseDown={() => pickJob(job)}
-                      className="px-5 py-3 cursor-pointer hover:bg-[#F2F2F2] border-b border-gray-100 last:border-0
-                                 flex items-baseline gap-3"
-                    >
-                      <span className="font-bold text-[#1F3864] text-sm w-28 shrink-0">{job.rj_number}</span>
-                      <span className="text-gray-700 text-sm truncate">{job.company_name}</span>
-                    </li>
-                  ))}
-                </ul>
+          {/* ── LEFT: Entry Form ── */}
+          <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow p-6 space-y-6">
+
+            {/* Job Search */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                RJ Number / Company
+              </label>
+              <div ref={searchRef} className="relative">
+                <input ref={inputRef} type="text" autoComplete="off"
+                  placeholder={jobsLoaded ? "Type RJ# or company name…" : "Loading jobs…"}
+                  disabled={!!selectedJob || isCustom}
+                  value={query}
+                  onChange={e=>{setQuery(e.target.value);setShowDrop(true);}}
+                  onFocus={()=>setShowDrop(true)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-lg
+                             focus:outline-none disabled:bg-gray-50 disabled:text-gray-400"
+                  style={{borderColor:showDrop&&(filtered.length>0||showAddNew)?"#1F6B6B":undefined}}
+                />
+
+                {/* Dropdown */}
+                {showDrop && (filtered.length>0||showAddNew) && (
+                  <ul className="absolute z-40 left-0 right-0 mt-1 bg-white border border-gray-200
+                                 rounded-xl shadow-2xl max-h-72 overflow-y-auto">
+                    {filtered.map(job=>(
+                      <li key={job.rj_number} onMouseDown={()=>pickJob(job)}
+                        className="px-5 py-3 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-0 flex items-baseline gap-3">
+                        <span className="font-bold text-sm w-28 shrink-0" style={{color:NAVY}}>{job.rj_number}</span>
+                        <span className="text-sm text-gray-600 truncate">{job.company_name}</span>
+                      </li>
+                    ))}
+                    {showAddNew && (
+                      <li onMouseDown={pickCustom}
+                        className="px-5 py-3 cursor-pointer border-t-2 flex items-center gap-2 font-semibold text-sm"
+                        style={{borderColor:TEAL,color:TEAL,background:"#f0fafa"}}>
+                        <span className="text-lg font-bold">+</span>
+                        Add new job: <span className="font-bold" style={{color:NAVY}}>{query}</span>
+                      </li>
+                    )}
+                  </ul>
+                )}
+              </div>
+
+              {/* Selected job confirmation */}
+              {selectedJob && (
+                <div className="mt-3 flex items-center gap-3 px-5 py-4 rounded-xl border"
+                  style={{background:LTGRAY,borderColor:"#d1d5db"}}>
+                  <div className="flex-1">
+                    <p className="text-2xl font-bold" style={{color:NAVY}}>{selectedJob.rj_number}</p>
+                    <p className="text-sm text-gray-600 mt-0.5">{selectedJob.company_name}</p>
+                  </div>
+                  <button type="button" onClick={clearJob}
+                    className="text-sm text-gray-400 hover:text-red-500 px-3 py-1 border rounded-lg hover:border-red-400 transition"
+                    style={{borderColor:"#d1d5db"}}>Change</button>
+                </div>
+              )}
+
+              {/* Custom job fields */}
+              {isCustom && (
+                <div className="mt-3 p-4 rounded-xl border-2 space-y-3" style={{borderColor:TEAL,background:"#f0fafa"}}>
+                  <div className="flex items-center justify-between mb-1">
+                    <p className="text-sm font-bold" style={{color:NAVY}}>New Job: <span style={{color:TEAL}}>{query}</span></p>
+                    <button type="button" onClick={cancelCustom}
+                      className="text-xs text-gray-400 hover:text-red-500 transition">✕ Cancel</button>
+                  </div>
+                  <input type="text" placeholder="Company Name (required)"
+                    value={customCompany} onChange={e=>setCustomCompany(e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none"
+                    style={{borderColor:customCompany?"#1F6B6B":undefined}}
+                  />
+                  <input type="text" placeholder="Job Description (optional)"
+                    value={customDesc} onChange={e=>setCustomDesc(e.target.value)}
+                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none"
+                  />
+                </div>
               )}
             </div>
 
-            {/* Selected job confirmation */}
-            {selectedJob && (
-              <div className="mt-4 flex items-center gap-4 px-5 py-4 bg-[#F2F2F2] rounded-xl border border-gray-200">
-                <div className="flex-1">
-                  <p className="text-2xl font-bold text-[#1F3864]">{selectedJob.rj_number}</p>
-                  <p className="text-base text-gray-600 mt-0.5">{selectedJob.company_name}</p>
+            {/* Day Amount Inputs */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-3" style={{color:TEAL}}>
+                Daily Amounts
+              </label>
+              <div className="grid grid-cols-7 gap-2">
+                {DAYS.map((day,i)=>(
+                  <div key={day} className="flex flex-col items-center gap-1">
+                    <span className="text-xs font-bold tracking-widest"
+                      style={{color:day==="sun"||day==="sat"?ORANGE:"#6b7280"}}>
+                      {DAY_LABELS[i]}
+                    </span>
+                    <input type="text" inputMode="decimal" placeholder="—"
+                      value={amounts[day]}
+                      onChange={e=>setAmounts(p=>({...p,[day]:e.target.value}))}
+                      onFocus={()=>handleAmountFocus(day)}
+                      onBlur={()=>handleAmountBlur(day)}
+                      className="w-full border-2 border-gray-300 rounded-xl px-1 py-4 text-center
+                                 text-sm font-semibold focus:outline-none tabular-nums placeholder:text-gray-300"
+                      style={{borderColor:parseDollar(amounts[day])>0?TEAL:undefined}}
+                    />
+                  </div>
+                ))}
+              </div>
+              {/* Week Total */}
+              <div className="mt-4 flex items-center justify-end gap-3 pr-1">
+                <span className="text-sm font-bold uppercase tracking-widest text-gray-400">Week Total</span>
+                <span className="text-3xl font-bold tabular-nums" style={{color:ORANGE}}>
+                  {fmtCurrency(weekTotal)}
+                </span>
+              </div>
+            </div>
+
+            {/* Invoice & Notes */}
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>Invoice #</label>
+                <input type="text" placeholder="INV-2026-0001"
+                  value={invoiceNum} onChange={e=>setInvoiceNum(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                  Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
+                </label>
+                <input type="text" placeholder="Any remarks…"
+                  value={notes} onChange={e=>setNotes(e.target.value)}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                />
+              </div>
+            </div>
+
+            {/* Submit */}
+            <button type="submit" disabled={submitting}
+              className="w-full text-white font-bold text-xl py-5 rounded-xl transition-colors
+                         shadow-md tracking-wider uppercase disabled:opacity-50"
+              style={{background:submitting?TEAL:NAVY}}>
+              {submitting ? "Saving…" : "Submit Entry"}
+            </button>
+          </form>
+
+          {/* ── RIGHT: This Week at a Glance ── */}
+          <div className="space-y-4">
+            <div className="bg-white rounded-2xl shadow p-6">
+              <h2 className="text-xs font-bold uppercase tracking-widest mb-4" style={{color:TEAL}}>
+                This Week at a Glance
+                {entries.length>0 && (
+                  <span className="ml-2 text-gray-400 font-normal normal-case">
+                    — {entries.length} entr{entries.length===1?"y":"ies"}
+                  </span>
+                )}
+              </h2>
+
+              {/* Entries table */}
+              {entries.length===0 ? (
+                <p className="text-gray-400 text-sm py-6 text-center">No entries yet for this week.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="text-white text-xs uppercase tracking-wider" style={{background:NAVY}}>
+                        <th className="px-3 py-2 text-left">RJ #</th>
+                        <th className="px-3 py-2 text-left">Company</th>
+                        {DAY_LABELS.map(d=><th key={d} className="px-1 py-2 text-center">{d}</th>)}
+                        <th className="px-3 py-2 text-right">Total</th>
+                        <th className="px-2 py-2"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {entries.map((entry,i)=>(
+                        <tr key={entry.id} style={{background:i%2===0?"white":LTGRAY}}>
+                          <td className="px-3 py-2 font-bold whitespace-nowrap" style={{color:NAVY}}>
+                            {entry.rj_number}
+                          </td>
+                          <td className="px-3 py-2 text-gray-600 max-w-[120px] truncate whitespace-nowrap">
+                            {entry.company_name}
+                          </td>
+                          {DAYS.map(day=>(
+                            <td key={day} className="px-1 py-2 text-center tabular-nums"
+                              style={{color:Number(entry[day])>0?"#374151":"#d1d5db"}}>
+                              {fmtCell(Number(entry[day]))}
+                            </td>
+                          ))}
+                          <td className="px-3 py-2 text-right font-bold tabular-nums whitespace-nowrap"
+                            style={{color:ORANGE}}>
+                            {fmtCurrency(Number(entry.week_total))}
+                          </td>
+                          <td className="px-2 py-2 text-center">
+                            <button onClick={()=>handleDelete(entry.id)}
+                              disabled={deleting===entry.id}
+                              className="text-xs text-gray-300 hover:text-red-500 transition px-1.5 py-0.5 rounded border border-gray-200 hover:border-red-400 disabled:opacity-40">
+                              {deleting===entry.id?"…":"Del"}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                    <tfoot>
+                      <tr className="text-white text-xs font-bold" style={{background:NAVY}}>
+                        <td colSpan={2} className="px-3 py-2 text-right uppercase tracking-wider text-xs">Totals</td>
+                        {DAYS.map(day=>{
+                          const s=entries.reduce((t,e)=>t+Number(e[day]),0);
+                          return <td key={day} className="px-1 py-2 text-center tabular-nums">
+                            {s>0?fmtBlur(s):<span className="opacity-40">—</span>}
+                          </td>;
+                        })}
+                        <td className="px-3 py-2 text-right tabular-nums" style={{color:ORANGE}}>
+                          {fmtCurrency(grandTotal)}
+                        </td>
+                        <td></td>
+                      </tr>
+                    </tfoot>
+                  </table>
                 </div>
-                <button
-                  type="button"
-                  onClick={clearJob}
-                  className="text-sm text-gray-400 hover:text-red-500 transition font-medium px-3 py-1
-                             border border-gray-300 rounded-lg hover:border-red-400"
-                >
-                  Change
-                </button>
+              )}
+            </div>
+
+            {/* Daily Totals Bar Chart */}
+            {entries.length>0 && (
+              <div className="bg-white rounded-2xl shadow p-6">
+                <h3 className="text-xs font-bold uppercase tracking-widest mb-4" style={{color:TEAL}}>
+                  Daily Totals
+                </h3>
+                <ResponsiveContainer width="100%" height={180}>
+                  <BarChart data={chartData} margin={{top:4,right:8,left:8,bottom:0}}>
+                    <XAxis dataKey="day" tick={{fontSize:11,fontWeight:600}} axisLine={false} tickLine={false}/>
+                    <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false}
+                      tickFormatter={v=>v===0?"":("$"+Number(v).toLocaleString())}/>
+                    <Tooltip
+                      formatter={(value)=>["$"+Number(value).toLocaleString("en-US",{minimumFractionDigits:2}),"Total"]}
+                      contentStyle={{borderRadius:"8px",border:"1px solid #e5e7eb",fontSize:"12px"}}
+                    />
+                    <Bar dataKey="total" radius={[4,4,0,0]}>
+                      {chartData.map((entry,i)=>(
+                        <Cell key={i} fill={entry.total>0?NAVY:"#e5e7eb"}/>
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             )}
           </div>
+          {/* end right column */}
 
-          {/* Daily Amounts */}
-          <div>
-            <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-3">
-              Daily Amounts
-            </label>
-            <div className="grid grid-cols-7 gap-3">
-              {DAYS.map((day, i) => (
-                <div key={day} className="flex flex-col items-center gap-2">
-                  <span className={`text-xs font-bold tracking-widest
-                    ${day === "sun" || day === "sat" ? "text-[#C55A11]" : "text-gray-500"}`}>
-                    {DAY_LABELS[i]}
-                  </span>
-                  <input
-                    type="text"
-                    inputMode="decimal"
-                    placeholder="—"
-                    value={amounts[day]}
-                    onChange={e => setAmounts(p => ({ ...p, [day]: e.target.value }))}
-                    onFocus={() => handleAmountFocus(day)}
-                    onBlur={() => handleAmountBlur(day)}
-                    className="w-full border-2 border-gray-300 rounded-xl px-1 py-4 text-center text-base
-                               font-semibold focus:outline-none focus:border-[#1F6B6B]
-                               placeholder:text-gray-300 tabular-nums"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* Week Total */}
-            <div className="mt-5 flex items-center justify-end gap-4 pr-1">
-              <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">Week Total</span>
-              <span className="text-3xl font-bold text-[#C55A11] tabular-nums">
-                {fmtCurrency(weekTotal)}
-              </span>
-            </div>
-          </div>
-
-          {/* Invoice & Notes */}
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
-                Invoice #
-              </label>
-              <input
-                type="text"
-                placeholder="e.g. INV-2026-0001"
-                value={invoiceNum}
-                onChange={e => setInvoiceNum(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-base
-                           focus:outline-none focus:border-[#1F6B6B]"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-[#1F6B6B] uppercase tracking-widest mb-2">
-                Notes <span className="text-gray-400 normal-case font-normal">(optional)</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Any remarks…"
-                value={notes}
-                onChange={e => setNotes(e.target.value)}
-                className="w-full border-2 border-gray-300 rounded-xl px-5 py-4 text-base
-                           focus:outline-none focus:border-[#1F6B6B]"
-              />
-            </div>
-          </div>
-
-          {/* Submit */}
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-[#1F3864] hover:bg-[#1F6B6B] disabled:bg-gray-400
-                       text-white font-bold text-xl py-5 rounded-xl transition-colors
-                       shadow-md tracking-wider uppercase"
-          >
-            {submitting ? "Saving…" : "Submit Entry"}
-          </button>
-        </form>
-
-        {/* ── Recent Entries Table ── */}
-        <section>
-          <div className="flex items-baseline gap-3 mb-3 px-1">
-            <h2 className="text-xs font-bold text-[#1F6B6B] uppercase tracking-widest">
-              Entries This Week
-            </h2>
-            {entries.length > 0 && (
-              <span className="text-xs text-gray-400">
-                {entries.length} record{entries.length !== 1 ? "s" : ""}
-              </span>
-            )}
-          </div>
-
-          {entries.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-md px-8 py-10 text-center text-gray-400 text-sm">
-              No entries yet for this week.
-            </div>
-          ) : (
-            <div className="bg-white rounded-2xl shadow-md overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-[#1F3864] text-white text-xs uppercase tracking-wider">
-                    <th className="px-4 py-3 text-left">RJ #</th>
-                    <th className="px-4 py-3 text-left">Company</th>
-                    {DAY_LABELS.map(d => (
-                      <th key={d} className="px-2 py-3 text-center">{d}</th>
-                    ))}
-                    <th className="px-4 py-3 text-right">Total</th>
-                    <th className="px-4 py-3 text-left">Invoice</th>
-                    <th className="px-3 py-3"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {entries.map((entry, i) => (
-                    <tr
-                      key={entry.id}
-                      className={`border-b border-gray-100 ${i % 2 === 0 ? "bg-white" : "bg-[#F2F2F2]"}`}
-                    >
-                      <td className="px-4 py-3 font-bold text-[#1F3864] whitespace-nowrap">
-                        {entry.rj_number}
-                      </td>
-                      <td className="px-4 py-3 text-gray-700 max-w-[180px] truncate whitespace-nowrap">
-                        {entry.company_name}
-                      </td>
-                      {DAYS.map(day => (
-                        <td
-                          key={day}
-                          className={`px-2 py-3 text-center tabular-nums
-                            ${Number(entry[day]) > 0 ? "text-gray-700" : "text-gray-300"}`}
-                        >
-                          {fmtCell(Number(entry[day]))}
-                        </td>
-                      ))}
-                      <td className="px-4 py-3 text-right font-bold text-[#C55A11] tabular-nums whitespace-nowrap">
-                        {fmtCurrency(Number(entry.week_total))}
-                      </td>
-                      <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
-                        {entry.invoice_number || "—"}
-                      </td>
-                      <td className="px-3 py-3 text-center">
-                        <button
-                          onClick={() => handleDelete(entry.id)}
-                          disabled={deleting === entry.id}
-                          className="text-xs text-gray-400 hover:text-red-600 transition font-medium
-                                     px-2 py-1 rounded border border-gray-200 hover:border-red-400
-                                     disabled:opacity-40"
-                          title="Delete this entry"
-                        >
-                          {deleting === entry.id ? "…" : "Del"}
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-                <tfoot>
-                  <tr className="bg-[#1F3864] text-white font-bold text-sm">
-                    <td colSpan={2} className="px-4 py-3 text-right text-xs uppercase tracking-wider">
-                      Week Total
-                    </td>
-                    {DAYS.map(day => (
-                      <td key={day} className="px-2 py-3 text-center tabular-nums text-xs">
-                        {colTotal(day) > 0 ? fmtBlur(colTotal(day)) : <span className="opacity-40">—</span>}
-                      </td>
-                    ))}
-                    <td className="px-4 py-3 text-right text-[#C55A11] tabular-nums">
-                      {fmtCurrency(grandTotal)}
-                    </td>
-                    <td colSpan={2}></td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          )}
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
 }
