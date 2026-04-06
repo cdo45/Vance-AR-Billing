@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   const {
     rj_number, company_name, job_description, week_start,
     sun, mon, tue, wed, thu, fri, sat,
-    invoice_number, notes, work_description, prelim_date, customer_id,
+    invoice_number, notes, work_description, prelim_date, customer_id, status,
   } = body;
 
   if (!rj_number || !company_name || !week_start) {
@@ -50,12 +50,12 @@ export async function POST(req: NextRequest) {
     INSERT INTO billing_entries
       (rj_number, company_name, job_description, week_start,
        sun, mon, tue, wed, thu, fri, sat, week_total,
-       invoice_number, notes, work_description, prelim_date, customer_id)
+       invoice_number, notes, work_description, prelim_date, customer_id, status)
     VALUES
       (${rj_number}, ${company_name}, ${job_description || ""}, ${week_start},
        ${s}, ${m}, ${t}, ${w}, ${th}, ${f}, ${sa}, ${week_total},
        ${invoice_number || ""}, ${notes || ""}, ${work_description || ""},
-       ${prelim_date || null}, ${customer_id || null})
+       ${prelim_date || null}, ${customer_id || null}, ${status || "pending"})
     RETURNING *
   ` as BillingEntry[];
 
