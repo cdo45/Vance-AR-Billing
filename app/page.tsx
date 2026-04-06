@@ -28,6 +28,7 @@ interface BillingEntry {
   week_total: number;
   invoice_number: string;
   notes: string;
+  work_description: string;
   created_at: string;
 }
 
@@ -90,6 +91,15 @@ export default function EntryForm() {
   const [invoiceNum, setInvoiceNum] = useState("");
   const [notes, setNotes]           = useState("");
 
+  // Work description
+  const [workDesc, setWorkDesc] = useState("");
+
+  // DB status & company autocomplete
+  const [dbStatus, setDbStatus]     = useState<"loading"|"ok"|"error">("loading");
+  const [companies, setCompanies]   = useState<string[]>([]);
+  const [showCompanyDrop, setShowCompanyDrop] = useState(false);
+  const companyRef = useRef<HTMLDivElement>(null);
+
   // UI state
   const [toast, setToast]         = useState<Toast|null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -104,6 +114,22 @@ export default function EntryForm() {
       .catch(() => { setAllJobs([]); setJobsLoaded(true); });
   }, []);
 
+  // ── DB health check ──
+  useEffect(() => {
+    fetch("/api/health")
+      .then(r => r.json())
+      .then(d => setDbStatus(d.status === "ok" ? "ok" : "error"))
+      .catch(() => setDbStatus("error"));
+  }, []);
+
+  // ── Load company names for autocomplete ──
+  useEffect(() => {
+    fetch("/api/companies")
+      .then(r => r.ok ? r.json() : [])
+      .then((d: string[]) => setCompanies(Array.isArray(d) ? d : []))
+      .catch(() => {});
+  }, []);
+
   // ── Fetch entries for selected week ──
   const fetchEntries = useCallback(async () => {
     try {
@@ -113,10 +139,11 @@ export default function EntryForm() {
   }, [weekStart]);
   useEffect(() => { fetchEntries(); }, [fetchEntries]);
 
-  // ── Close dropdown on outside click ──
+  // ── Close dropdowns on outside click ──
   useEffect(() => {
     function down(e: MouseEvent) {
       if (searchRef.current && !searchRef.current.contains(e.target as Node)) setShowDrop(false);
+      if (companyRef.current && !companyRef.current.contains(e.target as Node)) setShowCompanyDrop(false);
     }
     document.addEventListener("mousedown", down);
     return () => document.removeEventListener("mousedown", down);
@@ -160,12 +187,12 @@ export default function EntryForm() {
     setCustomCompany(""); setCustomDesc("");
   }
   function cancelCustom() {
-    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setIsCustom(false); setCustomCompany(""); setCustomDesc(""); setWorkDesc("");
     setTimeout(() => inputRef.current?.focus(), 50);
   }
   function clearJob() {
     setSelectedJob(null); setQuery("");
-    setIsCustom(false); setCustomCompany(""); setCustomDesc("");
+    setIsCustom(false); setCustomCompany(""); setCustomDesc(""); setWorkDesc("");
     setTimeout(() => inputRef.current?.focus(), 50);
   }
   function advanceWeek(delta: number) {
@@ -189,6 +216,9 @@ export default function EntryForm() {
     }
     if (isCustom && !customCompany.trim()) {
       setToast({msg:"Company Name is required for new jobs.",type:"error"}); return;
+    }
+    if (!workDesc.trim()) {
+      setToast({msg:"Work Description is required.",type:"error"}); return;
     }
     if (weekTotal === 0) {
       setToast({msg:"Enter at least one day amount before submitting.",type:"error"}); return;
@@ -222,13 +252,14 @@ export default function EntryForm() {
           thu:parseDollar(amounts.thu), fri:parseDollar(amounts.fri),
           sat:parseDollar(amounts.sat),
           invoice_number:invoiceNum, notes,
+          work_description:workDesc,
         }),
       });
       if (!res.ok) { const err=await res.json(); throw new Error(err.error||"Server error"); }
 
       setToast({msg:`✓ Saved — ${rj} · ${fmtCurrency(weekTotal)}`,type:"success"});
       setSelectedJob(null); setQuery(""); setAmounts(EMPTY_AMOUNTS);
-      setInvoiceNum(""); setNotes(""); setIsCustom(false);
+      setInvoiceNum(""); setNotes(""); setWorkDesc(""); setIsCustom(false);
       setCustomCompany(""); setCustomDesc("");
       await fetchEntries();
     } catch(err) {
@@ -265,7 +296,17 @@ export default function EntryForm() {
         <div>
           <h1 className="text-2xl font-bold tracking-wider uppercase">Vance Corp — Rental Billing</h1>
         </div>
-        <p className="text-sm opacity-75">{formatTodayLong()}</p>
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-2 text-sm">
+            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{
+              background: dbStatus==="ok" ? "#22c55e" : dbStatus==="error" ? "#ef4444" : "#9ca3af"
+            }}/>
+            <span className="opacity-75">
+              {dbStatus==="loading" ? "Connecting…" : dbStatus==="ok" ? "DB Connected" : "DB Error"}
+            </span>
+          </div>
+          <p className="text-sm opacity-75">{formatTodayLong()}</p>
+        </div>
       </header>
 
       {/* Week Selector — full width above both columns */}
@@ -353,17 +394,46 @@ export default function EntryForm() {
                     <button type="button" onClick={cancelCustom}
                       className="text-xs text-gray-400 hover:text-red-500 transition">✕ Cancel</button>
                   </div>
-                  <input type="text" placeholder="Company Name (required)"
-                    value={customCompany} onChange={e=>setCustomCompany(e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none"
-                    style={{borderColor:customCompany?"#1F6B6B":undefined}}
-                  />
+                  <div ref={companyRef} className="relative">
+                    <input type="text" placeholder="Company Name (required)"
+                      value={customCompany}
+                      onChange={e=>{setCustomCompany(e.target.value);setShowCompanyDrop(true);}}
+                      onFocus={()=>setShowCompanyDrop(true)}
+                      className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none"
+                      style={{borderColor:customCompany?"#1F6B6B":undefined}}
+                    />
+                    {showCompanyDrop && customCompany && (() => {
+                      const filtered = companies.filter(c=>c.toLowerCase().includes(customCompany.toLowerCase())).slice(0,10);
+                      return filtered.length>0 ? (
+                        <ul className="absolute z-40 left-0 right-0 mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl max-h-48 overflow-y-auto">
+                          {filtered.map(c=>(
+                            <li key={c} onMouseDown={()=>{setCustomCompany(c);setShowCompanyDrop(false);}}
+                              className="px-4 py-2.5 cursor-pointer hover:bg-gray-50 border-b border-gray-100 last:border-0 text-sm text-gray-700">
+                              {c}
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null;
+                    })()}
+                  </div>
                   <input type="text" placeholder="Job Description (optional)"
                     value={customDesc} onChange={e=>setCustomDesc(e.target.value)}
                     className="w-full border-2 border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none"
                   />
                 </div>
               )}
+            </div>
+
+            {/* Work Description */}
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-widest mb-2" style={{color:TEAL}}>
+                Work Description <span className="text-red-400 font-bold">*</span>
+              </label>
+              <input type="text" placeholder="Describe the work performed…"
+                value={workDesc} onChange={e=>setWorkDesc(e.target.value)}
+                className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
+                style={{borderColor:workDesc.trim()?TEAL:undefined}}
+              />
             </div>
 
             {/* Day Amount Inputs */}
@@ -461,8 +531,11 @@ export default function EntryForm() {
                           <td className="px-3 py-2 font-bold whitespace-nowrap" style={{color:NAVY}}>
                             {entry.rj_number}
                           </td>
-                          <td className="px-3 py-2 text-gray-600 max-w-[120px] truncate whitespace-nowrap">
-                            {entry.company_name}
+                          <td className="px-3 py-2 max-w-[140px]">
+                            <div className="text-gray-600 truncate whitespace-nowrap">{entry.company_name}</div>
+                            {entry.work_description && (
+                              <div className="text-gray-400 text-xs truncate whitespace-nowrap italic">{entry.work_description}</div>
+                            )}
                           </td>
                           {DAYS.map(day=>(
                             <td key={day} className="px-1 py-2 text-center tabular-nums"

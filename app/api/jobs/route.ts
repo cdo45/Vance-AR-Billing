@@ -10,8 +10,15 @@ export async function GET() {
   try {
     const filePath = path.join(process.cwd(), "data", "jobs.json");
     const raw = fs.readFileSync(filePath, "utf-8").trim();
-    if (raw) staticJobs = JSON.parse(raw);
-  } catch {
+    if (!raw) {
+      console.warn("[jobs] data/jobs.json is empty — using empty list");
+    } else {
+      staticJobs = JSON.parse(raw);
+      console.log(`[jobs] Loaded ${staticJobs.length} jobs from jobs.json`);
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[jobs] Could not load data/jobs.json: ${msg} — using empty list`);
     staticJobs = [];
   }
 
@@ -25,7 +32,10 @@ export async function GET() {
       FROM custom_jobs
       ORDER BY created_at DESC
     `) as JobRecord[];
-  } catch {
+    console.log(`[jobs] Loaded ${customJobs.length} custom jobs from database`);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`[jobs] Could not load custom_jobs from database: ${msg}`);
     customJobs = [];
   }
 
