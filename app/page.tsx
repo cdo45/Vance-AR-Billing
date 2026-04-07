@@ -141,6 +141,7 @@ export default function EntryForm() {
   const [editNotes, setEditNotes]     = useState("");
   const [editWorkDesc, setEditWorkDesc] = useState("");
   const [editPrelim, setEditPrelim]   = useState("");
+  const [editStatus, setEditStatus]   = useState<EntryStatus>("pending");
   const [editReason, setEditReason]   = useState("");
   const [editSaving, setEditSaving]   = useState(false);
 
@@ -414,30 +415,54 @@ export default function EntryForm() {
     setEditNotes(entry.notes || "");
     setEditWorkDesc(entry.work_description || "");
     setEditPrelim(entry.prelim_date || "");
+    setEditStatus((entry.status || "pending") as EntryStatus);
     setEditReason("");
   }
 
   async function handleEditSave(e: React.FormEvent) {
     e.preventDefault();
     if (!editEntry) return;
-    if (!editReason.trim()) {
+
+    // Detect if only status changed (no reason required)
+    const otherFieldsChanged =
+      editWorkDesc !== (editEntry.work_description || "") ||
+      editInvoice  !== (editEntry.invoice_number  || "") ||
+      editNotes    !== (editEntry.notes            || "") ||
+      editPrelim   !== (editEntry.prelim_date      || "") ||
+      DAYS.some(d => parseDollar(editAmounts[d]) !== Number(editEntry[d]));
+    const statusChanged = editStatus !== ((editEntry.status || "pending") as EntryStatus);
+    const onlyStatusChanged = statusChanged && !otherFieldsChanged;
+
+    if (!onlyStatusChanged && !editReason.trim()) {
       setToast({msg:"Reason for edit is required.",type:"error"}); return;
     }
+
     setEditSaving(true);
     try {
-      const r = await fetch(`/api/entries/${editEntry.id}`, {
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          sun:parseDollar(editAmounts.sun), mon:parseDollar(editAmounts.mon),
-          tue:parseDollar(editAmounts.tue), wed:parseDollar(editAmounts.wed),
-          thu:parseDollar(editAmounts.thu), fri:parseDollar(editAmounts.fri),
-          sat:parseDollar(editAmounts.sat),
-          invoice_number:editInvoice, notes:editNotes,
-          work_description:editWorkDesc, prelim_date:editPrelim||null,
-          reason:editReason,
-        }),
-      });
+      let r: Response;
+      if (onlyStatusChanged) {
+        // Use status-only PUT path (no reason needed)
+        r = await fetch(`/api/entries/${editEntry.id}`, {
+          method:"PUT",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({ status: editStatus }),
+        });
+      } else {
+        r = await fetch(`/api/entries/${editEntry.id}`, {
+          method:"PUT",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            sun:parseDollar(editAmounts.sun), mon:parseDollar(editAmounts.mon),
+            tue:parseDollar(editAmounts.tue), wed:parseDollar(editAmounts.wed),
+            thu:parseDollar(editAmounts.thu), fri:parseDollar(editAmounts.fri),
+            sat:parseDollar(editAmounts.sat),
+            invoice_number:editInvoice, notes:editNotes,
+            work_description:editWorkDesc, prelim_date:editPrelim||null,
+            status:editStatus,
+            reason:editReason,
+          }),
+        });
+      }
       if (!r.ok) { const err=await r.json(); throw new Error(err.error||"Server error"); }
       setToast({msg:"Entry updated.",type:"success"});
       // CHANGE 6: prompt to mark invoiced if amounts were just added to a pending entry
@@ -1044,22 +1069,57 @@ export default function EntryForm() {
                       style={{borderColor:editPrelim?TEAL:undefined}}/>
                   </div>
                 </div>
-                {/* Notes */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Notes</label>
-                  <input type="text" value={editNotes} onChange={e=>setEditNotes(e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"/>
-                </div>
-                {/* Reason — required */}
-                <div className="rounded-xl border-2 p-4" style={{borderColor:ORANGE,background:"#fff7f7"}}>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:ORANGE}}>
-                    Reason for Edit <span className="text-red-500">*</span>
-                  </label>
-                  <input type="text" value={editReason} onChange={e=>setEditReason(e.target.value)}
-                    placeholder="Required — describe why this entry is being changed"
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
-                    style={{borderColor:editReason.trim()?ORANGE:undefined}}/>
-                </div>
+                {/* Status */}
+                {(() => {
+                  const otherChanged =
+                    editWorkDesc !== (editEntry.work_description || "") ||
+                    editInvoice  !== (editEntry.invoice_number  || "") ||
+                    editNotes    !== (editEntry.notes            || "") ||
+                    editPrelim   !== (editEntry.prelim_date      || "") ||
+                    DAYS.some(d => parseDollar(editAmounts[d]) !== Number(editEntry[d]));
+                  const statusChg = editStatus !== ((editEntry.status || "pending") as EntryStatus);
+                  const onlyStatus = statusChg && !otherChanged;
+                  return (
+                    <>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Status</label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {STATUS_ORDER.map(s=>(
+                            <button key={s} type="button" onClick={()=>setEditStatus(s)}
+                              className="py-2.5 rounded-xl text-sm font-bold uppercase tracking-wider border-2 transition"
+                              style={{
+                                background:  editStatus===s ? STATUS_FORM_BG[s]     : "white",
+                                color:       editStatus===s ? STATUS_FORM_TEXT[s]   : "#9ca3af",
+                                borderColor: editStatus===s ? STATUS_FORM_BORDER[s] : "#e5e7eb",
+                              }}>
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Notes */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Notes</label>
+                        <input type="text" value={editNotes} onChange={e=>setEditNotes(e.target.value)}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"/>
+                      </div>
+                      {/* Reason — required unless only status changed */}
+                      <div className="rounded-xl border-2 p-4" style={{borderColor:onlyStatus?"#d1d5db":ORANGE, background:onlyStatus?"#f9fafb":"#fff7f7"}}>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5"
+                          style={{color:onlyStatus?"#6b7280":ORANGE}}>
+                          Reason for Edit {onlyStatus
+                            ? <span className="font-normal normal-case tracking-normal text-gray-400 ml-1">— status change does not require a reason</span>
+                            : <span className="text-red-500">*</span>}
+                        </label>
+                        <input type="text" value={editReason} onChange={e=>setEditReason(e.target.value)}
+                          placeholder={onlyStatus ? "Optional" : "Required — describe why this entry is being changed"}
+                          disabled={onlyStatus}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none disabled:bg-gray-50 disabled:text-gray-400"
+                          style={{borderColor:(!onlyStatus && editReason.trim())?ORANGE:undefined}}/>
+                      </div>
+                    </>
+                  );
+                })()}
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={()=>setEditEntry(null)}
                     className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold uppercase tracking-wider text-gray-500 hover:border-gray-400 transition">
