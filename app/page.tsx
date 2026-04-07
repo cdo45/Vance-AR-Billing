@@ -1109,7 +1109,7 @@ export default function EntryForm() {
         </div>
       )}
 
-      {/* ── FIX 1: Hover Tooltip — left/right positioning via getBoundingClientRect ── */}
+      {/* ── Hover Tooltip — no scroll, left/right flip, two-col if too tall ── */}
       {hoveredCell && (() => {
         const row = gridRows.find(r=>r.rj_number===hoveredCell.rowKey);
         if (!row) return null;
@@ -1118,75 +1118,106 @@ export default function EntryForm() {
         const dayDate = dayDates[dayIdx] ?? "";
         const relevantEntries = row.entries.filter(en => Number(en[hoveredCell.day as Day]) > 0);
         const isPendingRow = row.rowStatus === "pending";
-        const TOOLTIP_W = 260;
-        const TOOLTIP_MAX_H = 300;
         const rect = hoveredCell.rect;
-        // Try right side; fall back to left
-        const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+        const TOOLTIP_W = 260;
+        const HEADER_H  = 46;
+        const ENTRY_H   = 90; // rough per-entry height estimate
+        const vw = typeof window !== "undefined" ? window.innerWidth  : 1200;
         const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+
+        // Decide if two-column layout is needed
+        const n = Math.max(relevantEntries.length, 1);
+        const singleH = HEADER_H + n * ENTRY_H;
+        const twoCol  = singleH > vh - 16 && relevantEntries.length > 1;
+        const mid = Math.ceil(relevantEntries.length / 2);
+        const colA = twoCol ? relevantEntries.slice(0, mid)  : relevantEntries;
+        const colB = twoCol ? relevantEntries.slice(mid)     : [];
+
+        const tooltipW = twoCol ? TOOLTIP_W * 2 + 8 : TOOLTIP_W;
+        const twoColH  = HEADER_H + Math.ceil(relevantEntries.length / 2) * ENTRY_H;
+        const tooltipH = twoCol ? twoColH : singleH;
+
+        // Horizontal: right of cell, flip left if overflow
         const rightLeft = rect.right + 12;
-        const leftLeft  = rect.left - TOOLTIP_W - 12;
-        const finalLeft = rightLeft + TOOLTIP_W + 8 <= vw ? rightLeft : leftLeft;
-        // Vertically center on cell, then clamp
-        let finalTop = rect.top + rect.height / 2 - TOOLTIP_MAX_H / 2;
-        if (finalTop + TOOLTIP_MAX_H > vh - 8) finalTop = vh - TOOLTIP_MAX_H - 8;
+        const leftLeft  = rect.left - tooltipW - 12;
+        const finalLeft = rightLeft + tooltipW + 8 <= vw ? rightLeft : Math.max(8, leftLeft);
+
+        // Vertical: center on cell, clamp to viewport
+        let finalTop = rect.top + rect.height / 2 - tooltipH / 2;
+        if (finalTop + tooltipH > vh - 8) finalTop = vh - tooltipH - 8;
         if (finalTop < 8) finalTop = 8;
+
+        // Render a single entry panel (shared between single and two-col modes)
+        function EntryPanel({ en, showDivider }: { en: BillingEntry; showDivider: boolean }) {
+          const amt = Number(en[hoveredCell!.day as Day]);
+          const sb  = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
+          return (
+            <div>
+              {showDivider && <div className="border-t" style={{borderColor:"#e5e7eb"}}/>}
+              <div className="px-3 py-2 space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Amount</span>
+                  <span className="font-bold tabular-nums" style={{color:ORANGE}}>{fmtCurrency(amt)}</span>
+                </div>
+                {en.work_description && (
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Work</span>
+                    <span className="text-right text-gray-700 leading-tight">{en.work_description}</span>
+                  </div>
+                )}
+                {en.invoice_number && (
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Invoice</span>
+                    <span style={{color:NAVY,fontWeight:600}}>{en.invoice_number}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Status</span>
+                  <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]" style={{background:sb.bg,color:sb.clr}}>
+                    ● {(en.status||"pending").toUpperCase()}
+                  </span>
+                </div>
+                {en.prelim_date && (
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Prelim</span>
+                    <span className="text-gray-700">{new Date(en.prelim_date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</span>
+                  </div>
+                )}
+                {en.notes && (
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Notes</span>
+                    <span className="text-right text-gray-500 italic leading-tight">{en.notes}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        }
+
         return (
-          <div className="pointer-events-none fixed rounded-xl shadow-xl border text-xs overflow-hidden overflow-y-auto"
-            style={{
-              left: finalLeft, top: finalTop,
-              width: TOOLTIP_W, maxHeight: TOOLTIP_MAX_H,
-              background:"white", borderColor: NAVY, zIndex: 9999,
-            }}>
+          <div className="pointer-events-none fixed rounded-xl shadow-xl border text-xs overflow-hidden"
+            style={{left:finalLeft, top:finalTop, width:tooltipW, background:"white", borderColor:NAVY, zIndex:9999}}>
+            {/* Header */}
             <div className="px-3 py-2" style={{background:NAVY,color:"white"}}>
               <div className="font-bold text-[11px] uppercase tracking-wider">{row.rj_number} — {row.company_name}</div>
               <div className="text-[10px] opacity-70 mt-0.5">{dayLabel} · {dayDate}</div>
             </div>
-            {relevantEntries.length > 0 ? relevantEntries.map((en, i) => {
-              const amt = Number(en[hoveredCell.day as Day]);
-              const sb = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
-              return (
-                <div key={en.id}>
-                  {i > 0 && <div className="border-t" style={{borderColor:"#e5e7eb"}}/>}
-                  <div className="px-3 py-2 space-y-1">
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Amount</span>
-                      <span className="font-bold tabular-nums" style={{color:ORANGE}}>{fmtCurrency(amt)}</span>
-                    </div>
-                    {en.work_description && (
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Work</span>
-                        <span className="text-right text-gray-700 leading-tight">{en.work_description}</span>
-                      </div>
-                    )}
-                    {en.invoice_number && (
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Invoice</span>
-                        <span style={{color:NAVY,fontWeight:600}}>{en.invoice_number}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Status</span>
-                      <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]" style={{background:sb.bg,color:sb.clr}}>
-                        ● {(en.status||"pending").toUpperCase()}
-                      </span>
-                    </div>
-                    {en.prelim_date && (
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Prelim</span>
-                        <span className="text-gray-700">{new Date(en.prelim_date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</span>
-                      </div>
-                    )}
-                    {en.notes && (
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Notes</span>
-                        <span className="text-right text-gray-500 italic leading-tight">{en.notes}</span>
-                      </div>
-                    )}
+            {relevantEntries.length > 0 ? (
+              twoCol ? (
+                /* Two-column layout */
+                <div className="flex">
+                  <div className="flex-1 border-r" style={{borderColor:"#e5e7eb"}}>
+                    {colA.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)}
+                  </div>
+                  <div className="flex-1">
+                    {colB.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)}
                   </div>
                 </div>
-              );
-            }) : isPendingRow ? (
+              ) : (
+                /* Single-column layout */
+                colA.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)
+              )
+            ) : isPendingRow ? (
               <div className="px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider" style={{color:"#93c5fd"}}>
                 TBD — Amount not yet set
               </div>
