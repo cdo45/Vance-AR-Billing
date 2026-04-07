@@ -141,6 +141,7 @@ export default function EntryForm() {
   const [editNotes, setEditNotes]     = useState("");
   const [editWorkDesc, setEditWorkDesc] = useState("");
   const [editPrelim, setEditPrelim]   = useState("");
+  const [editStatus, setEditStatus]   = useState<EntryStatus>("pending");
   const [editReason, setEditReason]   = useState("");
   const [editSaving, setEditSaving]   = useState(false);
 
@@ -414,30 +415,54 @@ export default function EntryForm() {
     setEditNotes(entry.notes || "");
     setEditWorkDesc(entry.work_description || "");
     setEditPrelim(entry.prelim_date || "");
+    setEditStatus((entry.status || "pending") as EntryStatus);
     setEditReason("");
   }
 
   async function handleEditSave(e: React.FormEvent) {
     e.preventDefault();
     if (!editEntry) return;
-    if (!editReason.trim()) {
+
+    // Detect if only status changed (no reason required)
+    const otherFieldsChanged =
+      editWorkDesc !== (editEntry.work_description || "") ||
+      editInvoice  !== (editEntry.invoice_number  || "") ||
+      editNotes    !== (editEntry.notes            || "") ||
+      editPrelim   !== (editEntry.prelim_date      || "") ||
+      DAYS.some(d => parseDollar(editAmounts[d]) !== Number(editEntry[d]));
+    const statusChanged = editStatus !== ((editEntry.status || "pending") as EntryStatus);
+    const onlyStatusChanged = statusChanged && !otherFieldsChanged;
+
+    if (!onlyStatusChanged && !editReason.trim()) {
       setToast({msg:"Reason for edit is required.",type:"error"}); return;
     }
+
     setEditSaving(true);
     try {
-      const r = await fetch(`/api/entries/${editEntry.id}`, {
-        method:"PUT",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          sun:parseDollar(editAmounts.sun), mon:parseDollar(editAmounts.mon),
-          tue:parseDollar(editAmounts.tue), wed:parseDollar(editAmounts.wed),
-          thu:parseDollar(editAmounts.thu), fri:parseDollar(editAmounts.fri),
-          sat:parseDollar(editAmounts.sat),
-          invoice_number:editInvoice, notes:editNotes,
-          work_description:editWorkDesc, prelim_date:editPrelim||null,
-          reason:editReason,
-        }),
-      });
+      let r: Response;
+      if (onlyStatusChanged) {
+        // Use status-only PUT path (no reason needed)
+        r = await fetch(`/api/entries/${editEntry.id}`, {
+          method:"PUT",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({ status: editStatus }),
+        });
+      } else {
+        r = await fetch(`/api/entries/${editEntry.id}`, {
+          method:"PUT",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            sun:parseDollar(editAmounts.sun), mon:parseDollar(editAmounts.mon),
+            tue:parseDollar(editAmounts.tue), wed:parseDollar(editAmounts.wed),
+            thu:parseDollar(editAmounts.thu), fri:parseDollar(editAmounts.fri),
+            sat:parseDollar(editAmounts.sat),
+            invoice_number:editInvoice, notes:editNotes,
+            work_description:editWorkDesc, prelim_date:editPrelim||null,
+            status:editStatus,
+            reason:editReason,
+          }),
+        });
+      }
       if (!r.ok) { const err=await r.json(); throw new Error(err.error||"Server error"); }
       setToast({msg:"Entry updated.",type:"success"});
       // CHANGE 6: prompt to mark invoiced if amounts were just added to a pending entry
@@ -1044,22 +1069,57 @@ export default function EntryForm() {
                       style={{borderColor:editPrelim?TEAL:undefined}}/>
                   </div>
                 </div>
-                {/* Notes */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Notes</label>
-                  <input type="text" value={editNotes} onChange={e=>setEditNotes(e.target.value)}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"/>
-                </div>
-                {/* Reason — required */}
-                <div className="rounded-xl border-2 p-4" style={{borderColor:ORANGE,background:"#fff7f7"}}>
-                  <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:ORANGE}}>
-                    Reason for Edit <span className="text-red-500">*</span>
-                  </label>
-                  <input type="text" value={editReason} onChange={e=>setEditReason(e.target.value)}
-                    placeholder="Required — describe why this entry is being changed"
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"
-                    style={{borderColor:editReason.trim()?ORANGE:undefined}}/>
-                </div>
+                {/* Status */}
+                {(() => {
+                  const otherChanged =
+                    editWorkDesc !== (editEntry.work_description || "") ||
+                    editInvoice  !== (editEntry.invoice_number  || "") ||
+                    editNotes    !== (editEntry.notes            || "") ||
+                    editPrelim   !== (editEntry.prelim_date      || "") ||
+                    DAYS.some(d => parseDollar(editAmounts[d]) !== Number(editEntry[d]));
+                  const statusChg = editStatus !== ((editEntry.status || "pending") as EntryStatus);
+                  const onlyStatus = statusChg && !otherChanged;
+                  return (
+                    <>
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Status</label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {STATUS_ORDER.map(s=>(
+                            <button key={s} type="button" onClick={()=>setEditStatus(s)}
+                              className="py-2.5 rounded-xl text-sm font-bold uppercase tracking-wider border-2 transition"
+                              style={{
+                                background:  editStatus===s ? STATUS_FORM_BG[s]     : "white",
+                                color:       editStatus===s ? STATUS_FORM_TEXT[s]   : "#9ca3af",
+                                borderColor: editStatus===s ? STATUS_FORM_BORDER[s] : "#e5e7eb",
+                              }}>
+                              {s}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Notes */}
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5" style={{color:TEAL}}>Notes</label>
+                        <input type="text" value={editNotes} onChange={e=>setEditNotes(e.target.value)}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none"/>
+                      </div>
+                      {/* Reason — required unless only status changed */}
+                      <div className="rounded-xl border-2 p-4" style={{borderColor:onlyStatus?"#d1d5db":ORANGE, background:onlyStatus?"#f9fafb":"#fff7f7"}}>
+                        <label className="block text-xs font-bold uppercase tracking-widest mb-1.5"
+                          style={{color:onlyStatus?"#6b7280":ORANGE}}>
+                          Reason for Edit {onlyStatus
+                            ? <span className="font-normal normal-case tracking-normal text-gray-400 ml-1">— status change does not require a reason</span>
+                            : <span className="text-red-500">*</span>}
+                        </label>
+                        <input type="text" value={editReason} onChange={e=>setEditReason(e.target.value)}
+                          placeholder={onlyStatus ? "Optional" : "Required — describe why this entry is being changed"}
+                          disabled={onlyStatus}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none disabled:bg-gray-50 disabled:text-gray-400"
+                          style={{borderColor:(!onlyStatus && editReason.trim())?ORANGE:undefined}}/>
+                      </div>
+                    </>
+                  );
+                })()}
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={()=>setEditEntry(null)}
                     className="flex-1 border-2 border-gray-300 rounded-xl py-3 font-bold uppercase tracking-wider text-gray-500 hover:border-gray-400 transition">
@@ -1109,7 +1169,7 @@ export default function EntryForm() {
         </div>
       )}
 
-      {/* ── FIX 1: Hover Tooltip — left/right positioning via getBoundingClientRect ── */}
+      {/* ── Hover Tooltip — no scroll, left/right flip, two-col if too tall ── */}
       {hoveredCell && (() => {
         const row = gridRows.find(r=>r.rj_number===hoveredCell.rowKey);
         if (!row) return null;
@@ -1118,75 +1178,106 @@ export default function EntryForm() {
         const dayDate = dayDates[dayIdx] ?? "";
         const relevantEntries = row.entries.filter(en => Number(en[hoveredCell.day as Day]) > 0);
         const isPendingRow = row.rowStatus === "pending";
-        const TOOLTIP_W = 260;
-        const TOOLTIP_MAX_H = 300;
         const rect = hoveredCell.rect;
-        // Try right side; fall back to left
-        const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+        const TOOLTIP_W = 260;
+        const HEADER_H  = 46;
+        const ENTRY_H   = 90; // rough per-entry height estimate
+        const vw = typeof window !== "undefined" ? window.innerWidth  : 1200;
         const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+
+        // Decide if two-column layout is needed
+        const n = Math.max(relevantEntries.length, 1);
+        const singleH = HEADER_H + n * ENTRY_H;
+        const twoCol  = singleH > vh - 16 && relevantEntries.length > 1;
+        const mid = Math.ceil(relevantEntries.length / 2);
+        const colA = twoCol ? relevantEntries.slice(0, mid)  : relevantEntries;
+        const colB = twoCol ? relevantEntries.slice(mid)     : [];
+
+        const tooltipW = twoCol ? TOOLTIP_W * 2 + 8 : TOOLTIP_W;
+        const twoColH  = HEADER_H + Math.ceil(relevantEntries.length / 2) * ENTRY_H;
+        const tooltipH = twoCol ? twoColH : singleH;
+
+        // Horizontal: right of cell, flip left if overflow
         const rightLeft = rect.right + 12;
-        const leftLeft  = rect.left - TOOLTIP_W - 12;
-        const finalLeft = rightLeft + TOOLTIP_W + 8 <= vw ? rightLeft : leftLeft;
-        // Vertically center on cell, then clamp
-        let finalTop = rect.top + rect.height / 2 - TOOLTIP_MAX_H / 2;
-        if (finalTop + TOOLTIP_MAX_H > vh - 8) finalTop = vh - TOOLTIP_MAX_H - 8;
+        const leftLeft  = rect.left - tooltipW - 12;
+        const finalLeft = rightLeft + tooltipW + 8 <= vw ? rightLeft : Math.max(8, leftLeft);
+
+        // Vertical: center on cell, clamp to viewport
+        let finalTop = rect.top + rect.height / 2 - tooltipH / 2;
+        if (finalTop + tooltipH > vh - 8) finalTop = vh - tooltipH - 8;
         if (finalTop < 8) finalTop = 8;
+
+        // Render a single entry panel (shared between single and two-col modes)
+        function EntryPanel({ en, showDivider }: { en: BillingEntry; showDivider: boolean }) {
+          const amt = Number(en[hoveredCell!.day as Day]);
+          const sb  = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
+          return (
+            <div>
+              {showDivider && <div className="border-t" style={{borderColor:"#e5e7eb"}}/>}
+              <div className="px-3 py-2 space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Amount</span>
+                  <span className="font-bold tabular-nums" style={{color:ORANGE}}>{fmtCurrency(amt)}</span>
+                </div>
+                {en.work_description && (
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Work</span>
+                    <span className="text-right text-gray-700 leading-tight">{en.work_description}</span>
+                  </div>
+                )}
+                {en.invoice_number && (
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Invoice</span>
+                    <span style={{color:NAVY,fontWeight:600}}>{en.invoice_number}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Status</span>
+                  <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]" style={{background:sb.bg,color:sb.clr}}>
+                    ● {(en.status||"pending").toUpperCase()}
+                  </span>
+                </div>
+                {en.prelim_date && (
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Prelim</span>
+                    <span className="text-gray-700">{new Date(en.prelim_date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</span>
+                  </div>
+                )}
+                {en.notes && (
+                  <div className="flex justify-between items-start gap-2">
+                    <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Notes</span>
+                    <span className="text-right text-gray-500 italic leading-tight">{en.notes}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        }
+
         return (
-          <div className="pointer-events-none fixed rounded-xl shadow-xl border text-xs overflow-hidden overflow-y-auto"
-            style={{
-              left: finalLeft, top: finalTop,
-              width: TOOLTIP_W, maxHeight: TOOLTIP_MAX_H,
-              background:"white", borderColor: NAVY, zIndex: 9999,
-            }}>
+          <div className="pointer-events-none fixed rounded-xl shadow-xl border text-xs overflow-hidden"
+            style={{left:finalLeft, top:finalTop, width:tooltipW, background:"white", borderColor:NAVY, zIndex:9999}}>
+            {/* Header */}
             <div className="px-3 py-2" style={{background:NAVY,color:"white"}}>
               <div className="font-bold text-[11px] uppercase tracking-wider">{row.rj_number} — {row.company_name}</div>
               <div className="text-[10px] opacity-70 mt-0.5">{dayLabel} · {dayDate}</div>
             </div>
-            {relevantEntries.length > 0 ? relevantEntries.map((en, i) => {
-              const amt = Number(en[hoveredCell.day as Day]);
-              const sb = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
-              return (
-                <div key={en.id}>
-                  {i > 0 && <div className="border-t" style={{borderColor:"#e5e7eb"}}/>}
-                  <div className="px-3 py-2 space-y-1">
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Amount</span>
-                      <span className="font-bold tabular-nums" style={{color:ORANGE}}>{fmtCurrency(amt)}</span>
-                    </div>
-                    {en.work_description && (
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Work</span>
-                        <span className="text-right text-gray-700 leading-tight">{en.work_description}</span>
-                      </div>
-                    )}
-                    {en.invoice_number && (
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Invoice</span>
-                        <span style={{color:NAVY,fontWeight:600}}>{en.invoice_number}</span>
-                      </div>
-                    )}
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Status</span>
-                      <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]" style={{background:sb.bg,color:sb.clr}}>
-                        ● {(en.status||"pending").toUpperCase()}
-                      </span>
-                    </div>
-                    {en.prelim_date && (
-                      <div className="flex justify-between items-center">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Prelim</span>
-                        <span className="text-gray-700">{new Date(en.prelim_date+"T00:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}</span>
-                      </div>
-                    )}
-                    {en.notes && (
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px] shrink-0">Notes</span>
-                        <span className="text-right text-gray-500 italic leading-tight">{en.notes}</span>
-                      </div>
-                    )}
+            {relevantEntries.length > 0 ? (
+              twoCol ? (
+                /* Two-column layout */
+                <div className="flex">
+                  <div className="flex-1 border-r" style={{borderColor:"#e5e7eb"}}>
+                    {colA.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)}
+                  </div>
+                  <div className="flex-1">
+                    {colB.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)}
                   </div>
                 </div>
-              );
-            }) : isPendingRow ? (
+              ) : (
+                /* Single-column layout */
+                colA.map((en,i)=><EntryPanel key={en.id} en={en} showDivider={i>0}/>)
+              )
+            ) : isPendingRow ? (
               <div className="px-3 py-2 text-center text-[10px] font-semibold uppercase tracking-wider" style={{color:"#93c5fd"}}>
                 TBD — Amount not yet set
               </div>

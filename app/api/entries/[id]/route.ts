@@ -32,7 +32,7 @@ export async function PUT(
   const {
     sun, mon, tue, wed, thu, fri, sat,
     invoice_number, notes, work_description, prelim_date,
-    reason, edited_by,
+    status, reason, edited_by,
   } = body;
 
   if (!reason?.trim()) {
@@ -47,6 +47,7 @@ export async function PUT(
     (a: number, b: unknown) => a + Number(b || 0), 0
   );
 
+  const newStatus = status ?? old["status"] ?? "pending";
   await sql`
     UPDATE billing_entries SET
       sun              = ${Number(sun || 0)},
@@ -60,17 +61,19 @@ export async function PUT(
       invoice_number   = ${invoice_number || ""},
       notes            = ${notes || ""},
       work_description = ${work_description || ""},
-      prelim_date      = ${prelim_date || null}
+      prelim_date      = ${prelim_date || null},
+      status           = ${newStatus}
     WHERE id = ${id}
   `;
 
-  const fields = ["sun","mon","tue","wed","thu","fri","sat","invoice_number","notes","work_description","prelim_date"] as const;
+  const fields = ["sun","mon","tue","wed","thu","fri","sat","invoice_number","notes","work_description","prelim_date","status"] as const;
   const newVals: Record<string, unknown> = {
     sun: Number(sun||0), mon: Number(mon||0), tue: Number(tue||0),
     wed: Number(wed||0), thu: Number(thu||0), fri: Number(fri||0),
     sat: Number(sat||0), invoice_number: invoice_number||"",
     notes: notes||"", work_description: work_description||"",
     prelim_date: prelim_date||null,
+    status: String(newStatus),
   };
 
   for (const field of fields) {
