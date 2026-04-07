@@ -152,9 +152,16 @@ export default function EntryForm() {
   // Inline status dropdown
   const [openStatusRowKey, setOpenStatusRowKey] = useState<string|null>(null);
 
-  // Hover tooltip (CHANGE 5)
-  interface HoveredCell { rowKey: string; day: string; x: number; y: number; }
+  // Hover tooltip — uses cell bounding rect for left/right positioning (FIX 1)
+  interface HoveredCell { rowKey: string; day: string; rect: DOMRect; }
   const [hoveredCell, setHoveredCell] = useState<HoveredCell|null>(null);
+
+  // Day-cell multi-entry selection modal (FIX 2)
+  interface CellSelectModal { rj_number: string; day: string; dayLabel: string; date: string; entries: BillingEntry[]; }
+  const [cellSelectModal, setCellSelectModal] = useState<CellSelectModal|null>(null);
+
+  // Row total summary modal (FIX 3)
+  const [rowSummaryModal, setRowSummaryModal] = useState<GridRow|null>(null);
 
   // Post-save "Mark as Invoiced?" prompt (CHANGE 6)
   const [showInvoicedPrompt, setShowInvoicedPrompt] = useState(false);
@@ -792,18 +799,18 @@ export default function EntryForm() {
                     {gridRows.map((row)=>{
                       const bdg = { bg: STATUS_BADGE_BG[row.rowStatus]??"#DBEAFE", clr: STATUS_BADGE_CLR[row.rowStatus]??"#1e40af" };
                       const isPending = row.rowStatus === "pending";
-                      const statusDot = isPending ? "●" : row.rowStatus === "invoiced" ? "●" : "●";
                       const isDropOpen = openStatusRowKey === row.rj_number;
                       return (
+                        // FIX 4: no onClick on <tr> — individual cells handle clicks
                         <tr key={row.rj_number}
                           style={{background: STATUS_ROW_BG[row.rowStatus]??"white"}}
-                          className="border-b border-gray-100 last:border-0 cursor-pointer hover:brightness-95 transition-all"
-                          onClick={()=>openEditEntry(row.entries[0])}>
-                          {/* Job cell */}
-                          <td className="px-2 py-1 align-top">
+                          className="border-b border-gray-100 last:border-0">
+                          {/* JOB cell — click opens most-recent entry edit modal */}
+                          <td className="px-2 py-1 align-top cursor-pointer hover:bg-blue-50 transition-colors"
+                            onClick={()=>openEditEntry(row.entries[row.entries.length-1])}>
                             <div className="font-bold text-[11px] truncate leading-tight" style={{color:NAVY}}>{row.rj_number}</div>
                             <div className="text-[10px] truncate leading-tight text-gray-500 mb-0.5">{row.company_name}</div>
-                            {/* Status pill — inline dropdown */}
+                            {/* Status pill — inline dropdown; stopPropagation so JOB cell click doesn't fire */}
                             <div className="relative inline-block" data-status-pill="true">
                               <button
                                 type="button"
@@ -811,7 +818,7 @@ export default function EntryForm() {
                                 onClick={e=>{e.stopPropagation();setOpenStatusRowKey(isDropOpen?null:row.rj_number);}}
                                 className="text-[9px] font-bold px-1.5 py-0.5 rounded-full leading-none transition hover:opacity-80"
                                 style={{background:bdg.bg,color:bdg.clr}}>
-                                {statusDot} {row.rowStatus.toUpperCase()}
+                                ● {row.rowStatus.toUpperCase()}
                               </button>
                               {isDropOpen && (
                                 <div className="absolute left-0 top-full mt-0.5 z-30 bg-white rounded-lg shadow-xl border border-gray-100 flex flex-col overflow-hidden"
@@ -831,33 +838,53 @@ export default function EntryForm() {
                               )}
                             </div>
                           </td>
-                          {/* Day cells */}
-                          {DAYS.map(day=>{
+                          {/* Day cells — FIX 2: clickable if has content */}
+                          {DAYS.map((day,di)=>{
                             const d = row.days[day];
                             const amt = d?.total ?? 0;
                             const hasContent = amt > 0 || isPending;
+                            // FIX 2: entries with data for this specific day
+                            const dayEntries = row.entries.filter(en=>Number(en[day as Day])>0);
+                            function handleDayCellClick(e: React.MouseEvent) {
+                              if (!hasContent) return;
+                              e.stopPropagation();
+                              setHoveredCell(null);
+                              if (amt > 0) {
+                                if (dayEntries.length === 1) {
+                                  openEditEntry(dayEntries[0]);
+                                } else if (dayEntries.length > 1) {
+                                  setCellSelectModal({
+                                    rj_number: row.rj_number,
+                                    day,
+                                    dayLabel: DAY_LABELS[di],
+                                    date: dayDates[di],
+                                    entries: dayEntries,
+                                  });
+                                }
+                              } else {
+                                // TBD — open most recent entry
+                                openEditEntry(row.entries[row.entries.length-1]);
+                              }
+                            }
                             return (
-                              <td key={day} className="px-0.5 py-1 text-right align-top tabular-nums"
+                              <td key={day}
+                                className={`px-0.5 py-1 text-right align-top tabular-nums transition-colors${hasContent ? " cursor-pointer hover:bg-blue-50" : ""}`}
                                 style={{
                                   background: amt>0 ? "#d1fae5" : isPending ? "#EFF6FF" : undefined,
                                   color:      amt>0 ? "#065f46" : isPending ? "#93c5fd" : "#e5e7eb",
                                   fontWeight: amt>0 ? 600 : 400,
-                                  cursor: hasContent ? "default" : undefined,
                                 }}
                                 onMouseEnter={hasContent ? e=>{
-                                  e.stopPropagation();
-                                  setHoveredCell({rowKey:row.rj_number, day, x:e.clientX, y:e.clientY});
-                                } : undefined}
-                                onMouseMove={hasContent ? e=>{
-                                  setHoveredCell({rowKey:row.rj_number, day, x:e.clientX, y:e.clientY});
+                                  const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+                                  setHoveredCell({rowKey:row.rj_number, day, rect});
                                 } : undefined}
                                 onMouseLeave={hasContent ? ()=>setHoveredCell(null) : undefined}
-                                onClick={e=>e.stopPropagation()}>
+                                onClick={handleDayCellClick}>
                                 {amt>0 ? (
                                   <>
                                     <div className="text-[11px]">{amt.toLocaleString("en-US",{maximumFractionDigits:0})}</div>
-                                    {d?.descs.map((desc,di)=>(
-                                      <div key={di} className="text-[9px] italic text-gray-400 leading-tight truncate">{desc}</div>
+                                    {d?.descs.map((desc,ddi)=>(
+                                      <div key={ddi} className="text-[9px] italic text-gray-400 leading-tight truncate">{desc}</div>
                                     ))}
                                   </>
                                 ) : isPending ? (
@@ -866,14 +893,16 @@ export default function EntryForm() {
                               </td>
                             );
                           })}
-                          {/* Invoices */}
+                          {/* INV# — not clickable */}
                           <td className="px-1 py-1 align-top text-[10px] text-gray-600">
                             <div className="truncate leading-tight">
                               {row.invoices.length>0 ? row.invoices.join(", ") : <span className="text-gray-300">—</span>}
                             </div>
                           </td>
-                          {/* Total */}
-                          <td className="px-1 py-1 text-right font-bold tabular-nums align-top text-[11px]" style={{color:row.rowTotal>0?ORANGE:"#93c5fd"}}>
+                          {/* TOTAL — FIX 3: click opens row summary modal */}
+                          <td className="px-1 py-1 text-right font-bold tabular-nums align-top text-[11px] cursor-pointer hover:bg-blue-50 transition-colors"
+                            style={{color:row.rowTotal>0?ORANGE:"#93c5fd"}}
+                            onClick={e=>{e.stopPropagation();setRowSummaryModal(row);}}>
                             {row.rowTotal>0 ? fmtCurrency(row.rowTotal) : <span className="text-[10px]">TBD</span>}
                           </td>
                         </tr>
@@ -1080,38 +1109,42 @@ export default function EntryForm() {
         </div>
       )}
 
-      {/* ── CHANGE 5: Hover Tooltip ── */}
+      {/* ── FIX 1: Hover Tooltip — left/right positioning via getBoundingClientRect ── */}
       {hoveredCell && (() => {
         const row = gridRows.find(r=>r.rj_number===hoveredCell.rowKey);
         if (!row) return null;
         const dayIdx = DAYS.indexOf(hoveredCell.day as typeof DAYS[number]);
         const dayLabel = DAY_LABELS[dayIdx] ?? hoveredCell.day.toUpperCase();
         const dayDate = dayDates[dayIdx] ?? "";
-        // find entries that have data for this day
         const relevantEntries = row.entries.filter(en => Number(en[hoveredCell.day as Day]) > 0);
         const isPendingRow = row.rowStatus === "pending";
         const TOOLTIP_W = 260;
-        const fromTop = hoveredCell.y < 220;
-        const left = Math.min(hoveredCell.x + 12, window.innerWidth - TOOLTIP_W - 16);
-        const top = fromTop ? hoveredCell.y + 20 : hoveredCell.y - 20;
-        const transform = fromTop ? "translateY(0)" : "translateY(-100%)";
+        const TOOLTIP_MAX_H = 300;
+        const rect = hoveredCell.rect;
+        // Try right side; fall back to left
+        const vw = typeof window !== "undefined" ? window.innerWidth : 1200;
+        const vh = typeof window !== "undefined" ? window.innerHeight : 800;
+        const rightLeft = rect.right + 12;
+        const leftLeft  = rect.left - TOOLTIP_W - 12;
+        const finalLeft = rightLeft + TOOLTIP_W + 8 <= vw ? rightLeft : leftLeft;
+        // Vertically center on cell, then clamp
+        let finalTop = rect.top + rect.height / 2 - TOOLTIP_MAX_H / 2;
+        if (finalTop + TOOLTIP_MAX_H > vh - 8) finalTop = vh - TOOLTIP_MAX_H - 8;
+        if (finalTop < 8) finalTop = 8;
         return (
-          <div className="pointer-events-none fixed z-50 rounded-xl shadow-xl border text-xs overflow-hidden"
+          <div className="pointer-events-none fixed rounded-xl shadow-xl border text-xs overflow-hidden overflow-y-auto"
             style={{
-              left, top, transform,
-              width: TOOLTIP_W,
-              background:"white",
-              borderColor: NAVY,
+              left: finalLeft, top: finalTop,
+              width: TOOLTIP_W, maxHeight: TOOLTIP_MAX_H,
+              background:"white", borderColor: NAVY, zIndex: 9999,
             }}>
-            {/* Header */}
             <div className="px-3 py-2" style={{background:NAVY,color:"white"}}>
               <div className="font-bold text-[11px] uppercase tracking-wider">{row.rj_number} — {row.company_name}</div>
               <div className="text-[10px] opacity-70 mt-0.5">{dayLabel} · {dayDate}</div>
             </div>
-            {/* Body */}
             {relevantEntries.length > 0 ? relevantEntries.map((en, i) => {
               const amt = Number(en[hoveredCell.day as Day]);
-              const statusBadge = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
+              const sb = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
               return (
                 <div key={en.id}>
                   {i > 0 && <div className="border-t" style={{borderColor:"#e5e7eb"}}/>}
@@ -1134,8 +1167,7 @@ export default function EntryForm() {
                     )}
                     <div className="flex justify-between items-center">
                       <span className="font-semibold text-gray-500 uppercase tracking-wider text-[10px]">Status</span>
-                      <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]"
-                        style={{background:statusBadge.bg,color:statusBadge.clr}}>
+                      <span className="px-1.5 py-0.5 rounded-full font-bold text-[9px]" style={{background:sb.bg,color:sb.clr}}>
                         ● {(en.status||"pending").toUpperCase()}
                       </span>
                     </div>
@@ -1162,6 +1194,102 @@ export default function EntryForm() {
           </div>
         );
       })()}
+
+      {/* ── FIX 2: Day-cell multi-entry selection modal ── */}
+      {cellSelectModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white" style={{borderColor:"#e5e7eb"}}>
+              <div>
+                <h3 className="text-lg font-bold uppercase tracking-wider" style={{color:NAVY}}>Select Entry</h3>
+                <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wider">
+                  {cellSelectModal.rj_number} · {cellSelectModal.dayLabel} {cellSelectModal.date}
+                </p>
+              </div>
+              <button onClick={()=>setCellSelectModal(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">✕</button>
+            </div>
+            <div className="p-4 space-y-2">
+              {cellSelectModal.entries.map(en=>{
+                const amt = Number(en[cellSelectModal.day as Day]);
+                return (
+                  <button key={en.id} type="button"
+                    onClick={()=>{setCellSelectModal(null);openEditEntry(en);}}
+                    className="w-full text-left rounded-xl border-2 px-4 py-3 hover:border-teal-400 transition-colors"
+                    style={{borderColor:"#e5e7eb"}}>
+                    <div className="font-semibold text-sm" style={{color:NAVY}}>{en.work_description||"(no description)"}</div>
+                    <div className="flex gap-4 mt-1 text-xs text-gray-500">
+                      <span className="font-bold tabular-nums" style={{color:ORANGE}}>{fmtCurrency(amt)}</span>
+                      {en.invoice_number && <span>INV {en.invoice_number}</span>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── FIX 3: Row total summary modal ── */}
+      {rowSummaryModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[85vh] overflow-y-auto">
+            <div className="px-6 py-4 border-b flex items-center justify-between sticky top-0 bg-white" style={{borderColor:"#e5e7eb"}}>
+              <div>
+                <h3 className="text-base font-bold uppercase tracking-wider leading-tight" style={{color:NAVY}}>
+                  {rowSummaryModal.rj_number} — {rowSummaryModal.company_name}
+                </h3>
+                <p className="text-xs text-gray-400 mt-0.5 uppercase tracking-wider">
+                  Week Total: <span className="font-bold tabular-nums" style={{color:ORANGE}}>
+                    {rowSummaryModal.rowTotal > 0 ? fmtCurrency(rowSummaryModal.rowTotal) : "TBD"}
+                  </span>
+                </p>
+              </div>
+              <button onClick={()=>setRowSummaryModal(null)} className="text-gray-400 hover:text-gray-600 text-xl font-bold leading-none">✕</button>
+            </div>
+            <div className="p-4 space-y-3">
+              {rowSummaryModal.entries.map(en=>{
+                const enTotal = DAYS.reduce((s,d)=>s+Number(en[d]),0);
+                const sb = { bg: STATUS_BADGE_BG[en.status]??"#DBEAFE", clr: STATUS_BADGE_CLR[en.status]??"#1e40af" };
+                const activeDays = DAYS.filter(d=>Number(en[d])>0);
+                return (
+                  <div key={en.id} className="rounded-xl border-2 p-4" style={{borderColor:"#e5e7eb"}}>
+                    <div className="font-semibold text-sm mb-2" style={{color:NAVY}}>{en.work_description||"(no description)"}</div>
+                    {activeDays.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {activeDays.map(d=>(
+                          <span key={d} className="text-[11px] tabular-nums rounded-lg px-2 py-0.5 font-semibold"
+                            style={{background:"#d1fae5",color:"#065f46"}}>
+                            {DAY_LABELS[DAYS.indexOf(d)]} {fmtCurrency(Number(en[d]))}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex items-center gap-3 text-xs flex-wrap">
+                      {en.invoice_number && (
+                        <span className="text-gray-500">INV <span className="font-semibold" style={{color:NAVY}}>{en.invoice_number}</span></span>
+                      )}
+                      <span className="px-2 py-0.5 rounded-full font-bold text-[10px]" style={{background:sb.bg,color:sb.clr}}>
+                        ● {(en.status||"pending").toUpperCase()}
+                      </span>
+                      {enTotal > 0 && (
+                        <span className="font-bold tabular-nums ml-auto" style={{color:ORANGE}}>{fmtCurrency(enTotal)}</span>
+                      )}
+                    </div>
+                    <div className="mt-3">
+                      <button type="button"
+                        onClick={()=>{setRowSummaryModal(null);openEditEntry(en);}}
+                        className="text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border-2 transition hover:opacity-70"
+                        style={{borderColor:TEAL,color:TEAL}}>
+                        Edit This Entry
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── CHANGE 6: "Mark as Invoiced?" prompt ── */}
       {showInvoicedPrompt && (
